@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1050892508316215187}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MuzzleMIddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1050892508874956664}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MuzzleBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1050892509929384987}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MuzzleUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14634,9 +14634,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8456131080261150018}
   - component: {fileID: 1050892509014178564}
+  - component: {fileID: 6256946802892457395}
+  - component: {fileID: 8377434104555117260}
+  - component: {fileID: 1473854897057809264}
   m_Layer: 7
   m_Name: Enemy02
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14672,16 +14675,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f457470c1cfa14c96fc1cf6f407d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyProjectile: {fileID: 2956574102853484863, guid: 098ccc18b633eb946a89153328417486, type: 3}
-  minFireInterval: 1.5
-  maxFireInterval: 3
-  moveSpeed: 4.5
+  enemyProjectile: {fileID: 2956574102853484863, guid: fd24ef0738c5c0043beabf007179139b, type: 3}
+  minFireInterval: 4
+  maxFireInterval: 6
+  moveSpeed: 3
   moveRotationAngle: 35
   paddingX: 1
   paddingY: 0.5
-  powerLevel: 2
+  powerLevel: 3
   muzzleUp: {fileID: 1050892509929384987}
   muzzleMiddle: {fileID: 1050892508316215187}
   muzzleBottom: {fileID: 1050892508874956664}
-  enemyProjectileUpAngle: 2
-  enemyProjectileBottomAngle: -2
+  enemyProjectileUpAngle: -2
+  enemyProjectileBottomAngle: 2
+--- !u!114 &6256946802892457395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8456131080261150044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7e0cc31391ca54a96047751a464d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathVFX: {fileID: 2342042931496088306, guid: 97b415311529fa145aacd3eedaac728e, type: 3}
+  maxHealth: 10
+--- !u!70 &8377434104555117260
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8456131080261150044}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.5, y: 0.5}
+  m_Direction: 1
+--- !u!50 &1473854897057809264
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8456131080261150044}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7

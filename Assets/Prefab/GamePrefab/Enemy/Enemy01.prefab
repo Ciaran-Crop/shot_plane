@@ -4964,7 +4964,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7567315259184537930}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MuzzleMIddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4994,7 +4994,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7567315259569348645}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MuzzleUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5024,7 +5024,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7567315259651694633}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MuzzleBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5055,9 +5055,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7782091112636936409}
   - component: {fileID: 7567315261155882613}
+  - component: {fileID: 4772701466137640122}
+  - component: {fileID: 2448555705075985889}
+  - component: {fileID: 1990529741003492056}
   m_Layer: 7
   m_Name: Enemy01
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5095,17 +5098,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyProjectile: {fileID: 2956574102853484863, guid: 098ccc18b633eb946a89153328417486, type: 3}
   minFireInterval: 0
-  maxFireInterval: 1.5
-  moveSpeed: 6
+  maxFireInterval: 4
+  moveSpeed: 5
   moveRotationAngle: 35
   paddingX: 1
   paddingY: 0.5
-  powerLevel: 1
+  powerLevel: 3
   muzzleUp: {fileID: 7567315259569348645}
   muzzleMiddle: {fileID: 7567315259184537930}
   muzzleBottom: {fileID: 7567315259651694633}
   enemyProjectileUpAngle: 2
   enemyProjectileBottomAngle: -2
+--- !u!114 &4772701466137640122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7782091112636936391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7e0cc31391ca54a96047751a464d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathVFX: {fileID: 2342042931496088306, guid: 97b415311529fa145aacd3eedaac728e, type: 3}
+  maxHealth: 12
+--- !u!70 &2448555705075985889
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7782091112636936391}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.5, y: 0.5}
+  m_Direction: 1
+--- !u!50 &1990529741003492056
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7782091112636936391}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &8371244601805127435
 GameObject:
   m_ObjectHideFlags: 0
