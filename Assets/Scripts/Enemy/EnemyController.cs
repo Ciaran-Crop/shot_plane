@@ -78,6 +78,7 @@ public class EnemyController : MonoBehaviour
                 default:
                     break;
             }
+            AudioManager.Instance.PlayRandomEnemyLaunch();
         }
     }
 

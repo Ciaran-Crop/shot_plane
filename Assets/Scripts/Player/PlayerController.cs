@@ -173,6 +173,7 @@ public class PlayerController : MonoBehaviour
                 default:
                     break;
             }
+            AudioManager.Instance.PlayPlayerProjectileLaunch(true);
             yield return fireWaitForSeconds;
         }
     }
@@ -188,6 +189,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator StartDodgeCoroutine()
     {
+        AudioManager.Instance.PlayPlayerDodge();
         curRoll = 0f;
         t = 0f;
         isDodging = true;

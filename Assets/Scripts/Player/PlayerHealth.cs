@@ -68,4 +68,10 @@ public class PlayerHealth : HealthSystem
         }
     }
 
+    public override void Die()
+    {
+        base.Die();
+        AudioManager.Instance.PlayPlayerExplosion();
+    }
+
 }

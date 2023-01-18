@@ -15,4 +15,14 @@ public class PlayerProjectile : Projectile
     {
         trail.Clear();
     }
+
+    protected override bool OnCollisionEnter2D(Collision2D collision)
+    {
+        bool collisionResult =  base.OnCollisionEnter2D(collision);
+        if(collisionResult)
+        {
+            AudioManager.Instance.PlayRandomPlayerProjectileHit();
+        }
+        return collisionResult;
+    }
 }

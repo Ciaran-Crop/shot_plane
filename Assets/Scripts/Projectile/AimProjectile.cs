@@ -37,4 +37,13 @@ public class AimProjectile : Projectile
     {
 
     }
+    protected override bool OnCollisionEnter2D(Collision2D collision)
+    {
+        bool collisionResult = base.OnCollisionEnter2D(collision);
+        if (collisionResult)
+        {
+            AudioManager.Instance.PlayEnemyProjectileHit2();
+        }
+        return collisionResult;
+    }
 }

@@ -21,5 +21,6 @@ public class EnemyHealth : HealthSystem
         base.Die();
         var enemyManager = GameObject.FindGameObjectWithTag("Enemy Manager");
         enemyManager.GetComponent<EnemyManager>().RemoveOneEnemy();
+        AudioManager.Instance.PlayRandomEnemyExplosion();
     }
 }
