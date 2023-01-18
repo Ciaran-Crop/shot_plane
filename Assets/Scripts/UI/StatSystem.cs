@@ -36,6 +36,11 @@ public class StatSystem : MonoBehaviour
     {
 
     }
+    
+    void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 
     public virtual void Initialize(float curStat, float maxStat)
     {
@@ -45,7 +50,7 @@ public class StatSystem : MonoBehaviour
         frontStatImage.fillAmount = targetFillAmount;
     }
 
-    public void UpdateStat(float targetStat, float maxStat)
+    public virtual void UpdateStat(float targetStat, float maxStat)
     {
         if (bufferedStatCoroutine != null)
         {

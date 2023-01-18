@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] GamePlayInput input;
     new Rigidbody2D rigidbody2D;
+    new Collider2D collider2D;
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float paddingX = 0.1f;
     [SerializeField] float paddingY = 0.2f;
@@ -26,9 +27,28 @@ public class PlayerController : MonoBehaviour
     Coroutine coroutine;
     WaitForSeconds fireWaitForSeconds;
 
+    bool isDodging = false;
+    [SerializeField] int dodgeCost = 25;
+    [SerializeField] float maxRoll = 720f;
+    [SerializeField] float rollSpeed = 360f;
+    [SerializeField] Vector3 dodgeScale;
+    float curRoll;
+    float dodgeDuration;
+    float t;
+
+    PlayerEnergy playerEnergy;
+
+    WaitForSeconds waitForStraight;
+    [SerializeField] float waitForStraightTime = 0.5f;
+
     void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        collider2D = GetComponent<Collider2D>();
+        playerEnergy = GetComponent<PlayerEnergy>();
+        curRoll = 0;
+        dodgeDuration = maxRoll / rollSpeed;
+        waitForStraight = new WaitForSeconds(waitForStraightTime);
     }
 
     void OnEnable()
@@ -37,6 +57,7 @@ public class PlayerController : MonoBehaviour
         input.onStopMove += StopMove;
         input.onFire += Fire;
         input.onStopFire += StopFire;
+        input.onDodge += Dodge;
     }
 
     void OnDisable()
@@ -45,6 +66,7 @@ public class PlayerController : MonoBehaviour
         input.onStopMove -= StopMove;
         input.onFire -= Fire;
         input.onStopFire -= StopFire;
+        input.onDodge -= Dodge;
     }
 
     void Start()
@@ -56,7 +78,7 @@ public class PlayerController : MonoBehaviour
         input.EnableGamePlayInput();
     }
 
-    // Update is called once per frame
+    // Update is called once per frame  
     void Update()
     {
 
@@ -72,7 +94,7 @@ public class PlayerController : MonoBehaviour
         }
         Quaternion rotationTarget = Quaternion.AngleAxis(moveRotationAngle * moveInput.y, transform.right);
         coroutine = StartCoroutine(StartMoveCoroutine(accelerationTime, moveInput.normalized * moveSpeed, rotationTarget));
-        StartCoroutine(MovePositionLimitCoroutine());
+        StartCoroutine(nameof(MovePositionLimitCoroutine));
     }
 
     void StopMove()
@@ -82,7 +104,7 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(coroutine);
         }
         coroutine = StartCoroutine(StartMoveCoroutine(decelerationTime, Vector2.zero, Quaternion.identity));
-        StopCoroutine(MovePositionLimitCoroutine());
+        StopCoroutine(nameof(MovePositionLimitCoroutine));
     }
 
     IEnumerator StartMoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationTarget)
@@ -131,16 +153,22 @@ public class PlayerController : MonoBehaviour
             switch (powerLevel)
             {
                 case 1:
-                    PoolManager.Release(projectile, muzzleMiddle.position, Quaternion.identity);
+                    GameObject p1 = PoolManager.Release(projectile, muzzleMiddle.position, Quaternion.identity);
+                    p1.GetComponent<Projectile>().setLauncher(gameObject);
                     break;
                 case 2:
-                    PoolManager.Release(projectile, muzzleUp.position, projectileUpRotation);
-                    PoolManager.Release(projectile, muzzleBottom.position, projectileBottomRotation);
+                    GameObject p2 = PoolManager.Release(projectile, muzzleUp.position, projectileUpRotation);
+                    GameObject p3 = PoolManager.Release(projectile, muzzleBottom.position, projectileBottomRotation);
+                    p2.GetComponent<Projectile>().setLauncher(gameObject);
+                    p3.GetComponent<Projectile>().setLauncher(gameObject);
                     break;
                 case 3:
-                    PoolManager.Release(projectile, muzzleUp.position, projectileUpRotation);
-                    PoolManager.Release(projectile, muzzleMiddle.position, Quaternion.identity);
-                    PoolManager.Release(projectile, muzzleBottom.position, projectileBottomRotation);
+                    GameObject p4 = PoolManager.Release(projectile, muzzleUp.position, projectileUpRotation);
+                    GameObject p5 = PoolManager.Release(projectile, muzzleMiddle.position, Quaternion.identity);
+                    GameObject p6 = PoolManager.Release(projectile, muzzleBottom.position, projectileBottomRotation);
+                    p4.GetComponent<Projectile>().setLauncher(gameObject);
+                    p5.GetComponent<Projectile>().setLauncher(gameObject);
+                    p6.GetComponent<Projectile>().setLauncher(gameObject);
                     break;
                 default:
                     break;
@@ -148,5 +176,35 @@ public class PlayerController : MonoBehaviour
             yield return fireWaitForSeconds;
         }
     }
+    # endregion
+
+    # region Dodge
+
+    void Dodge()
+    {
+        if (isDodging || !playerEnergy.isEnough(dodgeCost)) return;
+        StartCoroutine(nameof(StartDodgeCoroutine));
+    }
+
+    IEnumerator StartDodgeCoroutine()
+    {
+        curRoll = 0f;
+        t = 0f;
+        isDodging = true;
+        collider2D.isTrigger = true;
+        playerEnergy.Use(dodgeCost);
+        while (curRoll < maxRoll)
+        {
+            curRoll += Time.deltaTime * rollSpeed;
+            transform.rotation = Quaternion.AngleAxis(curRoll, transform.right);
+            t += Time.deltaTime / dodgeDuration;
+            transform.localScale = BezierCurve.Instance.QuadraticBezierCurve(Vector3.one, dodgeScale, Vector3.one, t);
+            yield return null;
+        }
+        yield return waitForStraight;
+        collider2D.isTrigger = false;
+        isDodging = false;
+    }
+
     # endregion
 }

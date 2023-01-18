@@ -18,9 +18,29 @@ public class PlayerHealth : HealthSystem
         healthRegenerationWaitTime = new WaitForSeconds(healthRegenerationInterval);
     }
 
-    public override void TakeDamage(float damage)
+    override protected void OnEnable()
     {
-        base.TakeDamage(damage);
+        base.OnEnable();
+        if(showHealthHUD)
+        {
+            onHUDStatBar.Initialize(health, maxHealth);
+            onHUDStatBar.gameObject.SetActive(true);
+        }
+        else
+        {
+            onHUDStatBar.gameObject.SetActive(false);
+        }
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        onHUDStatBar.UpdateStat(health, maxHealth);
+    }
+
+    public override bool TakeDamage(float damage)
+    {
+        bool isDead = base.TakeDamage(damage);
 
         if (showHealthHUD)
         {
@@ -35,6 +55,7 @@ public class PlayerHealth : HealthSystem
             }
             healthRegenerationCoroutine = StartCoroutine(LifeRegenerationCoroutine(healthRegenerationWaitTime, healthRegenerationPercent));
         }
+        return isDead;
     }
 
     public override void RestoreHealth(float restoreHealth)

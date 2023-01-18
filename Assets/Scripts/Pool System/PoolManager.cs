@@ -6,6 +6,7 @@ public class PoolManager : MonoBehaviour
     [SerializeField] Pool[] playerProjectilePools;
     [SerializeField] Pool[] enemyProjectilePools;
     [SerializeField] Pool[] vFXPools;
+    [SerializeField] Pool[] enemyPools;
 
     static Dictionary<GameObject, Pool> dictionary;
 
@@ -16,6 +17,7 @@ public class PoolManager : MonoBehaviour
         CheckRuntimeSize(playerProjectilePools);
         CheckRuntimeSize(enemyProjectilePools);
         CheckRuntimeSize(vFXPools);
+        CheckRuntimeSize(enemyPools);
     }
 
 #endif
@@ -38,12 +40,13 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
         dictionary = new Dictionary<GameObject, Pool>();
         Initialize(playerProjectilePools);
         Initialize(enemyProjectilePools);
         Initialize(vFXPools);
+        Initialize(enemyPools);
     }
 
     void Initialize(Pool[] pools)

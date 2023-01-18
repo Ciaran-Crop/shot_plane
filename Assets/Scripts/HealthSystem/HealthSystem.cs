@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    [SerializeField] public int deathEnergyRewards = 1;
     [SerializeField] GameObject deathVFX;
     [SerializeField] protected float maxHealth;
     protected float health;
@@ -31,7 +33,7 @@ public class HealthSystem : MonoBehaviour
     {
         health = maxHealth;
 
-        if(showOnHeadStatBar)
+        if (showOnHeadStatBar)
         {
             ShowOnHeadStatBar();
         }
@@ -41,11 +43,17 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    public virtual void TakeDamage(float damage)
+    protected virtual void OnDisable()
+    {
+        health = 0f;
+        StopAllCoroutines();
+    }
+
+    public virtual bool TakeDamage(float damage)
     {
         health = Mathf.Clamp(health - damage, 0f, maxHealth);
 
-        if(showOnHeadStatBar)
+        if (showOnHeadStatBar)
         {
             onHeadStatBar.UpdateStat(health, maxHealth);
         }
@@ -53,7 +61,9 @@ public class HealthSystem : MonoBehaviour
         if (health <= 0f)
         {
             Die();
+            return true;
         }
+        return false;
     }
 
     public virtual void Die()
@@ -69,7 +79,7 @@ public class HealthSystem : MonoBehaviour
     public virtual void RestoreHealth(float restoreHealth)
     {
         health = Mathf.Clamp(health + restoreHealth, 0f, maxHealth);
-        if(showOnHeadStatBar)
+        if (showOnHeadStatBar)
         {
             onHeadStatBar.UpdateStat(health, maxHealth);
         }
@@ -91,5 +101,15 @@ public class HealthSystem : MonoBehaviour
             yield return waitTime;
             TakeDamage(maxHealth * percent);
         }
+    }
+
+    internal void setDer(int der)
+    {
+        deathEnergyRewards = der;
+    }
+
+    internal void setMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
     }
 }

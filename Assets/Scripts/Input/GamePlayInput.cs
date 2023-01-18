@@ -12,6 +12,7 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions
     public event UnityAction onStopMove = delegate {};
     public event UnityAction onFire = delegate {};
     public event UnityAction onStopFire = delegate {};
+    public event UnityAction onDodge = delegate {};
 
     void OnEnable()
     {
@@ -59,6 +60,14 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions
         if(context.phase == InputActionPhase.Canceled)
         {
             onStopFire.Invoke();
+        }
+    }
+
+    public void OnDodge(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            onDodge.Invoke();
         }
     }
 }

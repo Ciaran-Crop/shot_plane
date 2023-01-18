@@ -143,8 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyProjectile: {fileID: 2956574102853484863, guid: 57e720cfe384a824eba173727c955950, type: 3}
-  minFireInterval: 6
-  maxFireInterval: 8
+  minFireInterval: 4
+  maxFireInterval: 6
   moveSpeed: 1
   moveRotationAngle: 35
   paddingX: 1
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7e0cc31391ca54a96047751a464d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathEnergyRewards: 8
   deathVFX: {fileID: 2342042931496088306, guid: 97b415311529fa145aacd3eedaac728e, type: 3}
   maxHealth: 6
   onHeadStatBar: {fileID: 6261354401138001516}

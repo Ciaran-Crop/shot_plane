@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float moveRotationAngle = 25f;
     [SerializeField] float paddingX = 0.2f;
     [SerializeField] float paddingY = 0.2f;
-    [SerializeField, Range(1, 3)] float powerLevel = 1f;
+    [SerializeField, Range(1, 3)]int powerLevel = 1;
 
     [SerializeField] Transform muzzleUp;
     [SerializeField] Transform muzzleMiddle;
@@ -58,16 +58,22 @@ public class EnemyController : MonoBehaviour
             switch (powerLevel)
             {
                 case 1:
-                    PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity);
+                    GameObject p1 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity);
+                    p1.GetComponent<Projectile>().setLauncher(gameObject);
                     break;
                 case 2:
-                    PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation);
-                    PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation);
+                    GameObject p2 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation);
+                    GameObject p3 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation);
+                    p2.GetComponent<Projectile>().setLauncher(gameObject);
+                    p3.GetComponent<Projectile>().setLauncher(gameObject);
                     break;
                 case 3:
-                    PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation);
-                    PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity);
-                    PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation);
+                    GameObject p4 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation);
+                    GameObject p5 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity);
+                    GameObject p6 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation);
+                    p4.GetComponent<Projectile>().setLauncher(gameObject);
+                    p5.GetComponent<Projectile>().setLauncher(gameObject);
+                    p6.GetComponent<Projectile>().setLauncher(gameObject);
                     break;
                 default:
                     break;
@@ -95,6 +101,11 @@ public class EnemyController : MonoBehaviour
 
     void Awake()
     {
+    }
+
+    internal void setPowerLevel(int power)
+    {
+        powerLevel = power;
     }
 
 }

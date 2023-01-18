@@ -5098,18 +5098,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyProjectile: {fileID: 2956574102853484863, guid: 098ccc18b633eb946a89153328417486, type: 3}
-  minFireInterval: 0
+  minFireInterval: 2
   maxFireInterval: 4
-  moveSpeed: 5
+  moveSpeed: 2
   moveRotationAngle: 35
   paddingX: 1
   paddingY: 0.5
-  powerLevel: 3
+  powerLevel: 1
   muzzleUp: {fileID: 7567315259569348645}
   muzzleMiddle: {fileID: 7567315259184537930}
   muzzleBottom: {fileID: 7567315259651694633}
-  enemyProjectileUpAngle: 2
-  enemyProjectileBottomAngle: -2
+  enemyProjectileUpAngle: 5
+  enemyProjectileBottomAngle: -5
 --- !u!114 &4772701466137640122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5122,6 +5122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7e0cc31391ca54a96047751a464d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathEnergyRewards: 5
   deathVFX: {fileID: 2342042931496088306, guid: 97b415311529fa145aacd3eedaac728e, type: 3}
   maxHealth: 12
   onHeadStatBar: {fileID: 873772715006092138}

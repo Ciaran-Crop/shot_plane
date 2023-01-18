@@ -147,9 +147,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2956574102853484862}
-  - component: {fileID: -4506208239839404481}
   - component: {fileID: -6987803742438075536}
   - component: {fileID: 7948606209765074350}
+  - component: {fileID: -3606127846535327677}
   m_Layer: 8
   m_Name: PlayerProjectile
   m_TagString: Untagged
@@ -172,22 +172,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4506208239839404481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2956574102853484863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da21b41de1900a7429e5db2cf9ca7b53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitVFX: {fileID: 5060298685065931927, guid: 6775c68a79b34db4fa2fd4db2a4cdf74, type: 3}
-  damage: 1
-  moveSpeed: 20
-  direction: {x: 1, y: 0}
 --- !u!114 &-6987803742438075536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +202,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.35, y: 0.15}
   m_Direction: 1
+--- !u!114 &-3606127846535327677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2956574102853484863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6fb050bbd243f4fa168c66633e25ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitVFX: {fileID: 5060298685065931927, guid: 6775c68a79b34db4fa2fd4db2a4cdf74, type: 3}
+  damage: 1
+  moveSpeed: 20
+  direction: {x: 1, y: 0}
 --- !u!1 &2956574103331079406
 GameObject:
   m_ObjectHideFlags: 0

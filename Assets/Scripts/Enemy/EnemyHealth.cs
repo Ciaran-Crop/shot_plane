@@ -15,4 +15,11 @@ public class EnemyHealth : HealthSystem
     {
         
     }
+
+    public override void Die()
+    {
+        base.Die();
+        var enemyManager = GameObject.FindGameObjectWithTag("Enemy Manager");
+        enemyManager.GetComponent<EnemyManager>().RemoveOneEnemy();
+    }
 }
