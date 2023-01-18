@@ -28,7 +28,12 @@ public class EnemyController : MonoBehaviour
         Vector3 moveTo = ViewPort.Instance.RandomEnemyMoveRightPosition(paddingX, paddingY);
         while (gameObject.activeSelf)
         {
-            if (Vector3.Distance(transform.position, moveTo) > Mathf.Epsilon)
+            // if (gameObject.name == "Enemy01")
+            // {
+            //     Debug.Log(string.Format("{0} move to {1} but now : {2}, distance: {3}"
+            // , gameObject.tag, moveTo, transform.position, Vector3.Distance(transform.position, moveTo)));
+            // }
+            if (Vector3.Distance(transform.position, moveTo) >= Time.deltaTime * moveSpeed)
             {
                 transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.deltaTime * moveSpeed);
                 transform.rotation = Quaternion.AngleAxis(

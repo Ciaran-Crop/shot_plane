@@ -10,6 +10,9 @@ public class PlayerHealth : HealthSystem
     WaitForSeconds healthRegenerationWaitTime;
     Coroutine healthRegenerationCoroutine;
 
+    [SerializeField] bool showHealthHUD = true;
+    [SerializeField] StatSystem_HUD onHUDStatBar;
+
     void Awake()
     {
         healthRegenerationWaitTime = new WaitForSeconds(healthRegenerationInterval);
@@ -19,6 +22,11 @@ public class PlayerHealth : HealthSystem
     {
         base.TakeDamage(damage);
 
+        if (showHealthHUD)
+        {
+            onHUDStatBar.UpdateStat(health, maxHealth);
+        }
+
         if (gameObject.activeSelf && healthRegeneration)
         {
             if (healthRegenerationCoroutine != null)
@@ -26,6 +34,16 @@ public class PlayerHealth : HealthSystem
                 StopCoroutine(healthRegenerationCoroutine);
             }
             healthRegenerationCoroutine = StartCoroutine(LifeRegenerationCoroutine(healthRegenerationWaitTime, healthRegenerationPercent));
+        }
+    }
+
+    public override void RestoreHealth(float restoreHealth)
+    {
+        base.RestoreHealth(restoreHealth);
+
+        if (showHealthHUD)
+        {
+            onHUDStatBar.UpdateStat(health, maxHealth);
         }
     }
 

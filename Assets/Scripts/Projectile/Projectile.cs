@@ -14,29 +14,32 @@ public class Projectile : MonoBehaviour
         StartCoroutine(nameof(ProjectileMoveCoroutine));
     }
 
-    void OnDisable() 
+    void OnDisable()
     {
         StopCoroutine(nameof(ProjectileMoveCoroutine));
     }
-    
+
     IEnumerator ProjectileMoveCoroutine()
     {
-        while(gameObject.activeSelf)
+        while (gameObject.activeSelf)
         {
             transform.Translate(direction * moveSpeed * Time.deltaTime);
             yield return null;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) 
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
+        if (collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
         {
-            healthSystem.TakeDamage(damage);
-            // 释放命中特效
-            var contactPoint = collision.GetContact(0);
-            PoolManager.Release(hitVFX, contactPoint.point, Quaternion.LookRotation(contactPoint.normal));
-            gameObject.SetActive(false);
+            if (collision.gameObject.activeSelf)
+            {
+                healthSystem.TakeDamage(damage);
+                // 释放命中特效
+                var contactPoint = collision.GetContact(0);
+                PoolManager.Release(hitVFX, contactPoint.point, Quaternion.LookRotation(contactPoint.normal));
+                gameObject.SetActive(false);
+            }
         }
     }
 }

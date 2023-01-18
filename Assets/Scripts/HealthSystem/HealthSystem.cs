@@ -8,19 +8,48 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] protected float maxHealth;
     protected float health;
 
+    [SerializeField] StatSystem onHeadStatBar;
+    [SerializeField] bool showOnHeadStatBar = true;
+
     void Start()
     {
 
     }
 
+    public void ShowOnHeadStatBar()
+    {
+        onHeadStatBar.gameObject.SetActive(true);
+        onHeadStatBar.Initialize(health, maxHealth);
+    }
+
+    public void HideOnHeadStatBar()
+    {
+        onHeadStatBar.gameObject.SetActive(false);
+    }
+
     protected virtual void OnEnable()
     {
         health = maxHealth;
+
+        if(showOnHeadStatBar)
+        {
+            ShowOnHeadStatBar();
+        }
+        else
+        {
+            HideOnHeadStatBar();
+        }
     }
 
     public virtual void TakeDamage(float damage)
     {
-        health -= damage;
+        health = Mathf.Clamp(health - damage, 0f, maxHealth);
+
+        if(showOnHeadStatBar)
+        {
+            onHeadStatBar.UpdateStat(health, maxHealth);
+        }
+
         if (health <= 0f)
         {
             Die();
@@ -40,6 +69,10 @@ public class HealthSystem : MonoBehaviour
     public virtual void RestoreHealth(float restoreHealth)
     {
         health = Mathf.Clamp(health + restoreHealth, 0f, maxHealth);
+        if(showOnHeadStatBar)
+        {
+            onHeadStatBar.UpdateStat(health, maxHealth);
+        }
     }
 
     protected IEnumerator LifeRegenerationCoroutine(WaitForSeconds waitTime, float percent)
