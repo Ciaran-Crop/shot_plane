@@ -309,7 +309,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7288163975072422313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,4 +326,4 @@ MonoBehaviour:
   backStatImage: {fileID: 4515484835270081036}
   fillDelay: 1
   delayFillTime: 0.2
-  fillSpeed: 0.1
+  fillSpeed: 10

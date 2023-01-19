@@ -15,26 +15,17 @@ public class StatSystem : MonoBehaviour
     [SerializeField] protected float fillSpeed = 0.1f;
     protected float t;
     protected WaitForSeconds waitForDelayFill;
+    float curFillAmountDefault;
 
     Coroutine bufferedStatCoroutine;
 
     Canvas canvas;
 
-    void Awake()
+    protected virtual void Awake()
     {
         waitForDelayFill = new WaitForSeconds(delayFillTime);
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
-    }
-
-    void Start()
-    {
-
-    }
-
-    void OnEnable()
-    {
-
     }
     
     void OnDisable()
@@ -78,10 +69,11 @@ public class StatSystem : MonoBehaviour
             yield return waitForDelayFill;
         }
         t = 0f;
+        curFillAmountDefault = curFillAmount;
         while (t < 1f)
         {
             t += Time.deltaTime * fillSpeed;
-            curFillAmount = Mathf.Lerp(curFillAmount, targetFillAmount, t);
+            curFillAmount = Mathf.Lerp(curFillAmountDefault, targetFillAmount, t);
             image.fillAmount = curFillAmount;
             yield return null;
         }

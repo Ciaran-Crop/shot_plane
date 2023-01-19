@@ -12,8 +12,7 @@ public class HealthSystem : MonoBehaviour
 
     [SerializeField] StatSystem onHeadStatBar;
     [SerializeField] bool showOnHeadStatBar = true;
-
-    void Start()
+    void Awake()
     {
 
     }
@@ -66,6 +65,11 @@ public class HealthSystem : MonoBehaviour
         return false;
     }
 
+    public virtual void TakeDoT(int count)
+    {
+
+    }
+
     public virtual void Die()
     {
         health = 0f;
@@ -85,22 +89,40 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    protected IEnumerator LifeRegenerationCoroutine(WaitForSeconds waitTime, float percent)
+    protected IEnumerator LifeRegenerationCoroutine(WaitForSeconds waitTime, WaitForSeconds waitForRestoreInterval, float percent)
     {
-        while (health < maxHealth)
+        PlayerEffect playerEffect = GetComponent<PlayerEffect>();
+        playerEffect.CancelRestore();
+        if (health < maxHealth)
         {
             yield return waitTime;
-            RestoreHealth(maxHealth * percent);
+            playerEffect.SetRestore();
+            while (health < maxHealth && playerEffect.status == PlayerEffect.RESTORE)
+            {
+                yield return waitForRestoreInterval;
+                if (playerEffect.status == PlayerEffect.RESTORE)
+                {
+                    RestoreHealth(maxHealth * percent);
+                }
+            }
         }
+        playerEffect.CancelRestore();
     }
 
-    protected IEnumerator SustainedDamageCoroutine(WaitForSeconds waitTime, float percent)
+    protected IEnumerator SustainedDamageCoroutine(WaitForSeconds waitTime, int count, float percent)
     {
-        while (health > 0f)
+        PlayerEffect playerEffect = GetComponent<PlayerEffect>();
+        playerEffect.SetDoT();
+        while (health > 0f && count > 0 && playerEffect.status == PlayerEffect.DOT)
         {
             yield return waitTime;
-            TakeDamage(maxHealth * percent);
+            if (playerEffect.status == PlayerEffect.DOT)
+            {
+                TakeDamage(maxHealth * percent);
+                count--;
+            }
         }
+        playerEffect.CancelDoT();
     }
 
     internal void setDer(int der)

@@ -203,6 +203,9 @@ MonoBehaviour:
   moveSpeed: 10
   direction: {x: -1, y: 0}
   targetName: Player
+  doTProbability: 0.7
+  minDoTCount: 1
+  maxDoTCount: 3
 --- !u!61 &-8444490257208796415
 BoxCollider2D:
   m_ObjectHideFlags: 0

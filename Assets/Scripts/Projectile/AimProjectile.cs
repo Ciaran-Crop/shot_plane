@@ -5,6 +5,9 @@ using UnityEngine;
 public class AimProjectile : Projectile
 {
     [SerializeField] string targetName;
+    [SerializeField, Range(0, 1)] float doTProbability;
+    [SerializeField] int minDoTCount = 1;
+    [SerializeField] int maxDoTCount = 3;   
     GameObject target;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +46,13 @@ public class AimProjectile : Projectile
         if (collisionResult)
         {
             AudioManager.Instance.PlayEnemyProjectileHit2();
+            if(Random.Range(0f, 1f) <= doTProbability)
+            {
+                if (collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
+                {
+                    healthSystem.TakeDoT(Random.Range(minDoTCount, maxDoTCount + 1));
+                }
+            }
         }
         return collisionResult;
     }

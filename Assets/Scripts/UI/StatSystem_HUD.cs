@@ -7,7 +7,7 @@ public class StatSystem_HUD : StatSystem
 {
     [SerializeField] Text textFillPercent;
 
-    public void UpdateText(float targetFillAmount)
+    public virtual void UpdateText(float targetFillAmount)
     {
         textFillPercent.text = Mathf.FloorToInt(targetFillAmount * 100f) + "%";
     }

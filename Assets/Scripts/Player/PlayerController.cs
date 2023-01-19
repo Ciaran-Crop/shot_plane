@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -20,12 +21,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleBottom;
     [SerializeField] float projectileUpAngle = 0.05f;
+    [SerializeField] Text weaponLevelText;
     Quaternion projectileUpRotation;
     [SerializeField] float projectileBottomAngle = -0.05f;
     Quaternion projectileBottomRotation;
+
+    public int PowerLevel => powerLevel;
     [SerializeField, Range(1, 3)] int powerLevel = 1;
     Coroutine coroutine;
     WaitForSeconds fireWaitForSeconds;
+    Vector2 velocity;
+    Quaternion rotation;
+    WaitForFixedUpdate waitForFixedUpdate;
 
     bool isDodging = false;
     [SerializeField] int dodgeCost = 25;
@@ -35,6 +42,7 @@ public class PlayerController : MonoBehaviour
     float curRoll;
     float dodgeDuration;
     float t;
+    float moveT;
 
     PlayerEnergy playerEnergy;
 
@@ -49,6 +57,8 @@ public class PlayerController : MonoBehaviour
         curRoll = 0;
         dodgeDuration = maxRoll / rollSpeed;
         waitForStraight = new WaitForSeconds(waitForStraightTime);
+        waitForFixedUpdate = new WaitForFixedUpdate();
+        ChangePowerLevel(powerLevel);
     }
 
     void OnEnable()
@@ -109,13 +119,15 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator StartMoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationTarget)
     {
-        float t = 0f;
-        while (t < 1f)
+        moveT = 0f;
+        velocity = rigidbody2D.velocity;
+        rotation = transform.rotation;
+        while (moveT < 1f)
         {
-            t += Time.fixedDeltaTime / time;
-            rigidbody2D.velocity = Vector2.Lerp(rigidbody2D.velocity, moveVelocity, t);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotationTarget, t);
-            yield return null;
+            moveT += Time.fixedDeltaTime / time;
+            rigidbody2D.velocity = Vector2.Lerp(velocity, moveVelocity, moveT);
+            transform.rotation = Quaternion.Lerp(rotation, rotationTarget, moveT);
+            yield return waitForFixedUpdate;
         }
     }
 
@@ -209,4 +221,15 @@ public class PlayerController : MonoBehaviour
     }
 
     # endregion
+
+
+    public void ChangePowerLevel(int value)
+    {
+        powerLevel = value;
+        weaponLevelText.text = "" + powerLevel;
+    }
+    public void UpdatePowerLevel()
+    {
+        ChangePowerLevel(Mathf.Clamp(powerLevel + 1, 1, 3));
+    }
 }

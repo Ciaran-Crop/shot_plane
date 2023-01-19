@@ -137,6 +137,9 @@ GameObject:
   - component: {fileID: 2703132807643306197}
   - component: {fileID: 4951250486748783763}
   - component: {fileID: 174799530}
+  - component: {fileID: 549699829}
+  - component: {fileID: 549699830}
+  - component: {fileID: 549699835}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -201,8 +204,8 @@ MonoBehaviour:
   moveSpeed: 10
   paddingX: 0.8
   paddingY: 0.3
-  accelerationTime: 0.2
-  decelerationTime: 0.2
+  accelerationTime: 0.35
+  decelerationTime: 0.75
   moveRotationAngle: 30
   projectile: {fileID: 2956574102853484863, guid: b29fc8e015d8c81419c743074cf19fc3, type: 3}
   fireInterval: 0.12
@@ -210,12 +213,14 @@ MonoBehaviour:
   muzzleMiddle: {fileID: 1351570052869826408}
   muzzleBottom: {fileID: 1351570052406061380}
   projectileUpAngle: 2
+  weaponLevelText: {fileID: 0}
   projectileBottomAngle: -2
   powerLevel: 1
   dodgeCost: 25
   maxRoll: 360
   rollSpeed: 360
   dodgeScale: {x: 0.2, y: 0.2, z: 0.2}
+  waitForStraightTime: 0.5
 --- !u!114 &2703132807643306197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +241,9 @@ MonoBehaviour:
   healthRegeneration: 1
   healthRegenerationPercent: 0.02
   healthRegenerationInterval: 12
+  sustainedDamageInterval: 2
+  sustainedDamagePercent: 0.02
+  RestoreIntervalTime: 2
   showHealthHUD: 1
   onHUDStatBar: {fileID: 0}
 --- !u!70 &4951250486748783763
@@ -267,6 +275,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyStatBar: {fileID: 0}
+--- !u!114 &549699829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351570053332145418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bed05f562a21f8148a21c1bdb1865eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &549699830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351570053332145418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd559e76d25c8046a96c9dd6e9b5665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statSystemEffect: {fileID: 0}
+  status: 0
+--- !u!114 &549699835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351570053332145418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b866d4ced173d46bf425d90e57714c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  epStatBar: {fileID: 0}
 --- !u!1 &1784134570944895181
 GameObject:
   m_ObjectHideFlags: 0

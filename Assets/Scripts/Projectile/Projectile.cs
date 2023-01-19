@@ -48,10 +48,13 @@ public class Projectile : MonoBehaviour
                 if (launcher.gameObject.tag == "Player")
                 {
                     PlayerEnergy playerEnergy = launcher.GetComponent<PlayerEnergy>();
+                    PlayerEP playerEP = launcher.GetComponent<PlayerEP>();
                     playerEnergy.Obtain(PlayerEnergy.PERCENT);
+                    playerEP.Obtain(PlayerEP.PERCENT);
                     if (isDead)
                     {
                         playerEnergy.Obtain(healthSystem.deathEnergyRewards);
+                        playerEP.Obtain(healthSystem.deathEnergyRewards);
                     }
                 }
                 // 释放命中特效
