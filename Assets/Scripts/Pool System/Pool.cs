@@ -81,4 +81,13 @@ public class Pool
         return gameObjectClone;
     }
 
+    public GameObject Get(Vector3 position, Quaternion rotation, bool setActive)
+    {
+        GameObject gameObjectClone = ReturnOneObject();
+        gameObjectClone.SetActive(setActive);
+        gameObjectClone.transform.position = position;
+        gameObjectClone.transform.rotation = rotation;
+        return gameObjectClone;
+    }
+
 }

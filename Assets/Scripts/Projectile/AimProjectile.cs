@@ -7,17 +7,12 @@ public class AimProjectile : Projectile
     [SerializeField] string targetName;
     [SerializeField, Range(0, 1)] float doTProbability;
     [SerializeField] int minDoTCount = 1;
-    [SerializeField] int maxDoTCount = 3;   
-    GameObject target;
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField] int maxDoTCount = 3;
 
-    }
-
-    void Awake()
+    override protected void Awake()
     {
-        target = GameObject.FindGameObjectWithTag(targetName);
+        base.Awake();
+        SetTarget(GameObject.FindGameObjectWithTag(targetName));
     }
 
     IEnumerator TrackTargetCoroutine()
@@ -31,14 +26,11 @@ public class AimProjectile : Projectile
 
     protected override void OnEnable()
     {
-        StartCoroutine(nameof(TrackTargetCoroutine));
+        if (target != null)
+        {
+            StartCoroutine(nameof(TrackTargetCoroutine));
+        }
         base.OnEnable();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     protected override bool OnCollisionEnter2D(Collision2D collision)
     {
@@ -46,7 +38,7 @@ public class AimProjectile : Projectile
         if (collisionResult)
         {
             AudioManager.Instance.PlayEnemyProjectileHit2();
-            if(Random.Range(0f, 1f) <= doTProbability)
+            if (Random.Range(0f, 1f) <= doTProbability)
             {
                 if (collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
                 {

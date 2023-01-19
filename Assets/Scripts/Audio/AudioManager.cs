@@ -23,6 +23,8 @@ public class AudioManager : PersistentSingleton<AudioManager>
     [SerializeField] public AudioData PlayerProjectileHit2Data;
     [SerializeField] public AudioData PlayerProjectileHit3Data;
     [SerializeField] public AudioData PlayerProjectileLaunchData;
+    [SerializeField] public AudioData PlayerOverdriveOffData;
+    [SerializeField] public AudioData PlayerOverdriveOnData;
 
 
     public void PlayAudio(AudioData audioData)
@@ -67,6 +69,14 @@ public class AudioManager : PersistentSingleton<AudioManager>
     public void PlayEnemyExplosion1()
     {
         PlayOneShot(EnemyExplosion1Data);
+    }
+    public void PlayerOverdriveOff()
+    {
+        PlayOneShot(PlayerOverdriveOffData);
+    }
+    public void PlayerOverdriveOn()
+    {
+        PlayOneShot(PlayerOverdriveOnData);
     }
 
     public void PlayEnemyExplosion2()

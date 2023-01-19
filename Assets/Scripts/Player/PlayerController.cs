@@ -49,6 +49,18 @@ public class PlayerController : MonoBehaviour
     WaitForSeconds waitForStraight;
     [SerializeField] float waitForStraightTime = 0.5f;
 
+    bool isOverdrive = false;
+
+    int dodgeCostFactor = 2;
+
+    float moveSpeedFactor = 1.2f;
+    float shootSpeedFactor = 0.9f;
+    WaitForSeconds waitForShootOverdrive;
+
+    [SerializeField] GameObject playerProjectileOverdrive;
+
+
+
     void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -58,6 +70,7 @@ public class PlayerController : MonoBehaviour
         dodgeDuration = maxRoll / rollSpeed;
         waitForStraight = new WaitForSeconds(waitForStraightTime);
         waitForFixedUpdate = new WaitForFixedUpdate();
+        waitForShootOverdrive = new WaitForSeconds(shootSpeedFactor * fireInterval);
         ChangePowerLevel(powerLevel);
     }
 
@@ -68,6 +81,9 @@ public class PlayerController : MonoBehaviour
         input.onFire += Fire;
         input.onStopFire += StopFire;
         input.onDodge += Dodge;
+        input.onOverdrive += Overdrive;
+        PlayerOverdrive.on += OverdriveOn;
+        PlayerOverdrive.off += OverdriveOff;
     }
 
     void OnDisable()
@@ -77,6 +93,9 @@ public class PlayerController : MonoBehaviour
         input.onFire -= Fire;
         input.onStopFire -= StopFire;
         input.onDodge -= Dodge;
+        input.onOverdrive -= Overdrive;
+        PlayerOverdrive.on -= OverdriveOn;
+        PlayerOverdrive.off -= OverdriveOff;
     }
 
     void Start()
@@ -91,7 +110,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame  
     void Update()
     {
-
+        transform.position = ViewPort.Instance.PlayerEnablePosition(
+            transform.position,
+            paddingX,
+            paddingY
+        );
     }
 
     # region Move
@@ -102,9 +125,9 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(coroutine);
         }
+        float moveSpeedX = isOverdrive ? moveSpeed * moveSpeedFactor : moveSpeed;
         Quaternion rotationTarget = Quaternion.AngleAxis(moveRotationAngle * moveInput.y, transform.right);
-        coroutine = StartCoroutine(StartMoveCoroutine(accelerationTime, moveInput.normalized * moveSpeed, rotationTarget));
-        StartCoroutine(nameof(MovePositionLimitCoroutine));
+        coroutine = StartCoroutine(StartMoveCoroutine(accelerationTime, moveInput.normalized * moveSpeedX, rotationTarget));
     }
 
     void StopMove()
@@ -114,7 +137,6 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(coroutine);
         }
         coroutine = StartCoroutine(StartMoveCoroutine(decelerationTime, Vector2.zero, Quaternion.identity));
-        StopCoroutine(nameof(MovePositionLimitCoroutine));
     }
 
     IEnumerator StartMoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationTarget)
@@ -128,19 +150,6 @@ public class PlayerController : MonoBehaviour
             rigidbody2D.velocity = Vector2.Lerp(velocity, moveVelocity, moveT);
             transform.rotation = Quaternion.Lerp(rotation, rotationTarget, moveT);
             yield return waitForFixedUpdate;
-        }
-    }
-
-    IEnumerator MovePositionLimitCoroutine()
-    {
-        while (true)
-        {
-            transform.position = ViewPort.Instance.PlayerEnablePosition(
-                transform.position,
-                paddingX,
-                paddingY
-            );
-            yield return null;
         }
     }
 
@@ -158,55 +167,69 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(nameof(StartFire));
     }
 
+    GameObject GetProjectile()
+    {
+        return isOverdrive? playerProjectileOverdrive : projectile;
+    }
+
     IEnumerator StartFire()
     {
         while (true)
         {
-            switch (powerLevel)
             {
-                case 1:
-                    GameObject p1 = PoolManager.Release(projectile, muzzleMiddle.position, Quaternion.identity);
-                    p1.GetComponent<Projectile>().setLauncher(gameObject);
-                    break;
-                case 2:
-                    GameObject p2 = PoolManager.Release(projectile, muzzleUp.position, projectileUpRotation);
-                    GameObject p3 = PoolManager.Release(projectile, muzzleBottom.position, projectileBottomRotation);
-                    p2.GetComponent<Projectile>().setLauncher(gameObject);
-                    p3.GetComponent<Projectile>().setLauncher(gameObject);
-                    break;
-                case 3:
-                    GameObject p4 = PoolManager.Release(projectile, muzzleUp.position, projectileUpRotation);
-                    GameObject p5 = PoolManager.Release(projectile, muzzleMiddle.position, Quaternion.identity);
-                    GameObject p6 = PoolManager.Release(projectile, muzzleBottom.position, projectileBottomRotation);
-                    p4.GetComponent<Projectile>().setLauncher(gameObject);
-                    p5.GetComponent<Projectile>().setLauncher(gameObject);
-                    p6.GetComponent<Projectile>().setLauncher(gameObject);
-                    break;
-                default:
-                    break;
+                switch (powerLevel)
+                {
+                    case 1:
+                        GameObject p1 = PoolManager.Release(GetProjectile(), muzzleMiddle.position, Quaternion.identity, false);
+                        p1.GetComponent<Projectile>().setLauncher(gameObject);
+                        p1.SetActive(true);
+                        break;
+                    case 2:
+                        GameObject p2 = PoolManager.Release(GetProjectile(), muzzleUp.position, projectileUpRotation, false);
+                        GameObject p3 = PoolManager.Release(GetProjectile(), muzzleBottom.position, projectileBottomRotation, false);
+                        p2.GetComponent<Projectile>().setLauncher(gameObject);
+                        p2.SetActive(true);
+                        p3.GetComponent<Projectile>().setLauncher(gameObject);
+                        p3.SetActive(true);
+                        break;
+                    case 3:
+                        GameObject p4 = PoolManager.Release(GetProjectile(), muzzleUp.position, projectileUpRotation, false);
+                        GameObject p5 = PoolManager.Release(GetProjectile(), muzzleMiddle.position, Quaternion.identity, false);
+                        GameObject p6 = PoolManager.Release(GetProjectile(), muzzleBottom.position, projectileBottomRotation, false);
+                        p4.GetComponent<Projectile>().setLauncher(gameObject);
+                        p4.SetActive(true);
+                        p5.GetComponent<Projectile>().setLauncher(gameObject);
+                        p5.SetActive(true);
+                        p6.GetComponent<Projectile>().setLauncher(gameObject);
+                        p6.SetActive(true);
+                        break;
+                    default:
+                        break;
+                }
+                AudioManager.Instance.PlayPlayerProjectileLaunch(true);
+                yield return isOverdrive ? waitForShootOverdrive : fireWaitForSeconds;
             }
-            AudioManager.Instance.PlayPlayerProjectileLaunch(true);
-            yield return fireWaitForSeconds;
         }
     }
-    # endregion
+    #endregion
 
-    # region Dodge
+    #region Dodge
 
     void Dodge()
     {
-        if (isDodging || !playerEnergy.isEnough(dodgeCost)) return;
-        StartCoroutine(nameof(StartDodgeCoroutine));
+        int useEnergy = isOverdrive ? dodgeCost * dodgeCostFactor : dodgeCost;
+        if (isDodging || !playerEnergy.isEnough(useEnergy)) return;
+        StartCoroutine(StartDodgeCoroutine(useEnergy));
     }
 
-    IEnumerator StartDodgeCoroutine()
+    IEnumerator StartDodgeCoroutine(int useEnergy)
     {
         AudioManager.Instance.PlayPlayerDodge();
         curRoll = 0f;
         t = 0f;
         isDodging = true;
         collider2D.isTrigger = true;
-        playerEnergy.Use(dodgeCost);
+        playerEnergy.Use(useEnergy);
         while (curRoll < maxRoll)
         {
             curRoll += Time.deltaTime * rollSpeed;
@@ -220,8 +243,7 @@ public class PlayerController : MonoBehaviour
         isDodging = false;
     }
 
-    # endregion
-
+    #endregion
 
     public void ChangePowerLevel(int value)
     {
@@ -232,4 +254,24 @@ public class PlayerController : MonoBehaviour
     {
         ChangePowerLevel(Mathf.Clamp(powerLevel + 1, 1, 3));
     }
+
+    #region Overdrive
+
+    void Overdrive()
+    {
+        if (!playerEnergy.isEnough(PlayerEnergy.MAX_ENERGY) || isOverdrive) return;
+        PlayerOverdrive.on.Invoke();
+    }
+
+    void OverdriveOn()
+    {
+        isOverdrive = true;
+    }
+
+    void OverdriveOff()
+    {
+        isOverdrive = false;
+    }
+
+    #endregion
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Singleton<EnemyManager>
 {
     [SerializeField] GameObject[] enemyList;
     [SerializeField] bool selfGenerate = true;
@@ -12,7 +12,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] int[] enemy3Attr;
     [SerializeField] float waitForShowUITime = 3f;
     List<List<Dictionary<string, int>>> waveList;
-    int nowWaveListCount;
+    List<GameObject> nowWaveList;
+    int nowWaveListCount => nowWaveList.Count;
     int curWave = 1;
     WaitUntil waitUntilWaveEnd;
     WaitForSeconds waitForShowUI;
@@ -28,7 +29,7 @@ public class EnemyManager : MonoBehaviour
             SetWaveUI(curWave);
             yield return waitForShowUI;
             RemoveWaveUI();
-            nowWaveListCount = createOneWaveFromSetting(getOneWave(curWave));
+            createOneWaveFromSetting(getOneWave(curWave));
             curWave++;
             yield return waitUntilWaveEnd;
         }
@@ -58,11 +59,13 @@ public class EnemyManager : MonoBehaviour
         waveUIController.gameObject.SetActive(false);
     }
 
-    void Awake()
+    override protected void Awake()
     {
+        base.Awake();
         waveList = new List<List<Dictionary<string, int>>>();
         waitUntilWaveEnd = new WaitUntil(() => nowWaveListCount == 0);
         waitForShowUI = new WaitForSeconds(waitForShowUITime);
+        nowWaveList = new List<GameObject>();
         CreateWaveSettings();
     }
     // Start is called before the first frame update
@@ -79,10 +82,9 @@ public class EnemyManager : MonoBehaviour
         StopCoroutine(nameof(SelfWaveStartCoroutine));
     }
 
-    public int createOneWaveFromSetting(List<Dictionary<string, int>> waveSetting)
+    public void createOneWaveFromSetting(List<Dictionary<string, int>> waveSetting)
     {
-        int enemyLen = waveSetting.Count;
-        for (int i = 0; i < enemyLen; i++)
+        for (int i = 0; i < waveSetting.Count; i++)
         {
             var dictionary = waveSetting[i];
             int enemyType = dictionary["type"];
@@ -95,14 +97,18 @@ public class EnemyManager : MonoBehaviour
             var healthSystem = enemy.GetComponent<HealthSystem>();
             healthSystem.setDer(der);
             healthSystem.setMaxHealth(maxHealth);
+            nowWaveList.Add(enemy);
         }
-
-        return enemyLen;
     }
 
-    internal void RemoveOneEnemy()
+    public GameObject RandomEnemyTarget()
     {
-        nowWaveListCount--;
+        return nowWaveListCount == 0 ? null : nowWaveList[Random.Range(0, nowWaveListCount)];
+    }
+
+    internal void RemoveOneEnemy(GameObject enemy)
+    {
+        nowWaveList.Remove(enemy);
     }
 
     Dictionary<string, int> createOneEnemySetting(int type, int power, int der, int maxHealth)
@@ -166,7 +172,7 @@ public class EnemyManager : MonoBehaviour
     {
         List<Dictionary<string, int>> newWaveList = CreateOneList();
         // random enemy1 number
-        int randomLevel1Number = Random.Range(randomLevel1[0], randomLevel1[1] + 1);
+        int randomLevel1Number = Random.Range(randomLevel1[0], randomLevel1[1] + 1) + curWave / 10;
         for (int i = 0; i < randomLevel1Number; i++)
         {
             int power = enemy1Attr[Random.Range(1, 2 + 1) * 3 + 0];
@@ -175,7 +181,7 @@ public class EnemyManager : MonoBehaviour
             newWaveList.Add(createOneEnemySetting(0, power, der, maxHealth));
         }
         // random enemy2 number
-        int randomLevel2Number = Random.Range(randomLevel2[0], randomLevel2[1] + 1);
+        int randomLevel2Number = Random.Range(randomLevel2[0], randomLevel2[1] + 1) + + curWave / 15;
         for (int i = 0; i < randomLevel2Number; i++)
         {
             int power = enemy2Attr[Random.Range(1, 2 + 1) * 3 + 0];
@@ -184,7 +190,7 @@ public class EnemyManager : MonoBehaviour
             newWaveList.Add(createOneEnemySetting(1, power, der, maxHealth));
         }
         // random enemy3 number
-        int randomLevel3Number = Random.Range(randomLevel3[0], randomLevel3[1] + 1);
+        int randomLevel3Number = Random.Range(randomLevel3[0], randomLevel3[1] + 1) + + curWave / 20;
         for (int i = 0; i < randomLevel3Number; i++)
         {
             int power = enemy3Attr[Random.Range(1, 2 + 1) * 3 + 0];

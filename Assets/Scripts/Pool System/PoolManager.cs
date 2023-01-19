@@ -110,6 +110,19 @@ public class PoolManager : MonoBehaviour
         return dictionary[prefab].Get(position, rotation);
     }
 
+
+    public static GameObject Release(GameObject prefab, Vector2 position, Quaternion rotation, bool setActive)
+    {
+#if UNITY_EDITOR
+        if (!dictionary.ContainsKey(prefab))
+        {
+            Debug.LogError("Pool Manager has not this key: " + prefab.name);
+            return null;
+        }
+#endif
+        return dictionary[prefab].Get(position, rotation, setActive);
+    }
+
     public static GameObject Release(GameObject prefab, Vector2 position, Quaternion rotation, Vector3 localScale)
     {
 #if UNITY_EDITOR

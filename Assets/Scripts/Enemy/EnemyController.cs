@@ -58,22 +58,28 @@ public class EnemyController : MonoBehaviour
             switch (powerLevel)
             {
                 case 1:
-                    GameObject p1 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity);
+                    GameObject p1 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity, false);
                     p1.GetComponent<Projectile>().setLauncher(gameObject);
+                    p1.SetActive(false);
                     break;
                 case 2:
-                    GameObject p2 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation);
-                    GameObject p3 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation);
+                    GameObject p2 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation, false);
+                    GameObject p3 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation, false);
                     p2.GetComponent<Projectile>().setLauncher(gameObject);
+                    p2.SetActive(false);
                     p3.GetComponent<Projectile>().setLauncher(gameObject);
+                    p3.SetActive(false);
                     break;
                 case 3:
-                    GameObject p4 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation);
-                    GameObject p5 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity);
-                    GameObject p6 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation);
+                    GameObject p4 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation, false);
+                    GameObject p5 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity, false);
+                    GameObject p6 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation, false);
                     p4.GetComponent<Projectile>().setLauncher(gameObject);
+                    p4.SetActive(false);
                     p5.GetComponent<Projectile>().setLauncher(gameObject);
+                    p5.SetActive(false);
                     p6.GetComponent<Projectile>().setLauncher(gameObject);
+                    p6.SetActive(false);
                     break;
                 default:
                     break;

@@ -9,6 +9,18 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float moveSpeed = 10f;
     [SerializeField] protected Vector2 direction;
     GameObject launcher;
+    protected GameObject target;
+    TrailRenderer trail;
+
+    protected virtual void Awake()
+    {
+        trail = GetComponentInChildren<TrailRenderer>();
+    }
+
+    protected virtual void SetTarget(GameObject tar)
+    {
+        target = tar;
+    }
 
     protected virtual void OnEnable()
     {
@@ -19,6 +31,7 @@ public class Projectile : MonoBehaviour
     {
         launcher = null;
         StopCoroutine(nameof(ProjectileMoveCoroutine));
+        trail.Clear();
     }
 
     public void setLauncher(GameObject newLauncher)
@@ -29,11 +42,16 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    public virtual void Move()
+    {
+        transform.Translate(direction * moveSpeed * Time.deltaTime);
+    }
+
     IEnumerator ProjectileMoveCoroutine()
     {
         while (gameObject.activeSelf)
         {
-            transform.Translate(direction * moveSpeed * Time.deltaTime);
+            Move();
             yield return null;
         }
     }
@@ -49,12 +67,14 @@ public class Projectile : MonoBehaviour
                 {
                     PlayerEnergy playerEnergy = launcher.GetComponent<PlayerEnergy>();
                     PlayerEP playerEP = launcher.GetComponent<PlayerEP>();
+                    PlayerScore playerScore = launcher.GetComponent<PlayerScore>();
                     playerEnergy.Obtain(PlayerEnergy.PERCENT);
                     playerEP.Obtain(PlayerEP.PERCENT);
                     if (isDead)
                     {
                         playerEnergy.Obtain(healthSystem.deathEnergyRewards);
                         playerEP.Obtain(healthSystem.deathEnergyRewards);
+                        playerScore.UpdateScore(healthSystem.deathEnergyRewards * 20);
                     }
                 }
                 // 释放命中特效

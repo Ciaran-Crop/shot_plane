@@ -5,10 +5,23 @@ using UnityEngine;
 public class PlayerEnergy : MonoBehaviour
 {
     [SerializeField] StatSystem_HUD_Energy energyStatBar;
-    const int MAX_ENERGY = 100;
+    [SerializeField] float overdriveTime = 0.1f;
+    [SerializeField] int overdriveCost = 2;
+    [SerializeField] Color defaultFrontImageColor;
+    [SerializeField] Color defaultBackImageColor;
+    [SerializeField] Color fullFrontImageColor;
+    [SerializeField] Color fullBackImageColor;
+    WaitForSeconds waitForOverdrive;
+    public const int MAX_ENERGY = 100;
     public const int PERCENT = 1;
-    
+
     int energy;
+    bool canObtain = true;
+
+    void Awake()
+    {
+        waitForOverdrive = new WaitForSeconds(overdriveTime);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -19,24 +32,76 @@ public class PlayerEnergy : MonoBehaviour
 
     public void Use(int value)
     {
-        if(isEnough(value))
+        if (isEnough(value))
         {
             energy -= value;
             energyStatBar.UpdateStat(energy, MAX_ENERGY);
         }
+
+        if (canObtain)
+        {
+            NotFullState();
+        }
+
+        if (energy == 0 && !canObtain)
+        {
+            PlayerOverdrive.off.Invoke();
+        }
+    }
+
+    void OnEnable()
+    {
+        PlayerOverdrive.on += OverdriveOn;
+        PlayerOverdrive.off += OverdriveOff;
+    }
+
+    void OnDisable()
+    {
+        PlayerOverdrive.on -= OverdriveOn;
+        PlayerOverdrive.off -= OverdriveOff;
     }
 
     public void Obtain(int value)
     {
+        if (!canObtain) return;
         energy = Mathf.Clamp(energy + value, 0, MAX_ENERGY);
         energyStatBar.UpdateStat(energy, MAX_ENERGY);
+        if (energy == MAX_ENERGY)
+        {
+            FullState();
+        }
+    }
+
+    void FullState()
+    {
+        energyStatBar.setBarColor(fullFrontImageColor, fullBackImageColor);
+    }
+
+    void NotFullState()
+    {
+        energyStatBar.setBarColor(defaultFrontImageColor, defaultBackImageColor);
     }
 
     public bool isEnough(int useValue) => energy >= useValue;
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator OverdriveEnergyCoroutine()
     {
-        
+        while (energy >= overdriveCost)
+        {
+            Use(overdriveCost);
+            yield return waitForOverdrive;
+        }
+    }
+
+    void OverdriveOn()
+    {
+        canObtain = false;
+        StartCoroutine(nameof(OverdriveEnergyCoroutine));
+    }
+
+    void OverdriveOff()
+    {
+        canObtain = true;
+        StopCoroutine(nameof(OverdriveEnergyCoroutine));
     }
 }

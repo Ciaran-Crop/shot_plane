@@ -4,18 +4,6 @@ using UnityEngine;
 
 public class PlayerProjectile : Projectile
 {
-    TrailRenderer trail;
-
-    void Awake()
-    {
-        trail = GetComponentInChildren<TrailRenderer>();
-    }
-
-    void OnDisable()
-    {
-        trail.Clear();
-    }
-
     protected override bool OnCollisionEnter2D(Collision2D collision)
     {
         bool collisionResult =  base.OnCollisionEnter2D(collision);

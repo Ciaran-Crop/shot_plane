@@ -19,8 +19,8 @@ public class EnemyHealth : HealthSystem
     public override void Die()
     {
         base.Die();
-        var enemyManager = GameObject.FindGameObjectWithTag("Enemy Manager");
-        enemyManager.GetComponent<EnemyManager>().RemoveOneEnemy();
+        var enemyManager = EnemyManager.Instance;
+        enemyManager.GetComponent<EnemyManager>().RemoveOneEnemy(gameObject);
         AudioManager.Instance.PlayRandomEnemyExplosion();
     }
 }
