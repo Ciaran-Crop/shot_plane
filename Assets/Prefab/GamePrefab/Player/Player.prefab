@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 549699835}
   - component: {fileID: 1351570051863867975}
   - component: {fileID: 1351570051863867976}
+  - component: {fileID: 5538088300199130127}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -206,8 +207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 201e205f6309a624badea2bb28fb6540, type: 2}
   moveSpeed: 10
-  paddingX: 0.8
-  paddingY: 0.3
   accelerationTime: 0.35
   decelerationTime: 0.75
   moveRotationAngle: 30
@@ -226,6 +225,10 @@ MonoBehaviour:
   dodgeScale: {x: 0.2, y: 0.2, z: 0.2}
   waitForStraightTime: 0.5
   playerProjectileOverdrive: {fileID: 2956574102853484863, guid: 8b614dd39d0a93f45b6616915486ee6c, type: 3}
+  bulletTime: 0.5
+  fadeInTime: 0.5
+  keepTime: 1
+  fadeOutTime: 0.5
 --- !u!114 &2703132807643306197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +356,18 @@ MonoBehaviour:
   triggerVFX: {fileID: 1352333987810344042}
   engineVFXNormal: {fileID: 1784134570944895181}
   engineVFXOverdrive: {fileID: 3859271226810546545}
+--- !u!114 &5538088300199130127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351570053332145418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f155856510de0a419fd9617c803dcae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1784134570944895181
 GameObject:
   m_ObjectHideFlags: 0

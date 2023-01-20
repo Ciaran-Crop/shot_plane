@@ -63,7 +63,7 @@ public class Projectile : MonoBehaviour
             if (collision.gameObject.activeSelf)
             {
                 bool isDead = healthSystem.TakeDamage(damage);
-                if (launcher.gameObject.tag == "Player")
+                if (launcher && launcher.gameObject.tag == "Player")
                 {
                     PlayerEnergy playerEnergy = launcher.GetComponent<PlayerEnergy>();
                     PlayerEP playerEP = launcher.GetComponent<PlayerEP>();

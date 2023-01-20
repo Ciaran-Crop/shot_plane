@@ -233,8 +233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 193435494358057997}
-  minEulerAngle: -50
-  maxEulerAngle: 50
+  minEulerAngle: -40
+  maxEulerAngle: 40
 --- !u!1 &2956574103331079406
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,9 +33,9 @@ public class EnemyController : MonoBehaviour
             //     Debug.Log(string.Format("{0} move to {1} but now : {2}, distance: {3}"
             // , gameObject.tag, moveTo, transform.position, Vector3.Distance(transform.position, moveTo)));
             // }
-            if (Vector3.Distance(transform.position, moveTo) >= Time.deltaTime * moveSpeed)
+            if (Vector3.Distance(transform.position, moveTo) >= Time.fixedDeltaTime * moveSpeed)
             {
-                transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.deltaTime * moveSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.fixedDeltaTime * moveSpeed);
                 transform.rotation = Quaternion.AngleAxis(
                     (moveTo - transform.position).normalized.y * moveRotationAngle,
                     transform.right
@@ -60,26 +60,26 @@ public class EnemyController : MonoBehaviour
                 case 1:
                     GameObject p1 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity, false);
                     p1.GetComponent<Projectile>().setLauncher(gameObject);
-                    p1.SetActive(false);
+                    p1.SetActive(true);
                     break;
                 case 2:
                     GameObject p2 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation, false);
                     GameObject p3 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation, false);
                     p2.GetComponent<Projectile>().setLauncher(gameObject);
-                    p2.SetActive(false);
+                    p2.SetActive(true);
                     p3.GetComponent<Projectile>().setLauncher(gameObject);
-                    p3.SetActive(false);
+                    p3.SetActive(true);
                     break;
                 case 3:
                     GameObject p4 = PoolManager.Release(enemyProjectile, muzzleUp.position, enemyProjectileUpRotation, false);
                     GameObject p5 = PoolManager.Release(enemyProjectile, muzzleMiddle.position, Quaternion.identity, false);
                     GameObject p6 = PoolManager.Release(enemyProjectile, muzzleBottom.position, enemyProjectileBottomRotation, false);
                     p4.GetComponent<Projectile>().setLauncher(gameObject);
-                    p4.SetActive(false);
+                    p4.SetActive(true);
                     p5.GetComponent<Projectile>().setLauncher(gameObject);
-                    p5.SetActive(false);
+                    p5.SetActive(true);
                     p6.GetComponent<Projectile>().setLauncher(gameObject);
-                    p6.SetActive(false);
+                    p6.SetActive(true);
                     break;
                 default:
                     break;

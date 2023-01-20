@@ -1369,6 +1369,7 @@ MonoBehaviour:
   delayFillTime: 0.2
   fillSpeed: 1
   textFillPercent: {fileID: 918595134}
+  titleText: {fileID: 1291352894}
 --- !u!114 &344466996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2366,7 +2367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 470cb0cbf116edb4e82f6060289abbc9, type: 2}
-  m_Color: {r: 0.00998574, g: 0.2733146, b: 0.31132078, a: 1}
+  m_Color: {r: 0.011764706, g: 0.27450982, b: 0.30980393, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3865,34 +3866,34 @@ MonoBehaviour:
   - prefab: {fileID: 2956574102853484863, guid: b29fc8e015d8c81419c743074cf19fc3, type: 3}
     size: 75
   - prefab: {fileID: 2956574102853484863, guid: 8b614dd39d0a93f45b6616915486ee6c, type: 3}
-    size: 30
+    size: 60
   enemyProjectilePools:
   - prefab: {fileID: 2956574102853484863, guid: 098ccc18b633eb946a89153328417486, type: 3}
-    size: 17
+    size: 24
   - prefab: {fileID: 2956574102853484863, guid: 57e720cfe384a824eba173727c955950, type: 3}
     size: 10
   - prefab: {fileID: 2956574102853484863, guid: fd24ef0738c5c0043beabf007179139b, type: 3}
     size: 25
   vFXPools:
   - prefab: {fileID: 2342042931496088306, guid: 97b415311529fa145aacd3eedaac728e, type: 3}
-    size: 6
+    size: 11
   - prefab: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
     size: 5
   - prefab: {fileID: 1587261729604890, guid: 600ec83cba1cec448bf41a6607229741, type: 3}
     size: 1
   - prefab: {fileID: 5060298685065931927, guid: 6775c68a79b34db4fa2fd4db2a4cdf74, type: 3}
-    size: 75
+    size: 80
   - prefab: {fileID: 4801493125213720806, guid: e9c1d860eca6ffc439aea96b9f786323, type: 3}
     size: 30
   - prefab: {fileID: 5060298685065931927, guid: a0910089ce8efab458dc1589895ff035, type: 3}
-    size: 40
+    size: 60
   enemyPools:
   - prefab: {fileID: 7782091112636936391, guid: 82cc6135d4a3eee43bbb3684241372ad, type: 3}
-    size: 5
+    size: 10
   - prefab: {fileID: 8456131080261150044, guid: 8cdd30780c253ab41a602fc9bf5f54f4, type: 3}
-    size: 5
+    size: 10
   - prefab: {fileID: 4307445449615710544, guid: 6dbd773af8132844a894098b03a6ed50, type: 3}
-    size: 3
+    size: 10
 --- !u!4 &1944366962
 Transform:
   m_ObjectHideFlags: 0
@@ -4343,5 +4344,9 @@ PrefabInstance:
       propertyPath: onHUDStatBar
       value: 
       objectReference: {fileID: 222929291}
+    - target: {fileID: 5538088300199130127, guid: 5a1e3960c8a49eb459861710820dbc2e, type: 3}
+      propertyPath: openBulletTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1e3960c8a49eb459861710820dbc2e, type: 3}

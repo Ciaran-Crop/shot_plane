@@ -14,7 +14,7 @@ public class StatSystem : MonoBehaviour
     [SerializeField] protected float delayFillTime = 0.2f;
     [SerializeField] protected float fillSpeed = 0.1f;
     protected float t;
-    protected WaitForSeconds waitForDelayFill;
+    protected WaitForSecondsRealtime waitForDelayFill;
     float curFillAmountDefault;
 
     Coroutine bufferedStatCoroutine;
@@ -23,7 +23,7 @@ public class StatSystem : MonoBehaviour
 
     protected virtual void Awake()
     {
-        waitForDelayFill = new WaitForSeconds(delayFillTime);
+        waitForDelayFill = new WaitForSecondsRealtime(delayFillTime);
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
     }

@@ -6,7 +6,7 @@ public class PlayerEnergy : MonoBehaviour
 {
     [SerializeField] StatSystem_HUD_Energy energyStatBar;
     [SerializeField] float overdriveTime = 0.1f;
-    [SerializeField] int overdriveCost = 2;
+    [SerializeField] int overdriveCost = 4;
     [SerializeField] Color defaultFrontImageColor;
     [SerializeField] Color defaultBackImageColor;
     [SerializeField] Color fullFrontImageColor;
@@ -34,15 +34,13 @@ public class PlayerEnergy : MonoBehaviour
     {
         if (isEnough(value))
         {
+            if(canObtain)
+            {
+                NotFullState();
+            }
             energy -= value;
             energyStatBar.UpdateStat(energy, MAX_ENERGY);
         }
-
-        if (canObtain)
-        {
-            NotFullState();
-        }
-
         if (energy == 0 && !canObtain)
         {
             PlayerOverdrive.off.Invoke();
@@ -93,6 +91,11 @@ public class PlayerEnergy : MonoBehaviour
         }
     }
 
+    public void SetOverdriveCost(int value)
+    {
+        overdriveCost = value;
+    }
+
     void OverdriveOn()
     {
         canObtain = false;
@@ -102,6 +105,7 @@ public class PlayerEnergy : MonoBehaviour
     void OverdriveOff()
     {
         canObtain = true;
+        NotFullState();
         StopCoroutine(nameof(OverdriveEnergyCoroutine));
     }
 }

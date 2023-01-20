@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
     [SerializeField] float moveSpeed = 10f;
-    [SerializeField] float paddingX = 0.1f;
-    [SerializeField] float paddingY = 0.2f;
     [SerializeField] float accelerationTime = 5f;
     [SerializeField] float decelerationTime = 5f;
     [SerializeField] float moveRotationAngle = 50;
@@ -54,18 +52,27 @@ public class PlayerController : MonoBehaviour
     int dodgeCostFactor = 2;
 
     float moveSpeedFactor = 1.2f;
-    float shootSpeedFactor = 0.9f;
+    float shootSpeedFactor = 1.2f;
     WaitForSeconds waitForShootOverdrive;
 
     [SerializeField] GameObject playerProjectileOverdrive;
 
+    float paddingX;
+    float paddingY;
 
+    [SerializeField] public float bulletTime = 0.5f;
+    [SerializeField] public float fadeInTime = 0.5f;
+    [SerializeField] public float keepTime = 1f;
+    [SerializeField] public float fadeOutTime = 0.5f;
 
     void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         collider2D = GetComponent<Collider2D>();
         playerEnergy = GetComponent<PlayerEnergy>();
+        var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
+        paddingX = size.x;
+        paddingY = size.y;
         curRoll = 0;
         dodgeDuration = maxRoll / rollSpeed;
         waitForStraight = new WaitForSeconds(waitForStraightTime);
@@ -73,6 +80,12 @@ public class PlayerController : MonoBehaviour
         waitForShootOverdrive = new WaitForSeconds(shootSpeedFactor * fireInterval);
         ChangePowerLevel(powerLevel);
     }
+
+    public void SetWaitForStraightSub(float percent)
+    {
+        waitForStraight = new WaitForSeconds(Mathf.Max(waitForStraightTime * (1 - percent), 0.1f));
+    }
+
 
     void OnEnable()
     {
@@ -169,7 +182,7 @@ public class PlayerController : MonoBehaviour
 
     GameObject GetProjectile()
     {
-        return isOverdrive? playerProjectileOverdrive : projectile;
+        return isOverdrive ? playerProjectileOverdrive : projectile;
     }
 
     IEnumerator StartFire()
@@ -224,6 +237,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator StartDodgeCoroutine(int useEnergy)
     {
+        PlayerBulletTime.Instance.BulletTime(bulletTime, fadeOutTime, fadeInTime);
         AudioManager.Instance.PlayPlayerDodge();
         curRoll = 0f;
         t = 0f;
@@ -266,6 +280,7 @@ public class PlayerController : MonoBehaviour
     void OverdriveOn()
     {
         isOverdrive = true;
+        PlayerBulletTime.Instance.BulletTime(bulletTime, fadeOutTime, keepTime, fadeInTime);
     }
 
     void OverdriveOff()

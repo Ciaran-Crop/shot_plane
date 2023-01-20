@@ -20,13 +20,23 @@ public class PlayerHealth : HealthSystem
     [SerializeField] StatSystem_HUD onHUDStatBar;
 
     PlayerEffect playerEffect;
+    PlayerController playerController;
 
     void Awake()
     {
-        playerEffect = GetComponent<PlayerEffect>();
         healthRegenerationWaitTime = new WaitForSeconds(healthRegenerationInterval);
         waitForSustainedDamageTime = new WaitForSeconds(sustainedDamageInterval);
         waitForRestoreInterval = new WaitForSeconds(RestoreIntervalTime);
+    }
+    void Start()
+    {
+        playerEffect = GetComponent<PlayerEffect>();
+        playerController = GetComponent<PlayerController>();
+    }
+
+    public void SetHealthRegenerationWaitTime(float percent)
+    {
+        healthRegenerationWaitTime = new WaitForSeconds(Mathf.Max(healthRegenerationInterval * (1f - percent), 4f));
     }
 
     override protected void OnEnable()
@@ -65,6 +75,10 @@ public class PlayerHealth : HealthSystem
                 StopCoroutine(healthRegenerationCoroutine);
             }
             healthRegenerationCoroutine = StartCoroutine(LifeRegenerationCoroutine(healthRegenerationWaitTime, waitForRestoreInterval, healthRegenerationPercent));
+        }
+        if (!isDead)
+        {
+            PlayerBulletTime.Instance.BulletTime(playerController.bulletTime, playerController.fadeOutTime);
         }
         return isDead;
     }

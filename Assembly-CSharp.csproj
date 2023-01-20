@@ -42,6 +42,7 @@
      <Compile Include="Assets\Scripts\Miscs\AutoDeactivate.cs" />
      <Compile Include="Assets\Scripts\UI\StatSystem_HUD_Energy.cs" />
      <Compile Include="Assets\Scripts\UI\StatSystem.cs" />
+     <Compile Include="Assets\Scripts\Projectile\PlayerOverdriveProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectile\EnemyProjectile.cs" />
      <Compile Include="Assets\Scripts\HealthSystem\HealthSystem.cs" />
      <Compile Include="Assets\Scripts\Input\InputActions.cs" />
@@ -63,6 +64,7 @@
      <Compile Include="Assets\Scripts\Projectile\AimProjectile.cs" />
      <Compile Include="Assets\Scripts\Miscs\BezierCurve.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerEP.cs" />
+     <Compile Include="Assets\Scripts\Projectile\ProjectileGuidanceSystem.cs" />
      <Compile Include="Assets\Scripts\Pool System\PoolManager.cs" />
      <Compile Include="Assets\Scripts\UI\StatSystem_HUD.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
@@ -73,8 +75,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerEffect.cs" />
      <Compile Include="Assets\Scripts\Miscs\LightFade.cs" />
      <Compile Include="Assets\Scripts\System Modules\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Projectile\PlayerOverdriveProjectile.cs" />
-     <Compile Include="Assets\Scripts\Projectile\ProjectileGuidanceSystem.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerBulletTime.cs" />
      <None Include="Assets\Shaders\Shader_UI_DefaultHDR.shader" />
      <None Include="Assets\Resources\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
     <Reference Include="UnityEngine">

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StatSystem_HUD : StatSystem
 {
-    [SerializeField] Text textFillPercent;
+    [SerializeField] protected Text textFillPercent;
 
     public virtual void UpdateText(float targetFillAmount)
     {
