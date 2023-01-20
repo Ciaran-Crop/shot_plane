@@ -14,6 +14,7 @@ public class ScenesLoadManager : PersistentSingleton<ScenesLoadManager>
     void Load(string loadScene)
     {
         // SceneManager.LoadScene(loadScene);
+        StopAllCoroutines();
         StartCoroutine(LoadSceneFadeInOut(loadScene));
     }
 
@@ -29,11 +30,9 @@ public class ScenesLoadManager : PersistentSingleton<ScenesLoadManager>
             fadeBackImage.color = color;
             yield return null;
         }
+
+        yield return new WaitUntil(() => loadAsyncOperation.progress >= 0.9f);
         
-        if(!loadAsyncOperation.isDone)
-        {
-            yield return null;
-        }
         loadAsyncOperation.allowSceneActivation = true;
         while (color.a > 0f)
         {

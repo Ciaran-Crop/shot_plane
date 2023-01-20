@@ -19,13 +19,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleBottom;
     [SerializeField] float projectileUpAngle = 0.05f;
-    [SerializeField] Text weaponLevelText;
+
     Quaternion projectileUpRotation;
     [SerializeField] float projectileBottomAngle = -0.05f;
     Quaternion projectileBottomRotation;
 
     public int PowerLevel => powerLevel;
     [SerializeField, Range(1, 3)] int powerLevel = 1;
+    [SerializeField] SkillBarSystem skillBarSystem;
     Coroutine coroutine;
     WaitForSeconds fireWaitForSeconds;
     Vector2 velocity;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     WaitForSeconds waitForStraight;
     [SerializeField] float waitForStraightTime = 0.5f;
+    [SerializeField] float defaultWaitForStraightTime = 0.1f;
 
     bool isOverdrive = false;
 
@@ -83,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetWaitForStraightSub(float percent)
     {
-        waitForStraight = new WaitForSeconds(Mathf.Max(waitForStraightTime * (1 - percent), 0.1f));
+        waitForStraight = new WaitForSeconds(Mathf.Max(waitForStraightTime * (1 - percent), defaultWaitForStraightTime));
     }
 
 
@@ -117,7 +119,7 @@ public class PlayerController : MonoBehaviour
         fireWaitForSeconds = new WaitForSeconds(fireInterval);
         projectileUpRotation = Quaternion.AngleAxis(projectileUpAngle, transform.forward);
         projectileBottomRotation = Quaternion.AngleAxis(projectileBottomAngle, transform.forward);
-        input.EnableGamePlayInput();
+        input.SwitchToGamePlayInput();
     }
 
     // Update is called once per frame  
@@ -252,8 +254,8 @@ public class PlayerController : MonoBehaviour
             transform.localScale = BezierCurve.Instance.QuadraticBezierCurve(Vector3.one, dodgeScale, Vector3.one, t);
             yield return null;
         }
-        yield return waitForStraight;
         collider2D.isTrigger = false;
+        yield return waitForStraight;
         isDodging = false;
     }
 
@@ -262,7 +264,7 @@ public class PlayerController : MonoBehaviour
     public void ChangePowerLevel(int value)
     {
         powerLevel = value;
-        weaponLevelText.text = "" + powerLevel;
+        skillBarSystem.UpdateWeaponText(powerLevel);
     }
     public void UpdatePowerLevel()
     {

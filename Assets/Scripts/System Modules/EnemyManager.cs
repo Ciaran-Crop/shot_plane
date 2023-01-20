@@ -21,11 +21,13 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] int[] randomLevel2;
     [SerializeField] int[] randomLevel3;
     [SerializeField] WaveUIController waveUIController;
+    public bool OnlyHasOneEnemy => nowWaveListCount == 0;
 
     IEnumerator SelfWaveStartCoroutine()
     {
         while (true)
         {
+            if(GameManager.IsGameOver) yield break;
             SetWaveUI(curWave);
             yield return waitForShowUI;
             RemoveWaveUI();

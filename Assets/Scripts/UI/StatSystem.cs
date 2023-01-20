@@ -19,15 +19,17 @@ public class StatSystem : MonoBehaviour
 
     Coroutine bufferedStatCoroutine;
 
-    Canvas canvas;
 
     protected virtual void Awake()
     {
         waitForDelayFill = new WaitForSecondsRealtime(delayFillTime);
-        canvas = GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;
+        if (TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            canvas = GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
+        }
     }
-    
+
     void OnDisable()
     {
         StopAllCoroutines();
@@ -52,13 +54,19 @@ public class StatSystem : MonoBehaviour
 
         if (targetFillAmount < curFillAmount)
         {
-            frontStatImage.fillAmount = targetFillAmount;
-            StartCoroutine(BufferedStatCoroutine(backStatImage));
+            if (frontStatImage != null)
+            {
+                frontStatImage.fillAmount = targetFillAmount;
+                StartCoroutine(BufferedStatCoroutine(backStatImage));
+            }
         }
         else if (targetFillAmount > curFillAmount)
         {
-            backStatImage.fillAmount = targetFillAmount;
-            StartCoroutine(BufferedStatCoroutine(frontStatImage));
+            if (backStatImage != null)
+            {
+                backStatImage.fillAmount = targetFillAmount;
+                StartCoroutine(BufferedStatCoroutine(frontStatImage));
+            }
         }
     }
 

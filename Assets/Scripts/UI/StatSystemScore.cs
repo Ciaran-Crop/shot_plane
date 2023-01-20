@@ -12,6 +12,15 @@ public class StatSystemScore : MonoBehaviour
     float curScore;
     float addScore;
 
+    void Awake()
+    {
+        if (TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            canvas = GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
+        }
+    }
+
     public void Initialize(float score)
     {
         curScore = score;

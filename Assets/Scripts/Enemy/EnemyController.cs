@@ -12,16 +12,19 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float moveRotationAngle = 25f;
     [SerializeField] float paddingX = 0.2f;
     [SerializeField] float paddingY = 0.2f;
-    [SerializeField, Range(1, 3)]int powerLevel = 1;
+    [SerializeField, Range(1, 3)] int powerLevel = 1;
 
     [SerializeField] Transform muzzleUp;
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleBottom;
+    [SerializeField] float collisionDamage = 1f;
+    [SerializeField] bool hasCollisionDamage = false;
 
     [SerializeField] float enemyProjectileUpAngle = 2f;
     Quaternion enemyProjectileUpRotation;
     [SerializeField] float enemyProjectileBottomAngle = -2f;
     Quaternion enemyProjectileBottomRotation;
+    HealthSystem healthSystem;
     IEnumerator RandomMoveCoroutine()
     {
         transform.position = ViewPort.Instance.RandomEnemyCreatePosition(paddingX, paddingY);
@@ -33,9 +36,9 @@ public class EnemyController : MonoBehaviour
             //     Debug.Log(string.Format("{0} move to {1} but now : {2}, distance: {3}"
             // , gameObject.tag, moveTo, transform.position, Vector3.Distance(transform.position, moveTo)));
             // }
-            if (Vector3.Distance(transform.position, moveTo) >= Time.fixedDeltaTime * moveSpeed)
+            if (Vector3.Distance(transform.position, moveTo) >= Time.deltaTime * moveSpeed)
             {
-                transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.fixedDeltaTime * moveSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.deltaTime * moveSpeed);
                 transform.rotation = Quaternion.AngleAxis(
                     (moveTo - transform.position).normalized.y * moveRotationAngle,
                     transform.right
@@ -46,6 +49,8 @@ public class EnemyController : MonoBehaviour
                 moveTo = ViewPort.Instance.RandomEnemyMoveRightPosition(paddingX, paddingY);
             }
 
+            if (GameManager.IsGameOver) yield break;
+
             yield return null;
         }
     }
@@ -55,6 +60,7 @@ public class EnemyController : MonoBehaviour
         while (gameObject.activeSelf)
         {
             yield return new WaitForSeconds(Random.Range(minFireInterval, maxFireInterval));
+            if (GameManager.IsGameOver) yield break;
             switch (powerLevel)
             {
                 case 1:
@@ -93,6 +99,7 @@ public class EnemyController : MonoBehaviour
         transform.position = ViewPort.Instance.RandomEnemyCreatePosition(paddingX, paddingY);
         enemyProjectileBottomRotation = Quaternion.AngleAxis(enemyProjectileBottomAngle, transform.forward);
         enemyProjectileUpRotation = Quaternion.AngleAxis(enemyProjectileUpAngle, transform.forward);
+        healthSystem = GetComponent<HealthSystem>();
     }
 
     void OnDisable()
@@ -114,5 +121,24 @@ public class EnemyController : MonoBehaviour
     {
         powerLevel = power;
     }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (hasCollisionDamage)
+        {
+            if (collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem collisionHealthSystem))
+            {
+                if (collision.gameObject.activeSelf)
+                {
+                    collisionHealthSystem.TakeDamage(collisionDamage);
+                    healthSystem.TakeDamage(collisionDamage);
+                    AudioManager.Instance.PlayEnemyProjectileHit1();
+                }
+            }
+        }
+    }
+
+    public void OpenCollisionDamage() => hasCollisionDamage = true;
+    public void CloseCollisionDamage() => hasCollisionDamage = false;
 
 }

@@ -137,7 +137,6 @@ GameObject:
   - component: {fileID: 2703132807643306197}
   - component: {fileID: 4951250486748783763}
   - component: {fileID: 174799530}
-  - component: {fileID: 549699829}
   - component: {fileID: 549699830}
   - component: {fileID: 549699835}
   - component: {fileID: 1351570051863867975}
@@ -216,9 +215,9 @@ MonoBehaviour:
   muzzleMiddle: {fileID: 1351570052869826408}
   muzzleBottom: {fileID: 1351570052406061380}
   projectileUpAngle: 2
-  weaponLevelText: {fileID: 0}
   projectileBottomAngle: -2
   powerLevel: 1
+  skillBarSystem: {fileID: 0}
   dodgeCost: 25
   maxRoll: 360
   rollSpeed: 360
@@ -289,18 +288,6 @@ MonoBehaviour:
   defaultBackImageColor: {r: 0, g: 0.03529412, b: 0.039215688, a: 1}
   fullFrontImageColor: {r: 0.67058825, g: 0.007843138, b: 0.15686275, a: 1}
   fullBackImageColor: {r: 0.08627451, g: 0, b: 0.019607844, a: 1}
---- !u!114 &549699829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351570053332145418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bed05f562a21f8148a21c1bdb1865eee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &549699830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f155856510de0a419fd9617c803dcae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openBulletTime: 1
 --- !u!1 &1784134570944895181
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,12 +11,25 @@ public class PlayerBulletTime : Singleton<PlayerBulletTime>
 
     public void CloseBulletTime() => openBulletTime = false;
     public void OpenBulletTime() => openBulletTime = true;
+    float timeScaleBeforePause;
 
     protected override void Awake()
     {
         base.Awake();
         defaultTimeScale = Time.fixedDeltaTime;
     }
+
+    public void SetPause()
+    {
+        timeScaleBeforePause = Time.timeScale;
+        Time.timeScale = 0f;
+    }
+
+    public void CancelPause()
+    {
+        Time.timeScale = timeScaleBeforePause;
+    }
+
     public void BulletTime(float bulletTime, float fadeOutTime)
     {
         if (openBulletTime)
@@ -49,14 +62,21 @@ public class PlayerBulletTime : Singleton<PlayerBulletTime>
             t = 0f;
             while (t <= 1f)
             {
-                t += Time.unscaledDeltaTime / fadeInTime;
-                Time.timeScale = Mathf.Lerp(1f, bulletTime, t);
-                Time.fixedDeltaTime = defaultTimeScale * Time.timeScale;
+                if (!GameManager.IsGamePause)
+                {
+                    t += Time.unscaledDeltaTime / fadeInTime;
+                    Time.timeScale = Mathf.Lerp(1f, bulletTime, t);
+                    Time.fixedDeltaTime = defaultTimeScale * Time.timeScale;
+                }
                 yield return null;
             }
         }
         else
         {
+            while (GameManager.IsGamePause)
+            {
+                yield return null;
+            }
             Time.timeScale = bulletTime;
             Time.fixedDeltaTime = defaultTimeScale * Time.timeScale;
         }
@@ -64,6 +84,10 @@ public class PlayerBulletTime : Singleton<PlayerBulletTime>
         // keep
         if (keepTime > 0f)
         {
+            while (GameManager.IsGamePause)
+            {
+                yield return null;
+            }
             yield return new WaitForSecondsRealtime(keepTime);
         }
 
@@ -73,14 +97,21 @@ public class PlayerBulletTime : Singleton<PlayerBulletTime>
             t = 0f;
             while (t <= 1f)
             {
-                t += Time.unscaledDeltaTime / fadeOutTime;
-                Time.timeScale = Mathf.Lerp(bulletTime, 1f, t);
-                Time.fixedDeltaTime = defaultTimeScale * Time.timeScale;
+                if (!GameManager.IsGamePause)
+                {
+                    t += Time.unscaledDeltaTime / fadeOutTime;
+                    Time.timeScale = Mathf.Lerp(bulletTime, 1f, t);
+                    Time.fixedDeltaTime = defaultTimeScale * Time.timeScale;
+                }
                 yield return null;
             }
         }
         else
         {
+            while (GameManager.IsGamePause)
+            {
+                yield return null;
+            }
             Time.timeScale = 1f;
             Time.fixedDeltaTime = defaultTimeScale * Time.timeScale;
         }

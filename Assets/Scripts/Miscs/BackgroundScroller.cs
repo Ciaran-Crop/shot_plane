@@ -6,21 +6,24 @@ public class BackgroundScroller : MonoBehaviour
 {
 
     Material material;
-    [SerializeField]Vector2 scrollVelocity;
+    [SerializeField] Vector2 scrollVelocity;
     // Start is called before the first frame update
 
-    void Awake() 
+    void Awake()
     {
-        material = GetComponent<Renderer>().material; 
+        material = GetComponent<Renderer>().material;
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        material.mainTextureOffset += scrollVelocity * Time.deltaTime;
+        if (GameManager.IsGamePlaying)
+        {
+            material.mainTextureOffset += scrollVelocity * Time.deltaTime;
+        }
     }
 }

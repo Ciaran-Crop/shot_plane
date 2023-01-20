@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillBarSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Text weaponLevelText;
+    void Awake()
     {
-        
+        if (TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            canvas = GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateWeaponText(int value)
     {
-        
+        weaponLevelText.text = "" + value;
     }
 }

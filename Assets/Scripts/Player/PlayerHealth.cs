@@ -21,6 +21,7 @@ public class PlayerHealth : HealthSystem
 
     PlayerEffect playerEffect;
     PlayerController playerController;
+    [SerializeField] float defaultLeastRegenerationTime = 2f;
 
     void Awake()
     {
@@ -36,7 +37,7 @@ public class PlayerHealth : HealthSystem
 
     public void SetHealthRegenerationWaitTime(float percent)
     {
-        healthRegenerationWaitTime = new WaitForSeconds(Mathf.Max(healthRegenerationInterval * (1f - percent), 4f));
+        healthRegenerationWaitTime = new WaitForSeconds(Mathf.Max(healthRegenerationInterval * (1f - percent), defaultLeastRegenerationTime));
     }
 
     override protected void OnEnable()
@@ -110,6 +111,7 @@ public class PlayerHealth : HealthSystem
     public override void Die()
     {
         base.Die();
+        GameManager.GameState = GameState.GameOver;
         AudioManager.Instance.PlayPlayerExplosion();
         playerEffect.CancelRestore();
         playerEffect.CancelDoT();

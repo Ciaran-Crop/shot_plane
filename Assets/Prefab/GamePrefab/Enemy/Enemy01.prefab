@@ -5108,6 +5108,8 @@ MonoBehaviour:
   muzzleUp: {fileID: 7567315259569348645}
   muzzleMiddle: {fileID: 7567315259184537930}
   muzzleBottom: {fileID: 7567315259651694633}
+  collisionDamage: 1
+  hasCollisionDamage: 1
   enemyProjectileUpAngle: 5
   enemyProjectileBottomAngle: -5
 --- !u!114 &4772701466137640122

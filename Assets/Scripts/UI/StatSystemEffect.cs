@@ -12,6 +12,11 @@ public class StatSystemEffect : MonoBehaviour
     {
         restoreImage.gameObject.SetActive(false);
         doTImage.gameObject.SetActive(false);
+        if (TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            canvas = GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
+        }
     }
 
     public void SetRestoreImage(bool isShow)
