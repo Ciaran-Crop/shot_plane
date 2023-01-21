@@ -6,88 +6,138 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+
+    # region Base
+
+    [Header("-- Base --")]
     [SerializeField] GamePlayInput input;
+    [SerializeField] SkillBarSystem skillBarSystem;
+    [SerializeField] ShootUIController shootUIController;
+    PlayerEnergy playerEnergy;
+    PlayerHealth playerHealth;
+    PlayerEffect playerEffect;
+    PlayerEP playerEP;
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
+
+    bool inUI = false;
+
+    #endregion
+
+    # region Move
+
+    [Header("-- Move --")]
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float accelerationTime = 5f;
     [SerializeField] float decelerationTime = 5f;
     [SerializeField] float moveRotationAngle = 50;
+    WaitForFixedUpdate waitForFixedUpdate;
+    Vector2 velocity;
+    Coroutine coroutine;
+    Quaternion rotation;
+    float moveT;
+    float paddingX;
+    float paddingY;
+
+    #endregion
+
+    # region Fire
+    // need to move to SkillBarSystem
+
+    [Header("-- Fire --")]
     [SerializeField] GameObject projectile;
+    [SerializeField] GameObject missile;
     [SerializeField] float fireInterval = 0.2f;
     [SerializeField] Transform muzzleUp;
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleBottom;
     [SerializeField] float projectileUpAngle = 0.05f;
-
-    Quaternion projectileUpRotation;
     [SerializeField] float projectileBottomAngle = -0.05f;
-    Quaternion projectileBottomRotation;
-
-    public int PowerLevel => powerLevel;
     [SerializeField, Range(1, 3)] int powerLevel = 1;
-    [SerializeField] SkillBarSystem skillBarSystem;
-    Coroutine coroutine;
+    [SerializeField] int missileCount = 3;
+    [SerializeField] float missileColdDownTime = 3f;
+    bool missileUseAvailable = true;
+    Quaternion projectileUpRotation;
+    Quaternion projectileBottomRotation;
     WaitForSeconds fireWaitForSeconds;
-    Vector2 velocity;
-    Quaternion rotation;
-    WaitForFixedUpdate waitForFixedUpdate;
+    public int PowerLevel => powerLevel;
+    GameObject GetProjectile => isOverdrive ? playerProjectileOverdrive : projectile;
 
-    bool isDodging = false;
+    #endregion
+
+    # region Dodge
+
+    [Header("-- Dodge --")]
     [SerializeField] int dodgeCost = 25;
     [SerializeField] float maxRoll = 720f;
     [SerializeField] float rollSpeed = 360f;
-    [SerializeField] Vector3 dodgeScale;
+    [SerializeField] Vector3 dodgeScale = Vector3.one;
+    [SerializeField] float waitForStraightTime = 0.5f;
+    [SerializeField] float minWaitForStraightTime = 0.1f;
     float curRoll;
     float dodgeDuration;
+    bool isDodging = false;
+    public bool CanDodge { get; }
+    bool canDodge = false;
     float t;
-    float moveT;
-
-    PlayerEnergy playerEnergy;
-
     WaitForSeconds waitForStraight;
-    [SerializeField] float waitForStraightTime = 0.5f;
-    [SerializeField] float defaultWaitForStraightTime = 0.1f;
 
-    bool isOverdrive = false;
+    #endregion
 
-    int dodgeCostFactor = 2;
+    # region Overdrive
 
-    float moveSpeedFactor = 1.2f;
-    float shootSpeedFactor = 1.2f;
-    WaitForSeconds waitForShootOverdrive;
-
+    [Header("-- Overdrive --")]
     [SerializeField] GameObject playerProjectileOverdrive;
+    [SerializeField] float overdriveTime = 0.1f;
+    [SerializeField] int overdriveCost = 4;
+    bool isOverdrive = false;
+    float shootSpeedFactor = 1.2f;
+    float moveSpeedFactor = 1.2f;
+    int dodgeCostFactor = 2;
+    WaitForSeconds waitForShootOverdrive;
+    WaitForSeconds waitForOverdrive;
 
-    float paddingX;
-    float paddingY;
+    #endregion
+
+    # region Bullet
 
     [SerializeField] public float bulletTime = 0.5f;
     [SerializeField] public float fadeInTime = 0.5f;
     [SerializeField] public float keepTime = 1f;
     [SerializeField] public float fadeOutTime = 0.5f;
 
+    #endregion
+
+    # region BaseFunc
+
     void Awake()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
-        collider2D = GetComponent<Collider2D>();
-        playerEnergy = GetComponent<PlayerEnergy>();
-        var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
-        paddingX = size.x;
-        paddingY = size.y;
         curRoll = 0;
         dodgeDuration = maxRoll / rollSpeed;
         waitForStraight = new WaitForSeconds(waitForStraightTime);
         waitForFixedUpdate = new WaitForFixedUpdate();
         waitForShootOverdrive = new WaitForSeconds(shootSpeedFactor * fireInterval);
+        fireWaitForSeconds = new WaitForSeconds(fireInterval);
+        projectileUpRotation = Quaternion.AngleAxis(projectileUpAngle, transform.forward);
+        projectileBottomRotation = Quaternion.AngleAxis(projectileBottomAngle, transform.forward);
+        waitForOverdrive = new WaitForSeconds(overdriveTime);
+    }
+
+    void Start()
+    {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D.gravityScale = 0f;
+        collider2D = GetComponent<Collider2D>();
+        playerEnergy = GetComponent<PlayerEnergy>();
+        playerHealth = GetComponent<PlayerHealth>();
+        playerEffect = GetComponent<PlayerEffect>();
+        playerEP = GetComponent<PlayerEP>();
+        var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
+        paddingX = size.x;
+        paddingY = size.y;
+        input.SwitchToGamePlayInput();
         ChangePowerLevel(powerLevel);
     }
-
-    public void SetWaitForStraightSub(float percent)
-    {
-        waitForStraight = new WaitForSeconds(Mathf.Max(waitForStraightTime * (1 - percent), defaultWaitForStraightTime));
-    }
-
 
     void OnEnable()
     {
@@ -97,6 +147,7 @@ public class PlayerController : MonoBehaviour
         input.onStopFire += StopFire;
         input.onDodge += Dodge;
         input.onOverdrive += Overdrive;
+        input.onMissile += LaunchMissile;
         PlayerOverdrive.on += OverdriveOn;
         PlayerOverdrive.off += OverdriveOff;
     }
@@ -109,20 +160,11 @@ public class PlayerController : MonoBehaviour
         input.onStopFire -= StopFire;
         input.onDodge -= Dodge;
         input.onOverdrive -= Overdrive;
+        input.onMissile -= LaunchMissile;
         PlayerOverdrive.on -= OverdriveOn;
         PlayerOverdrive.off -= OverdriveOff;
     }
 
-    void Start()
-    {
-        rigidbody2D.gravityScale = 0f;
-        fireWaitForSeconds = new WaitForSeconds(fireInterval);
-        projectileUpRotation = Quaternion.AngleAxis(projectileUpAngle, transform.forward);
-        projectileBottomRotation = Quaternion.AngleAxis(projectileBottomAngle, transform.forward);
-        input.SwitchToGamePlayInput();
-    }
-
-    // Update is called once per frame  
     void Update()
     {
         transform.position = ViewPort.Instance.PlayerEnablePosition(
@@ -132,7 +174,27 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-    # region Move
+    #endregion
+
+    # region DodgeFunc
+
+    #endregion
+
+    # region MoveFunc
+
+    IEnumerator StartMoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationTarget)
+    {
+        moveT = 0f;
+        velocity = rigidbody2D.velocity;
+        rotation = transform.rotation;
+        while (moveT < 1f)
+        {
+            moveT += Time.fixedDeltaTime / time;
+            rigidbody2D.velocity = Vector2.Lerp(velocity, moveVelocity, moveT);
+            transform.rotation = Quaternion.Lerp(rotation, rotationTarget, moveT);
+            yield return waitForFixedUpdate;
+        }
+    }
 
     void Move(Vector2 moveInput)
     {
@@ -154,24 +216,26 @@ public class PlayerController : MonoBehaviour
         coroutine = StartCoroutine(StartMoveCoroutine(decelerationTime, Vector2.zero, Quaternion.identity));
     }
 
-    IEnumerator StartMoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationTarget)
+    #endregion
+
+    # region FireFunc
+
+    void InitProjectile(GameObject projectileObject)
     {
-        moveT = 0f;
-        velocity = rigidbody2D.velocity;
-        rotation = transform.rotation;
-        while (moveT < 1f)
-        {
-            moveT += Time.fixedDeltaTime / time;
-            rigidbody2D.velocity = Vector2.Lerp(velocity, moveVelocity, moveT);
-            transform.rotation = Quaternion.Lerp(rotation, rotationTarget, moveT);
-            yield return waitForFixedUpdate;
-        }
+        projectileObject.GetComponent<Projectile>().setLauncher(gameObject);
+        projectileObject.SetActive(true);
     }
 
-    # endregion
+    void FireProjectileUp() => InitProjectile(PoolManager.Release(GetProjectile, muzzleUp.position, projectileUpRotation, false));
 
+    void FireProjectileMiddle() => InitProjectile(PoolManager.Release(GetProjectile, muzzleMiddle.position, Quaternion.identity, false));
 
-    # region Fire
+    void FireProjectileBottom() => InitProjectile(PoolManager.Release(GetProjectile, muzzleBottom.position, projectileBottomRotation, false));
+
+    void FireMissile() => InitProjectile(PoolManager.Release(missile, muzzleMiddle.position, Quaternion.identity, false));
+
+    WaitForSeconds IsOverdriveTime() => isOverdrive ? waitForShootOverdrive : fireWaitForSeconds;
+
     void Fire()
     {
         StartCoroutine(nameof(StartFire));
@@ -182,9 +246,17 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(nameof(StartFire));
     }
 
-    GameObject GetProjectile()
+    public void ChangeMissileUseAvailable(bool state) => missileUseAvailable = state;
+
+    void LaunchMissile()
     {
-        return isOverdrive ? playerProjectileOverdrive : projectile;
+        if (missileCount > 0 && missileUseAvailable)
+        {
+            FireMissile();
+            missileCount--;
+            missileUseAvailable = false;
+            skillBarSystem.UseOneMissile(missileCount, missileColdDownTime);
+        }
     }
 
     IEnumerator StartFire()
@@ -195,45 +267,34 @@ public class PlayerController : MonoBehaviour
                 switch (powerLevel)
                 {
                     case 1:
-                        GameObject p1 = PoolManager.Release(GetProjectile(), muzzleMiddle.position, Quaternion.identity, false);
-                        p1.GetComponent<Projectile>().setLauncher(gameObject);
-                        p1.SetActive(true);
+                        FireProjectileMiddle();
                         break;
                     case 2:
-                        GameObject p2 = PoolManager.Release(GetProjectile(), muzzleUp.position, projectileUpRotation, false);
-                        GameObject p3 = PoolManager.Release(GetProjectile(), muzzleBottom.position, projectileBottomRotation, false);
-                        p2.GetComponent<Projectile>().setLauncher(gameObject);
-                        p2.SetActive(true);
-                        p3.GetComponent<Projectile>().setLauncher(gameObject);
-                        p3.SetActive(true);
+                        FireProjectileUp();
+                        FireProjectileBottom();
                         break;
                     case 3:
-                        GameObject p4 = PoolManager.Release(GetProjectile(), muzzleUp.position, projectileUpRotation, false);
-                        GameObject p5 = PoolManager.Release(GetProjectile(), muzzleMiddle.position, Quaternion.identity, false);
-                        GameObject p6 = PoolManager.Release(GetProjectile(), muzzleBottom.position, projectileBottomRotation, false);
-                        p4.GetComponent<Projectile>().setLauncher(gameObject);
-                        p4.SetActive(true);
-                        p5.GetComponent<Projectile>().setLauncher(gameObject);
-                        p5.SetActive(true);
-                        p6.GetComponent<Projectile>().setLauncher(gameObject);
-                        p6.SetActive(true);
+                        FireProjectileUp();
+                        FireProjectileMiddle();
+                        FireProjectileBottom();
                         break;
                     default:
                         break;
                 }
                 AudioManager.Instance.PlayPlayerProjectileLaunch(true);
-                yield return isOverdrive ? waitForShootOverdrive : fireWaitForSeconds;
+                yield return IsOverdriveTime();
             }
         }
     }
+
     #endregion
 
-    #region Dodge
+    # region Dodge
 
     void Dodge()
     {
         int useEnergy = isOverdrive ? dodgeCost * dodgeCostFactor : dodgeCost;
-        if (isDodging || !playerEnergy.isEnough(useEnergy)) return;
+        if (isDodging || !playerEnergy.isEnough(useEnergy) || !canDodge) return;
         StartCoroutine(StartDodgeCoroutine(useEnergy));
     }
 
@@ -261,18 +322,71 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    # region ChangeFunc
+
     public void ChangePowerLevel(int value)
     {
         powerLevel = value;
         skillBarSystem.UpdateWeaponText(powerLevel);
     }
-    public void UpdatePowerLevel()
+    public void UpdatePowerLevel() => ChangePowerLevel(Mathf.Clamp(powerLevel + 1, 1, 3));
+    public void ChangeMoveSpeed(float factor) => moveSpeed *= factor;
+    public void ChangeAccelerationTime(float factor) => accelerationTime *= factor;
+    public void ChangeDecelerationTime(float factor) => decelerationTime *= factor;
+    public void ChangeFireInterval(float factor)
     {
-        ChangePowerLevel(Mathf.Clamp(powerLevel + 1, 1, 3));
+        fireInterval *= factor;
+        fireWaitForSeconds = new WaitForSeconds(fireInterval);
+    }
+    public void ChangeAddMissileCount(int value) => missileCount = Mathf.Clamp(missileCount + value, 0, 10);
+    public void ChangeMissileColdDownTime(float factor) => missileColdDownTime *= factor;
+    public void ChangeDodgeCost(int value) => dodgeCost = Mathf.Clamp(dodgeCost + value, 1, 100);
+    public void ChangeWaitForStraightSub(float factor) => waitForStraight = new WaitForSeconds(Mathf.Max(waitForStraightTime * factor, minWaitForStraightTime));
+    public void ChangeOverdriveCost(int value) => overdriveCost = Mathf.Clamp(overdriveCost + value, 1, 100);
+    public void ChangeCanDodge(bool state)
+    {
+        canDodge = state;
+        skillBarSystem.ChangeDodgeState(canDodge);
+    }
+    public void ChangeHealthRegenerationWaitTime(float factor) => playerHealth.SetHealthRegenerationWaitTime(factor);
+    public void RestoreHealth(int value) => playerHealth.RestoreHealth(value);
+    public void ChangeDoTState(bool state)
+    {
+        if (state)
+        {
+            playerEffect.SetDoT();
+        }
+        else
+        {
+            playerEffect.CancelDoT();
+        }
+    }
+    public void ChangeLevelUpMissile(int value) => playerEP.levelUpAddMissileCount += value;
+    public void RestoreAll() => playerHealth.RestoreHealth(playerHealth.MaxHealth);
+    public void ChangeMaxHealth(float value) => playerHealth.setMaxHealth(value);
+
+    public void ChangeUIShow(bool state)
+    {
+        shootUIController.ChangeUIState(state);
+        ChangeUIState(state);
     }
 
-    #region Overdrive
+    public void ChangeUIState(bool state) => inUI = state;
+    public void SetUIBefore() => ChangeUIShow(inUI);
 
+    #endregion
+
+    #region OverdriveFunc
+
+    IEnumerator OverdriveEnergyCoroutine()
+    {
+        while (playerEnergy.isEnough(overdriveCost))
+        {
+            playerEnergy.Use(overdriveCost);
+            yield return waitForOverdrive;
+        }
+        PlayerOverdrive.off.Invoke();
+    }
     void Overdrive()
     {
         if (!playerEnergy.isEnough(PlayerEnergy.MAX_ENERGY) || isOverdrive) return;
@@ -283,11 +397,16 @@ public class PlayerController : MonoBehaviour
     {
         isOverdrive = true;
         PlayerBulletTime.Instance.BulletTime(bulletTime, fadeOutTime, keepTime, fadeInTime);
+        playerEnergy.SetUseObtain(false);
+        StartCoroutine(nameof(OverdriveEnergyCoroutine));
     }
 
     void OverdriveOff()
     {
         isOverdrive = false;
+        playerEnergy.SetUseObtain(true);
+        playerEnergy.NotFullState();
+        StopCoroutine(nameof(OverdriveEnergyCoroutine));
     }
 
     #endregion

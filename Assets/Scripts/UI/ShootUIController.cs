@@ -74,4 +74,10 @@ public class ShootUIController : MonoBehaviour
         gamePlayInput.SwitchToGamePlayInput();
         gamePlayInput.ChangeUpdateModeToFixed();
     }
+
+    public void ChangeUIState(bool state)
+    {
+        if(gameCanvas.enabled == state) return ;
+        gameCanvas.enabled = state;
+    }
 }

@@ -44,6 +44,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Missile",
+                    "type": "Button",
+                    "id": "2fee66e2-3547-4b79-a54d-eb7b46b5668c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -253,6 +261,17 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5d20b8b-70b5-48ff-b01b-c2440bc51174",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Missile",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAutoDestroy: 0
-  lifeTime: 3
+  lifeTime: 4
 --- !u!70 &7948606209765074350
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -200,8 +200,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.35, y: 0.15}
+  m_Offset: {x: 0.02, y: 0}
+  m_Size: {x: 0.3, y: 0.15}
   m_Direction: 1
 --- !u!114 &193435494358057997
 MonoBehaviour:

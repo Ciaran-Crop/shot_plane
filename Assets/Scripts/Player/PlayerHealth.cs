@@ -22,6 +22,7 @@ public class PlayerHealth : HealthSystem
     PlayerEffect playerEffect;
     PlayerController playerController;
     [SerializeField] float defaultLeastRegenerationTime = 2f;
+    public float MaxHealth => maxHealth;
 
     void Awake()
     {
@@ -37,7 +38,7 @@ public class PlayerHealth : HealthSystem
 
     public void SetHealthRegenerationWaitTime(float percent)
     {
-        healthRegenerationWaitTime = new WaitForSeconds(Mathf.Max(healthRegenerationInterval * (1f - percent), defaultLeastRegenerationTime));
+        healthRegenerationWaitTime = new WaitForSeconds(Mathf.Max(healthRegenerationInterval * percent, defaultLeastRegenerationTime));
     }
 
     override protected void OnEnable()

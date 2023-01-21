@@ -54,4 +54,5 @@ public class ViewPort : Singleton<ViewPort>
         position.y = Random.Range(minY + paddingY, maxY - paddingY);
         return position;
     }
+
 }

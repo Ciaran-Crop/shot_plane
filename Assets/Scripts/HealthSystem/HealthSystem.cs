@@ -130,7 +130,7 @@ public class HealthSystem : MonoBehaviour
         deathEnergyRewards = der;
     }
 
-    internal void setMaxHealth(int maxHealth)
+    internal void setMaxHealth(float maxHealth)
     {
         this.maxHealth = maxHealth;
     }

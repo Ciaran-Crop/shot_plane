@@ -14676,7 +14676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f457470c1cfa14c96fc1cf6f407d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyProjectile: {fileID: 2956574102853484863, guid: fd24ef0738c5c0043beabf007179139b, type: 3}
+  enemyProjectile: {fileID: 1838376022377245223, guid: c18f9d9d6927ab743950ac1ff5c6dc67, type: 3}
   minFireInterval: 2
   maxFireInterval: 4
   moveSpeed: 2
@@ -14721,8 +14721,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.5, y: 0.5}
+  m_Offset: {x: 0, y: -0.06}
+  m_Size: {x: 1.7, y: 0.5}
   m_Direction: 1
 --- !u!50 &1473854897057809264
 Rigidbody2D:

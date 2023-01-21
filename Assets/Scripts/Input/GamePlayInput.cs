@@ -18,6 +18,7 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, In
     public event UnityAction onPause = delegate { };
 
     public event UnityAction onUnpause = delegate { };
+    public event UnityAction onMissile = delegate {};
 
 
     void OnEnable()
@@ -109,6 +110,15 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, In
             onUnpause.Invoke();
         }
     }
-    # endregion
+
+    void InputActions.IGamePlayActions.OnMissile(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            onMissile.Invoke();
+        }
+    }
+
+    #endregion
 
 }

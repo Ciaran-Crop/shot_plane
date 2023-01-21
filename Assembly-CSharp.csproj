@@ -50,15 +50,22 @@
      <Compile Include="Assets\Scripts\UI\SkillBarSystem.cs" />
      <Compile Include="Assets\Scripts\UI\StatSystem_HUB_EP.cs" />
      <Compile Include="Assets\Scripts\System Modules\Singleton.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerBulletTime.cs" />
+     <Compile Include="Assets\Scripts\UI\ShootUIController.cs" />
+     <Compile Include="Assets\Scripts\System Modules\GameManager.cs" />
      <Compile Include="Assets\Scripts\Input\GamePlayInput.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerEnergy.cs" />
+     <Compile Include="Assets\Scripts\UI\ShootUIInput.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerOverdrive.cs" />
      <Compile Include="Assets\Scripts\UI\WaveUIController.cs" />
+     <Compile Include="Assets\Scripts\UI\ButtonEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerScore.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
+     <Compile Include="Assets\Scripts\UI\OnPressedBehaviour.cs" />
      <Compile Include="Assets\Scripts\Miscs\ViewPort.cs" />
      <Compile Include="Assets\Scripts\UI\StatSystemEffect.cs" />
      <Compile Include="Assets\Scripts\System Modules\PersistentSingleton.cs" />
+     <Compile Include="Assets\Scripts\Projectile\PlayerMissile.cs" />
      <Compile Include="Assets\Scripts\UI\StatSystemScore.cs" />
      <Compile Include="Assets\Scripts\Projectile\PlayerProjectile.cs" />
      <Compile Include="Assets\Scripts\Projectile\AimProjectile.cs" />
@@ -66,6 +73,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerEP.cs" />
      <Compile Include="Assets\Scripts\Projectile\ProjectileGuidanceSystem.cs" />
      <Compile Include="Assets\Scripts\Pool System\PoolManager.cs" />
+     <Compile Include="Assets\Scripts\UI\ManMenuUIController.cs" />
      <Compile Include="Assets\Scripts\UI\StatSystem_HUD.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyHealth.cs" />
@@ -75,15 +83,10 @@
      <Compile Include="Assets\Scripts\Player\PlayerEffect.cs" />
      <Compile Include="Assets\Scripts\Miscs\LightFade.cs" />
      <Compile Include="Assets\Scripts\System Modules\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerBulletTime.cs" />
-     <Compile Include="Assets\Scripts\UI\ShootUIController.cs" />
-     <Compile Include="Assets\Scripts\UI\ManMenuUIController.cs" />
-     <Compile Include="Assets\Scripts\UI\ShootUIInput.cs" />
-     <Compile Include="Assets\Scripts\UI\OnPressedBehaviour.cs" />
-     <Compile Include="Assets\Scripts\UI\ButtonEventTrigger.cs" />
-     <Compile Include="Assets\Scripts\System Modules\GameManager.cs" />
+     <Compile Include="Assets\Scripts\UI\HUDColliderController.cs" />
      <None Include="Assets\Shaders\Shader_UI_DefaultHDR.shader" />
      <None Include="Assets\Resources\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
+     <None Include="Assets\Shaders\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.43f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

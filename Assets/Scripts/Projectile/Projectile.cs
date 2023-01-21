@@ -31,7 +31,10 @@ public class Projectile : MonoBehaviour
     {
         launcher = null;
         StopCoroutine(nameof(ProjectileMoveCoroutine));
-        trail.Clear();
+        if (trail != null)
+        {
+            trail.Clear();
+        }
     }
 
     public void setLauncher(GameObject newLauncher)
