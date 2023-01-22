@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\UI\WaveUIController.cs" />
      <Compile Include="Assets\Scripts\UI\ButtonEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerScore.cs" />
+     <Compile Include="Assets\Scripts\UI\HUDColliderController.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\UI\OnPressedBehaviour.cs" />
      <Compile Include="Assets\Scripts\Miscs\ViewPort.cs" />
@@ -83,7 +84,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerEffect.cs" />
      <Compile Include="Assets\Scripts\Miscs\LightFade.cs" />
      <Compile Include="Assets\Scripts\System Modules\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\UI\HUDColliderController.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenuUIInput.cs" />
      <None Include="Assets\Shaders\Shader_UI_DefaultHDR.shader" />
      <None Include="Assets\Resources\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
      <None Include="Assets\Shaders\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />

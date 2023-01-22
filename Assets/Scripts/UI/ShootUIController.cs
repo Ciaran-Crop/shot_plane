@@ -18,6 +18,15 @@ public class ShootUIController : MonoBehaviour
 
     int PRESSED_ID = Animator.StringToHash("Pressed");
 
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        Time.timeScale = 1f;
+        GameManager.GameState = GameState.GamePlaying;
+    }
+
     void OnEnable()
     {
         gamePlayInput.onPause += Pause;
@@ -77,7 +86,7 @@ public class ShootUIController : MonoBehaviour
 
     public void ChangeUIState(bool state)
     {
-        if(gameCanvas.enabled == state) return ;
+        if (gameCanvas.enabled == state) return;
         gameCanvas.enabled = state;
     }
 }

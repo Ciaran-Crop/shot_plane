@@ -8,6 +8,9 @@ public class GameManager : PersistentSingleton<GameManager>
     GameState gameState = GameState.GamePlaying;
     GameState lastGameState = GameState.GamePlaying;
 
+    public static GameMode GameMode { get => Instance.gameMode; set => Instance.gameMode = value; }
+    GameMode gameMode = GameMode.Survive;
+
     public static bool IsGameOver => Instance.gameState == GameState.GameOver;
     public static bool IsGamePause => Instance.gameState == GameState.GamePause;
     public static bool IsGamePlaying => Instance.gameState == GameState.GamePlaying;
@@ -36,4 +39,11 @@ public enum GameState
     GamePlaying,
     GamePause,
     GameOver,
+}
+
+public enum GameMode
+{
+    Survive,
+    Endless,
+    Buff,
 }

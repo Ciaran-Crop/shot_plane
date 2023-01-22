@@ -21,7 +21,7 @@ public class ScenesLoadManager : PersistentSingleton<ScenesLoadManager>
     IEnumerator LoadSceneFadeInOut(string sceneName)
     {
         fadeBackImage.gameObject.SetActive(true);
-        var loadAsyncOperation  = SceneManager.LoadSceneAsync(sceneName);
+        var loadAsyncOperation = SceneManager.LoadSceneAsync(sceneName);
         loadAsyncOperation.allowSceneActivation = false;
 
         while (color.a < 1f)
@@ -32,7 +32,7 @@ public class ScenesLoadManager : PersistentSingleton<ScenesLoadManager>
         }
 
         yield return new WaitUntil(() => loadAsyncOperation.progress >= 0.9f);
-        
+
         loadAsyncOperation.allowSceneActivation = true;
         while (color.a > 0f)
         {
@@ -40,12 +40,18 @@ public class ScenesLoadManager : PersistentSingleton<ScenesLoadManager>
             fadeBackImage.color = color;
             yield return null;
         }
-        
+
         fadeBackImage.gameObject.SetActive(false);
     }
 
     public void LoadShootShoot()
     {
+        Load(SHOOTSHOOT);
+    }
+
+    public void LoadShootShoot(GameMode gameMode)
+    {
+        GameManager.GameMode = gameMode;
         Load(SHOOTSHOOT);
     }
 

@@ -57,7 +57,7 @@ public class StatSystem : MonoBehaviour
             if (frontStatImage != null)
             {
                 frontStatImage.fillAmount = targetFillAmount;
-                StartCoroutine(BufferedStatCoroutine(backStatImage));
+                if(gameObject.activeSelf) StartCoroutine(BufferedStatCoroutine(backStatImage));
             }
         }
         else if (targetFillAmount > curFillAmount)
@@ -65,7 +65,7 @@ public class StatSystem : MonoBehaviour
             if (backStatImage != null)
             {
                 backStatImage.fillAmount = targetFillAmount;
-                StartCoroutine(BufferedStatCoroutine(frontStatImage));
+                if(gameObject.activeSelf) StartCoroutine(BufferedStatCoroutine(frontStatImage));
             }
         }
     }
