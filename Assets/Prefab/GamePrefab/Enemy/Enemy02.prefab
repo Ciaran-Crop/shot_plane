@@ -14676,7 +14676,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f457470c1cfa14c96fc1cf6f407d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyProjectile: {fileID: 1838376022377245223, guid: c18f9d9d6927ab743950ac1ff5c6dc67, type: 3}
+  enemyProjectile: {fileID: 1838376022377245223, guid: 9299f91954c4c364eb4cf1566b8aa387, type: 3}
+  fireVFX: {fileID: 6312347931672775765, guid: bcdfcb20bdfc97f44a4f585803958b75, type: 3}
   minFireInterval: 2
   maxFireInterval: 4
   moveSpeed: 2

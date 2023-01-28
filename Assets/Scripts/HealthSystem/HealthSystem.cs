@@ -9,12 +9,13 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] GameObject deathVFX;
     [SerializeField] protected float maxHealth;
     protected float health;
+    public bool LessHalfHealth => health < (maxHealth / 2);
 
     [SerializeField] StatSystem onHeadStatBar;
     [SerializeField] bool showOnHeadStatBar = true;
     void Awake()
     {
-
+        
     }
 
     public void ShowOnHeadStatBar()
@@ -31,7 +32,6 @@ public class HealthSystem : MonoBehaviour
     protected virtual void OnEnable()
     {
         health = maxHealth;
-
         if (showOnHeadStatBar)
         {
             ShowOnHeadStatBar();

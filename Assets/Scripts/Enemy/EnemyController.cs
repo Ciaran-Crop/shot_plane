@@ -25,6 +25,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float enemyProjectileBottomAngle = -2f;
     Quaternion enemyProjectileBottomRotation;
     HealthSystem healthSystem;
+
+    EnemyMoveState moveState = EnemyMoveState.Random;
+
+    public void ChangeMoveState(EnemyMoveState state) => moveState = state;
+
     IEnumerator RandomMoveCoroutine()
     {
         transform.position = ViewPort.Instance.RandomEnemyCreatePosition(paddingX, paddingY);
@@ -36,6 +41,7 @@ public class EnemyController : MonoBehaviour
             //     Debug.Log(string.Format("{0} move to {1} but now : {2}, distance: {3}"
             // , gameObject.tag, moveTo, transform.position, Vector3.Distance(transform.position, moveTo)));
             // }
+            if (moveState != EnemyMoveState.Random) yield return null;
             if (Vector3.Distance(transform.position, moveTo) >= Time.deltaTime * moveSpeed)
             {
                 transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.deltaTime * moveSpeed);
@@ -141,4 +147,11 @@ public class EnemyController : MonoBehaviour
     public void OpenCollisionDamage() => hasCollisionDamage = true;
     public void CloseCollisionDamage() => hasCollisionDamage = false;
 
+}
+
+public enum EnemyMoveState
+{
+    Random,
+    Y,
+    X,
 }

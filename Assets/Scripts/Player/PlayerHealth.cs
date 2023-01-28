@@ -113,6 +113,7 @@ public class PlayerHealth : HealthSystem
     {
         base.Die();
         GameManager.GameState = GameState.GameOver;
+        GameManager.onGameOver?.Invoke();
         AudioManager.Instance.PlayPlayerExplosion();
         playerEffect.CancelRestore();
         playerEffect.CancelDoT();

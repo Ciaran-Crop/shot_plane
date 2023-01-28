@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "GamePlay")]
-public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, InputActions.IPauseMenuActions
+public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, InputActions.IPauseMenuActions, InputActions.IGameOverActions
 {
     InputActions inputActions;
     public event UnityAction<Vector2> onMove = delegate { };
@@ -18,7 +18,9 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, In
     public event UnityAction onPause = delegate { };
 
     public event UnityAction onUnpause = delegate { };
-    public event UnityAction onMissile = delegate {};
+    public event UnityAction onMissile = delegate { };
+
+    public event UnityAction onGameOverConfirm = delegate { };
 
 
     void OnEnable()
@@ -26,6 +28,7 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, In
         inputActions = new InputActions();
         inputActions.GamePlay.SetCallbacks(this);
         inputActions.PauseMenu.SetCallbacks(this);
+        inputActions.GameOver.SetCallbacks(this);
     }
 
     void SwitchActionsMapTo(InputActionMap actionMap, bool isDisableCursor)
@@ -47,9 +50,10 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, In
     void OnDisable() => DisableAllInput();
     public void SwitchToGamePlayInput() => SwitchActionsMapTo(inputActions.GamePlay, true);
     public void SwitchToPauseInput() => SwitchActionsMapTo(inputActions.PauseMenu, false);
+    public void SwitchToGameOverInput() => SwitchActionsMapTo(inputActions.GameOver, false);
     public void DisableAllInput() => inputActions.Disable();
     public void ChangeUpdateModeToFixed() => InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
-    public void ChangeUpdateModeToDynamic() => InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
+    public void ChangeUpdateModeToDynamic() => InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate; 
 
     # region Event
     // Start is called before the first frame update
@@ -111,11 +115,19 @@ public class GamePlayInput : ScriptableObject, InputActions.IGamePlayActions, In
         }
     }
 
-    void InputActions.IGamePlayActions.OnMissile(InputAction.CallbackContext context)
+    public void OnMissile(InputAction.CallbackContext context)
     {
         if (context.started)
         {
             onMissile.Invoke();
+        }
+    }
+
+    public void OnConfirm(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            onGameOverConfirm.Invoke();
         }
     }
 

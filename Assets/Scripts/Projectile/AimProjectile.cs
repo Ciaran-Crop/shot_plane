@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AimProjectile : Projectile
 {
-    [SerializeField] string targetName;
     [SerializeField, Range(0, 1)] float doTProbability;
     [SerializeField] int minDoTCount = 1;
     [SerializeField] int maxDoTCount = 3;
@@ -12,7 +11,7 @@ public class AimProjectile : Projectile
     override protected void Awake()
     {
         base.Awake();
-        SetTarget(GameObject.FindGameObjectWithTag(targetName));
+        SetTarget(EnemyManager.Instance.GetPlayer());
     }
 
     IEnumerator TrackTargetCoroutine()

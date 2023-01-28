@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\UI\UIInput.cs" />
      <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Projectile\Projectile.cs" />
      <Compile Include="Assets\Scripts\System Modules\ScenesLoadManager.cs" />
@@ -54,12 +55,13 @@
      <Compile Include="Assets\Scripts\UI\ShootUIController.cs" />
      <Compile Include="Assets\Scripts\System Modules\GameManager.cs" />
      <Compile Include="Assets\Scripts\Input\GamePlayInput.cs" />
+     <Compile Include="Assets\Scripts\UI\ScoreUIController.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerEnergy.cs" />
-     <Compile Include="Assets\Scripts\UI\ShootUIInput.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerOverdrive.cs" />
      <Compile Include="Assets\Scripts\UI\WaveUIController.cs" />
      <Compile Include="Assets\Scripts\UI\ButtonEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerScore.cs" />
+     <Compile Include="Assets\Scripts\UI\ScoreElementController.cs" />
      <Compile Include="Assets\Scripts\UI\HUDColliderController.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\UI\OnPressedBehaviour.cs" />
@@ -81,12 +83,18 @@
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Audio\AudioData.cs" />
      <Compile Include="Assets\Scripts\Pool System\Pool.cs" />
+     <Compile Include="Assets\Scripts\UI\RankListController.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerEffect.cs" />
      <Compile Include="Assets\Scripts\Miscs\LightFade.cs" />
      <Compile Include="Assets\Scripts\System Modules\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\UI\MainMenuUIInput.cs" />
+     <Compile Include="Assets\Scripts\UI\GameOverController.cs" />
+     <Compile Include="Assets\Scripts\Characters\Player\OverdriveMaterialController.cs" />
+     <Compile Include="Assets\Scripts\UI\Boss_Stat_HUD.cs" />
+     <Compile Include="Assets\Scripts\Enemy\BossController.cs" />
+     <Compile Include="Assets\Scripts\Enemy\BossHealth.cs" />
      <None Include="Assets\Shaders\Shader_UI_DefaultHDR.shader" />
      <None Include="Assets\Resources\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
+     <None Include="Assets\Models\Muzzle Fire\WFX_S Particle Add A8.shader" />
      <None Include="Assets\Shaders\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.43f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

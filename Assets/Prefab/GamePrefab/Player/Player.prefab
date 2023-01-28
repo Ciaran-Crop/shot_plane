@@ -205,11 +205,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 201e205f6309a624badea2bb28fb6540, type: 2}
+  skillBarSystem: {fileID: 0}
+  shootUIController: {fileID: 0}
   moveSpeed: 10
   accelerationTime: 0.35
   decelerationTime: 0.75
   moveRotationAngle: 30
   projectile: {fileID: 2956574102853484863, guid: b29fc8e015d8c81419c743074cf19fc3, type: 3}
+  fireVFX: {fileID: 503199608521591234, guid: 71a21ed31d1eb374ca249dabdf3936d3, type: 3}
+  missile: {fileID: 2523096243714385163, guid: 1b2c3ab1e0e61914ba3e10d026ca3023, type: 3}
   fireInterval: 0.12
   muzzleUp: {fileID: 1351570052002576451}
   muzzleMiddle: {fileID: 1351570052869826408}
@@ -217,13 +221,17 @@ MonoBehaviour:
   projectileUpAngle: 2
   projectileBottomAngle: -2
   powerLevel: 1
-  skillBarSystem: {fileID: 0}
+  missileCount: 3
+  missileColdDownTime: 3
   dodgeCost: 25
   maxRoll: 360
   rollSpeed: 360
   dodgeScale: {x: 0.2, y: 0.2, z: 0.2}
   waitForStraightTime: 0.5
+  minWaitForStraightTime: 0.1
   playerProjectileOverdrive: {fileID: 2956574102853484863, guid: 8b614dd39d0a93f45b6616915486ee6c, type: 3}
+  overdriveTime: 0.1
+  overdriveCost: 4
   bulletTime: 0.5
   fadeInTime: 0.5
   keepTime: 1
@@ -253,6 +261,7 @@ MonoBehaviour:
   RestoreIntervalTime: 2
   showHealthHUD: 1
   onHUDStatBar: {fileID: 0}
+  defaultLeastRegenerationTime: 2
 --- !u!70 &4951250486748783763
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -282,8 +291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyStatBar: {fileID: 0}
-  overdriveTime: 0.1
-  overdriveCost: 2
   defaultFrontImageColor: {r: 0.011764706, g: 0.27450982, b: 0.30980393, a: 1}
   defaultBackImageColor: {r: 0, g: 0.03529412, b: 0.039215688, a: 1}
   fullFrontImageColor: {r: 0.67058825, g: 0.007843138, b: 0.15686275, a: 1}
@@ -315,6 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   epStatBar: {fileID: 0}
+  levelUpAddMissileCount: 3
 --- !u!114 &1351570051863867975
 MonoBehaviour:
   m_ObjectHideFlags: 0

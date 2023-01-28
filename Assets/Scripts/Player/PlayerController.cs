@@ -165,14 +165,11 @@ public class PlayerController : MonoBehaviour
         PlayerOverdrive.off -= OverdriveOff;
     }
 
-    void Update()
-    {
-        transform.position = ViewPort.Instance.PlayerEnablePosition(
+    void Update() => transform.position = ViewPort.Instance.PlayerEnablePosition(
             transform.position,
             paddingX,
             paddingY
         );
-    }
 
     #endregion
 
@@ -187,7 +184,7 @@ public class PlayerController : MonoBehaviour
         moveT = 0f;
         velocity = rigidbody2D.velocity;
         rotation = transform.rotation;
-        while (moveT < 1f)
+        while (moveT <= 1f)
         {
             moveT += Time.fixedDeltaTime / time;
             rigidbody2D.velocity = Vector2.Lerp(velocity, moveVelocity, moveT);
@@ -227,11 +224,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void FireProjectileUp() => InitProjectile(PoolManager.Release(GetProjectile, muzzleUp.position, projectileUpRotation, false));
-
     void FireProjectileMiddle() => InitProjectile(PoolManager.Release(GetProjectile, muzzleMiddle.position, Quaternion.identity, false));
 
     void FireProjectileBottom() => InitProjectile(PoolManager.Release(GetProjectile, muzzleBottom.position, projectileBottomRotation, false));
-
     void FireMissile() => InitProjectile(PoolManager.Release(missile, muzzleMiddle.position, Quaternion.identity, false));
 
     WaitForSeconds IsOverdriveTime() => isOverdrive ? waitForShootOverdrive : fireWaitForSeconds;

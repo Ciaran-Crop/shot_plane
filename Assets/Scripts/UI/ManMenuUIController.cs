@@ -1,7 +1,4 @@
-using System;
-using System.Runtime.Serialization.Formatters;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,15 +37,25 @@ public class ManMenuUIController : MonoBehaviour
     [SerializeField] Button rankListButton;
     [SerializeField] Button backMainButton;
 
-    [SerializeField] Vector3 mainPosition;
-    [SerializeField] Vector3 subPosition;
-    [SerializeField] Vector3 middlePosition;
+    [SerializeField] Vector3 settingPosition;
+    [SerializeField] Vector3 operatePosition;
+    [SerializeField] Vector3 mainMiddlePosition;
+    [SerializeField] Vector3 subMiddlePosition;
+    [SerializeField] Vector3 rankListPosition;
+    [SerializeField] float middlePositionZ = 100f;
     [SerializeField] float menuMoveTime = 1f;
+    [SerializeField] float rankListTime = 0.5f;
+    [SerializeField] float operateTime = 0.5f;
+    [SerializeField] Button cancelRankListButton;
+    [SerializeField] Button confirmOperateButton;
+    [SerializeField] Button cancelSettingButton;
+    [SerializeField] Button confirmSettingButton;
     float menuT;
     RectTransform menuTransform;
     Coroutine menuCoroutine;
+    Vector3 middlePosition;
 
-    bool isMainMenu;
+    int menuState;
 
     #endregion
 
@@ -61,7 +68,8 @@ public class ManMenuUIController : MonoBehaviour
     {
         tempColor.a = 1f;
         Time.timeScale = 1f;
-        GameManager.GameState = GameState.GamePlaying;
+        middlePosition = new Vector3(0f, 0f, middlePositionZ);
+        GameManager.GameState = GameState.GameMenu;
     }
 
     void Start()
@@ -73,22 +81,26 @@ public class ManMenuUIController : MonoBehaviour
     void OnEnable()
     {
         menuTransform = menu.GetComponent<RectTransform>();
-        OnPressedBehaviour.UIActionDict.Add(startGameButton.gameObject, OnStartGameButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(settingButton.gameObject, OnSettingButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(operateButton.gameObject, OnOperateButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(exitButton.gameObject, OnExitButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(surviveGameButton.gameObject, OnSurviveGameButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(endlessGameButton.gameObject, OnEndlessGameButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(rankListButton.gameObject, OnRankListButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(BuffGameButton.gameObject, OnBuffGameButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(backMainButton.gameObject, OnBackMainButtonOn);
-        isMainMenu = true;
+        OnPressedBehaviour.UIActionDict.Add(startGameButton.gameObject.name, OnStartGameButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(settingButton.gameObject.name, OnSettingButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(operateButton.gameObject.name, OnOperateButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(exitButton.gameObject.name, OnExitButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(surviveGameButton.gameObject.name, OnSurviveGameButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(endlessGameButton.gameObject.name, OnEndlessGameButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(rankListButton.gameObject.name, OnRankListButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(BuffGameButton.gameObject.name, OnBuffGameButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(backMainButton.gameObject.name, OnBackMainButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(cancelRankListButton.gameObject.name, OnCancelRankListButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(confirmOperateButton.gameObject.name, OnConfirmOperateButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(cancelSettingButton.gameObject.name, OnCancelSettingButtonOn);
+        OnPressedBehaviour.UIActionDict.Add(confirmSettingButton.gameObject.name, OnConfirmSettingButtonOn);
+        menuState = 1;
         SelectTheFirst();
     }
 
     void OnDisable()
     {
-        startGameButton.onClick.RemoveAllListeners();
+        OnPressedBehaviour.UIActionDict.Clear();
         StopAllCoroutines();
     }
     #endregion
@@ -154,66 +166,74 @@ public class ManMenuUIController : MonoBehaviour
     #endregion
 
     #region MenuFunc
-
-    IEnumerator MenuMoveCoroutine(Vector3 startPos, Vector3 midPos, Vector3 endPos)
+    IEnumerator MenuMoveCoroutine(Vector3 startPos, Vector3 endPos, float time)
     {
         menuT = 0f;
+        middlePosition.x = (startPos.x + endPos.x) / 2;
         while (menuT <= 1f)
         {
-            menuT += Time.deltaTime / menuMoveTime;
-            menuTransform.anchoredPosition = BezierCurve.Instance.QuadraticBezierCurve(startPos, midPos, endPos, menuT);
+            menuT += Time.deltaTime / time;
+            menuTransform.anchoredPosition = BezierCurve.Instance.QuadraticBezierCurve(startPos, middlePosition, endPos, menuT);
             yield return null;
         }
         SelectTheFirst();
     }
 
-    void ChangeToSubMenu()
+    void MoveTo(Vector3 nowPos, Vector3 targetPos, float transformTime, int menuStateChange)
     {
         if (menuCoroutine != null)
         {
             StopCoroutine(menuCoroutine);
         }
-        isMainMenu = false;
-        menuCoroutine = StartCoroutine(MenuMoveCoroutine(mainPosition, middlePosition, subPosition));
-    }
-
-    void ChangeToMainMenu()
-    {
-        if (menuCoroutine != null)
-        {
-            StopCoroutine(menuCoroutine);
-        }
-        isMainMenu = true;
-        menuCoroutine = StartCoroutine(MenuMoveCoroutine(subPosition, middlePosition, mainPosition));
+        menuState = menuStateChange;
+        menuCoroutine = StartCoroutine(MenuMoveCoroutine(nowPos, targetPos, transformTime));
     }
 
     void SelectTheFirst()
     {
-        if (isMainMenu)
+        switch (menuState)
         {
-            MainMenuUIInput.Instance.SelectUI(startGameButton);
+            case 1:
+                UIInput.Instance.SelectUI(startGameButton);
+                break;
+            case 2:
+                UIInput.Instance.SelectUI(surviveGameButton);
+                break;
+            case 3:
+                UIInput.Instance.SelectUI(cancelRankListButton);
+                break;
+            case 4:
+                UIInput.Instance.SelectUI(confirmOperateButton);
+                break;
+            case 5:
+                UIInput.Instance.SelectUI(cancelSettingButton);
+                break;
+            default:
+                break;
         }
-        else
-        {
-            MainMenuUIInput.Instance.SelectUI(surviveGameButton);
-        }
     }
 
-    void OpenSetting()
+    Vector3 GetNowPosition() => menuTransform.anchoredPosition3D;
+
+    void ChangeToSubMenu() => MoveTo(GetNowPosition(), subMiddlePosition, menuMoveTime, 2);
+
+    void ChangeToMainMenu() => MoveTo(GetNowPosition(), mainMiddlePosition, menuMoveTime, 1);
+
+    void ChangeToSetting() => MoveTo(GetNowPosition(), settingPosition, menuMoveTime, 5);
+
+    void CloseSetting(bool isSave)
     {
-        Debug.Log("Click Setting");
+        // TODO
+        ChangeToMainMenu();
     }
 
-    void OpenRankList()
-    {
-        Debug.Log("Click RankList");
-    }
+    void ChangeToRankList() => MoveTo(GetNowPosition(), rankListPosition, rankListTime, 3);
 
-    void OpenOperate()
-    {
-        Debug.Log("Click Operate");
-    }
+    void CloseRankList() => ChangeToSubMenu();
 
+    void ChangeToOperate() => MoveTo(GetNowPosition(), operatePosition, operateTime, 4);
+
+    void ConfirmOperate() => ChangeToMainMenu();
     void ExitGame()
     {
 #if UNITY_EDITOR
@@ -225,9 +245,9 @@ public class ManMenuUIController : MonoBehaviour
 
     void OnStartGameButtonOn() => ChangeToSubMenu();
 
-    void OnSettingButtonOn() => OpenSetting();
+    void OnSettingButtonOn() => ChangeToSetting();
 
-    void OnOperateButtonOn() => OpenOperate();
+    void OnOperateButtonOn() => ChangeToOperate();
 
     void OnExitButtonOn() => ExitGame();
 
@@ -237,9 +257,17 @@ public class ManMenuUIController : MonoBehaviour
 
     void OnBuffGameButtonOn() => ScenesLoadManager.Instance.LoadShootShoot(GameMode.Buff);
 
-    void OnRankListButtonOn() => OpenRankList();
+    void OnRankListButtonOn() => ChangeToRankList();
+
+    void OnCancelRankListButtonOn() => CloseRankList();
 
     void OnBackMainButtonOn() => ChangeToMainMenu();
+
+    void OnConfirmOperateButtonOn() => ConfirmOperate();
+
+    void OnCancelSettingButtonOn() => CloseSetting(false);
+
+    void OnConfirmSettingButtonOn() => CloseSetting(true);
 
     #endregion
 

@@ -1,39 +1,76 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
     [SerializeField] GameObject[] enemyList;
+    [SerializeField] GameObject[] bossList;
+    GameObject player;
     [SerializeField] bool selfGenerate = true;
     [SerializeField] int[] enemy1Attr;
 
     [SerializeField] int[] enemy2Attr;
     [SerializeField] int[] enemy3Attr;
+    [SerializeField] int[] bossAttr;
+    [SerializeField] float bossFactor = 0.35f;
+    [SerializeField] float healthFactor = 100f;
     [SerializeField] float waitForShowUITime = 3f;
     List<List<Dictionary<string, int>>> waveList;
     List<GameObject> nowWaveList;
     int nowWaveListCount => nowWaveList.Count;
-    int curWave = 1;
+    int curWave = 10;
     WaitUntil waitUntilWaveEnd;
     WaitForSeconds waitForShowUI;
     [SerializeField] int[] randomLevel1;
     [SerializeField] int[] randomLevel2;
     [SerializeField] int[] randomLevel3;
     [SerializeField] WaveUIController waveUIController;
+    [SerializeField] GameObject bossUI;
     public bool OnlyHasOneEnemy => nowWaveListCount == 0;
 
     IEnumerator SelfWaveStartCoroutine()
     {
+        if (GameManager.GameMode == GameMode.Survive) yield return SurviveMode();
+        else if (GameManager.GameMode == GameMode.Endless) yield return EndlessMode();
+        else if (GameManager.GameMode == GameMode.Buff) yield return BuffMode();
+    }
+
+    IEnumerable BuffMode()
+    {
+        yield return null;
+    }
+
+    IEnumerator EndlessMode()
+    {
+        yield return null;
+    }
+
+    IEnumerator SurviveMode()
+    {
         while (true)
         {
-            if(GameManager.IsGameOver) yield break;
-            SetWaveUI(curWave);
-            yield return waitForShowUI;
-            RemoveWaveUI();
-            createOneWaveFromSetting(getOneWave(curWave));
-            curWave++;
-            yield return waitUntilWaveEnd;
+            if (GameManager.IsGameOver) yield break;
+            if (curWave % 10 == 0)
+            {
+                SetBossUI();
+                yield return waitForShowUI;
+                RemoveBossUI();
+                CreateOneBoss(curWave / 10);
+                curWave++;
+                yield return waitUntilWaveEnd;
+            }
+            else
+            {
+                SetWaveUI(curWave);
+                yield return waitForShowUI;
+                RemoveWaveUI();
+                createOneWaveFromSetting(getOneWave(curWave));
+                curWave++;
+                yield return waitUntilWaveEnd;
+            }
         }
     }
 
@@ -49,17 +86,20 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
+    void SetBossUI()
+    {
+        bossUI.SetActive(true);
+    }
+
+    void RemoveBossUI() => bossUI.SetActive(false);
+
     void SetWaveUI(int value)
     {
         waveUIController.gameObject.SetActive(true);
         waveUIController.UpdateText(value);
-        // Debug.Log(string.Format("Wave {0} Start !!!", curWave));
     }
 
-    void RemoveWaveUI()
-    {
-        waveUIController.gameObject.SetActive(false);
-    }
+    void RemoveWaveUI() => waveUIController.gameObject.SetActive(false);
 
     override protected void Awake()
     {
@@ -69,6 +109,7 @@ public class EnemyManager : Singleton<EnemyManager>
         waitForShowUI = new WaitForSeconds(waitForShowUITime);
         nowWaveList = new List<GameObject>();
         CreateWaveSettings();
+        player = GetPlayer();
     }
     // Start is called before the first frame update
     void Start()
@@ -106,6 +147,12 @@ public class EnemyManager : Singleton<EnemyManager>
     public GameObject RandomEnemyTarget()
     {
         return nowWaveListCount == 0 ? null : nowWaveList[Random.Range(0, nowWaveListCount)];
+    }
+
+    public GameObject GetPlayer()
+    {
+        player = player == null ? GameObject.FindGameObjectWithTag("Player") : player;
+        return player;
     }
 
     internal void RemoveOneEnemy(GameObject enemy)
@@ -183,7 +230,7 @@ public class EnemyManager : Singleton<EnemyManager>
             newWaveList.Add(createOneEnemySetting(0, power, der, maxHealth));
         }
         // random enemy2 number
-        int randomLevel2Number = Random.Range(randomLevel2[0], randomLevel2[1] + 1) + + curWave / 15;
+        int randomLevel2Number = Random.Range(randomLevel2[0], randomLevel2[1] + 1) + +curWave / 15;
         for (int i = 0; i < randomLevel2Number; i++)
         {
             int power = enemy2Attr[Random.Range(1, 2 + 1) * 3 + 0];
@@ -192,7 +239,7 @@ public class EnemyManager : Singleton<EnemyManager>
             newWaveList.Add(createOneEnemySetting(1, power, der, maxHealth));
         }
         // random enemy3 number
-        int randomLevel3Number = Random.Range(randomLevel3[0], randomLevel3[1] + 1) + + curWave / 20;
+        int randomLevel3Number = Random.Range(randomLevel3[0], randomLevel3[1] + 1) + +curWave / 20;
         for (int i = 0; i < randomLevel3Number; i++)
         {
             int power = enemy3Attr[Random.Range(1, 2 + 1) * 3 + 0];
@@ -201,5 +248,19 @@ public class EnemyManager : Singleton<EnemyManager>
             newWaveList.Add(createOneEnemySetting(2, power, der, maxHealth));
         }
         return newWaveList;
+    }
+
+    void CreateOneBoss(int id)
+    {
+        int level = (id + 1) / 2;
+        int index = (id + 1) % 2;
+        int maxHealth = Mathf.FloorToInt(bossAttr[0] + healthFactor * level * level);
+        int der = Mathf.FloorToInt(maxHealth * bossFactor);
+        var boss = PoolManager.Release(bossList[index]);
+        var healthSystem = boss.GetComponent<HealthSystem>();
+        boss.GetComponent<BossController>().StartSkill();
+        healthSystem.setDer(der);
+        healthSystem.setMaxHealth(maxHealth);
+        nowWaveList.Add(boss);
     }
 }

@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class OnPressedBehaviour : StateMachineBehaviour
 {
-    public static Dictionary<GameObject, System.Action> UIActionDict;
+    public static Dictionary<string, System.Action> UIActionDict;
 
     void Awake()
     {
-        UIActionDict = new Dictionary<GameObject, System.Action>();
+        UIActionDict = new Dictionary<string, System.Action>();
     }
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (ShootUIInput.Instance != null)
+        if (UIInput.Instance != null)
         {
-            ShootUIInput.Instance.DisableAllUIInput();
+            UIInput.Instance.DisableAllUIInput();
         }
     }
 
@@ -29,7 +29,15 @@ public class OnPressedBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        UIActionDict[animator.gameObject].Invoke();
+        try
+        {
+            UIActionDict[animator.gameObject.name].Invoke();
+        }
+        catch (System.Exception)
+        {
+            Debug.Log(animator.gameObject.name);
+        }
+
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

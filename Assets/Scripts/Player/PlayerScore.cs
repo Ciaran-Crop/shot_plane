@@ -8,6 +8,7 @@ public class PlayerScore : MonoBehaviour
 
     float score;
 
+
     void Start()
     {
         statSystemScore.Initialize(score);
@@ -17,5 +18,6 @@ public class PlayerScore : MonoBehaviour
     {
         score += value;
         statSystemScore.UpdateStat(score);
+        GameManager.GameScore = score;
     }
 }

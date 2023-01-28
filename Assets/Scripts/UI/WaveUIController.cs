@@ -12,7 +12,7 @@ public class WaveUIController : MonoBehaviour
         GetComponent<Canvas>().worldCamera = Camera.main;
     }
 
-    public void UpdateText(int value)
+    public virtual void UpdateText(int value)
     {
         waveText.text = string.Format("-  Wave  {0}  - ", value);
     }

@@ -316,6 +316,33 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GameOver"",
+            ""id"": ""a097eaec-66a1-4d73-a91c-eb9e78a5d0b7"",
+            ""actions"": [
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""df7beae9-9359-4f92-8ef8-2766b6ca7d33"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""16268b6b-cfb1-4b7f-9e53-5a461e69d40f"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -353,6 +380,9 @@ public class @InputActions : IInputActionCollection, IDisposable
         // PauseMenu
         m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
         m_PauseMenu_UnPause = m_PauseMenu.FindAction("UnPause", throwIfNotFound: true);
+        // GameOver
+        m_GameOver = asset.FindActionMap("GameOver", throwIfNotFound: true);
+        m_GameOver_Confirm = m_GameOver.FindAction("Confirm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -504,6 +534,39 @@ public class @InputActions : IInputActionCollection, IDisposable
         }
     }
     public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
+
+    // GameOver
+    private readonly InputActionMap m_GameOver;
+    private IGameOverActions m_GameOverActionsCallbackInterface;
+    private readonly InputAction m_GameOver_Confirm;
+    public struct GameOverActions
+    {
+        private @InputActions m_Wrapper;
+        public GameOverActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Confirm => m_Wrapper.m_GameOver_Confirm;
+        public InputActionMap Get() { return m_Wrapper.m_GameOver; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameOverActions set) { return set.Get(); }
+        public void SetCallbacks(IGameOverActions instance)
+        {
+            if (m_Wrapper.m_GameOverActionsCallbackInterface != null)
+            {
+                @Confirm.started -= m_Wrapper.m_GameOverActionsCallbackInterface.OnConfirm;
+                @Confirm.performed -= m_Wrapper.m_GameOverActionsCallbackInterface.OnConfirm;
+                @Confirm.canceled -= m_Wrapper.m_GameOverActionsCallbackInterface.OnConfirm;
+            }
+            m_Wrapper.m_GameOverActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
+            }
+        }
+    }
+    public GameOverActions @GameOver => new GameOverActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -525,5 +588,9 @@ public class @InputActions : IInputActionCollection, IDisposable
     public interface IPauseMenuActions
     {
         void OnUnPause(InputAction.CallbackContext context);
+    }
+    public interface IGameOverActions
+    {
+        void OnConfirm(InputAction.CallbackContext context);
     }
 }

@@ -8,6 +8,7 @@ public class ScenesLoadManager : PersistentSingleton<ScenesLoadManager>
 {
     const string SHOOTSHOOT = "ShootShoot";
     const string MAIN_MENU = "MainMenu";
+    const string SCORE = "Score";
     [SerializeField] Image fadeBackImage;
     [SerializeField] float fadeTime = 2f;
     Color color;
@@ -58,5 +59,10 @@ public class ScenesLoadManager : PersistentSingleton<ScenesLoadManager>
     public void LoadMainMenu()
     {
         Load(MAIN_MENU);
+    }
+
+    public void LoadScore()
+    {
+        Load(SCORE);
     }
 }

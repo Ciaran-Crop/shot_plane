@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class StatSystemScore : MonoBehaviour
 {
     [SerializeField] Text curScoreText;
+    [SerializeField] float delayTime = 1f;
     float t;
 
     float curScore;
@@ -35,12 +36,15 @@ public class StatSystemScore : MonoBehaviour
 
     IEnumerator AddScoreCoroutine(float score)
     {
-        while (curScore < score)
+        t = 0f;
+        while (t <= 1f)
         {
-            curScore = Mathf.Clamp(curScore + 2, 0f, score);
+            t += Time.deltaTime / delayTime;
+            curScore = Mathf.FloorToInt(Mathf.Clamp(Mathf.Lerp(curScore, score, t), 0f, score));
             UpdateText(curScore);
             yield return null;
         }
+        if(curScore != score) curScore = score;
     }
 
     public void UpdateStat(float score)

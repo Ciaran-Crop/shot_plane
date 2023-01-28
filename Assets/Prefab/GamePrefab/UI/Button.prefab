@@ -156,8 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2a0de9299feb478169a25843b2048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectData: {fileID: 0}
-  submitData: {fileID: 0}
+  selectData: {fileID: 11400000, guid: e1bcec7febfd65a4e8bebe31512a8903, type: 2}
+  submitData: {fileID: 11400000, guid: 0108b735063f5c04bbf1d4d48ef08dfc, type: 2}
 --- !u!1 &7058235716111898037
 GameObject:
   m_ObjectHideFlags: 0

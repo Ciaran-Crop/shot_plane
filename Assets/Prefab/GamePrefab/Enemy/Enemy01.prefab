@@ -5098,6 +5098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyProjectile: {fileID: 2956574102853484863, guid: 098ccc18b633eb946a89153328417486, type: 3}
+  fireVFX: {fileID: 6312347931672775765, guid: bcdfcb20bdfc97f44a4f585803958b75, type: 3}
   minFireInterval: 2
   maxFireInterval: 4
   moveSpeed: 2

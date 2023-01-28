@@ -330,9 +330,9 @@
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Util\FileUtilities.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Data\Interfaces\IMayRequireVertexSkinning.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Data\Graphs\SerializableGuid.cs" />
-     <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Generation\Collections\IncludeCollection.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Generation\Attributes\GenerateBlocksAttribute.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Data\Nodes\Math\Vector\CrossProductNode.cs" />
+     <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Generation\Collections\IncludeCollection.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Data\Nodes\Input\Scene\SceneColorNode.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Generation\Utils\TargetUtils.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@10.10.1\Editor\Data\Interfaces\IGeneratesFunction.cs" />

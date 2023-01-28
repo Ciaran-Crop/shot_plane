@@ -35,7 +35,7 @@ public class SkillBarSystem : MonoBehaviour
     {
         float t = 0f;
         missileColdDownImage.fillAmount = 1f;
-        while (t < 1f)
+        while (t <= 1f)
         {
             t += Time.deltaTime / coldDownTime;
             missileColdDownImage.fillAmount = Mathf.Lerp(1f, 0f, t);

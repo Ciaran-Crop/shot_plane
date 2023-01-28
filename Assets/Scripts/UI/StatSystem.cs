@@ -78,7 +78,7 @@ public class StatSystem : MonoBehaviour
         }
         t = 0f;
         curFillAmountDefault = curFillAmount;
-        while (t < 1f)
+        while (t <= 1f)
         {
             t += Time.deltaTime * fillSpeed;
             curFillAmount = Mathf.Lerp(curFillAmountDefault, targetFillAmount, t);
