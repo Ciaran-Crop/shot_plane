@@ -50,14 +50,12 @@ public class Pool
     public GameObject Get()
     {
         GameObject gameObjectClone = ReturnOneObject();
-        gameObjectClone.SetActive(true);
         return gameObjectClone;
     }
 
     public GameObject Get(Vector3 position)
     {
         GameObject gameObjectClone = ReturnOneObject();
-        gameObjectClone.SetActive(true);
         gameObjectClone.transform.position = position;
         return gameObjectClone;
     }
@@ -65,7 +63,6 @@ public class Pool
     public GameObject Get(Vector3 position, Quaternion rotation)
     {
         GameObject gameObjectClone = ReturnOneObject();
-        gameObjectClone.SetActive(true);
         gameObjectClone.transform.position = position;
         gameObjectClone.transform.rotation = rotation;
         return gameObjectClone;
@@ -74,7 +71,6 @@ public class Pool
     public GameObject Get(Vector3 position, Quaternion rotation, Vector3 localScale)
     {
         GameObject gameObjectClone = ReturnOneObject();
-        gameObjectClone.SetActive(true);
         gameObjectClone.transform.position = position;
         gameObjectClone.transform.rotation = rotation;
         gameObjectClone.transform.localScale = localScale;

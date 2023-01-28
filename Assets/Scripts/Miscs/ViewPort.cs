@@ -39,6 +39,13 @@ public class ViewPort : Singleton<ViewPort>
         position.y = Random.Range(minY + paddingY, maxY - paddingY);
         return position;
     }
+    public Vector3 RightPaddingPosition(float y)
+    {
+        Vector3 position = Vector3.zero;
+        position.x = maxX;
+        position.y = y;
+        return position;
+    }
 
     public Vector3 RandomEnemyMoveRightPosition(float paddingX, float paddingY)
     {

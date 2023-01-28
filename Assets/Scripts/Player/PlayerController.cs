@@ -31,13 +31,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float accelerationTime = 5f;
     [SerializeField] float decelerationTime = 5f;
     [SerializeField] float moveRotationAngle = 50;
+    [SerializeField] float invincibleTime = 1f;
     WaitForFixedUpdate waitForFixedUpdate;
+    WaitForSeconds waitForInvincible;
     Vector2 velocity;
     Coroutine coroutine;
     Quaternion rotation;
     float moveT;
     float paddingX;
     float paddingY;
+
+    Coroutine invincibleCoroutine;
 
     #endregion
 
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(1, 3)] int powerLevel = 1;
     [SerializeField] int missileCount = 3;
     [SerializeField] float missileColdDownTime = 3f;
+    [SerializeField] ParticleSystem fireVFX;
     bool missileUseAvailable = true;
     Quaternion projectileUpRotation;
     Quaternion projectileBottomRotation;
@@ -121,6 +126,7 @@ public class PlayerController : MonoBehaviour
         projectileUpRotation = Quaternion.AngleAxis(projectileUpAngle, transform.forward);
         projectileBottomRotation = Quaternion.AngleAxis(projectileBottomAngle, transform.forward);
         waitForOverdrive = new WaitForSeconds(overdriveTime);
+        waitForInvincible = new WaitForSeconds(invincibleTime);
     }
 
     void Start()
@@ -148,6 +154,7 @@ public class PlayerController : MonoBehaviour
         input.onDodge += Dodge;
         input.onOverdrive += Overdrive;
         input.onMissile += LaunchMissile;
+        fireVFX.Stop();
         PlayerOverdrive.on += OverdriveOn;
         PlayerOverdrive.off += OverdriveOff;
     }
@@ -178,6 +185,19 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     # region MoveFunc
+
+    IEnumerator InvincibleCoroutine()
+    {
+        collider2D.isTrigger = true;
+        yield return waitForInvincible;
+        collider2D.isTrigger = false;
+    }
+
+    public void Invincible()
+    {
+        if (invincibleCoroutine != null) StopCoroutine(nameof(InvincibleCoroutine));
+        invincibleCoroutine = StartCoroutine(nameof(InvincibleCoroutine));
+    }
 
     IEnumerator StartMoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationTarget)
     {
@@ -233,11 +253,13 @@ public class PlayerController : MonoBehaviour
 
     void Fire()
     {
+        fireVFX.Play();
         StartCoroutine(nameof(StartFire));
     }
 
     void StopFire()
     {
+        fireVFX.Stop();
         StopCoroutine(nameof(StartFire));
     }
 

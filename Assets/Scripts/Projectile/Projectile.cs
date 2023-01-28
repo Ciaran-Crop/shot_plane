@@ -82,7 +82,7 @@ public class Projectile : MonoBehaviour
                 }
                 // 释放命中特效
                 var contactPoint = collision.GetContact(0);
-                PoolManager.Release(hitVFX, contactPoint.point, Quaternion.LookRotation(contactPoint.normal));
+                PoolManager.Release(hitVFX, contactPoint.point, Quaternion.LookRotation(contactPoint.normal)).SetActive(true);
                 gameObject.SetActive(false);
                 return true;
             }

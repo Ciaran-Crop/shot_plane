@@ -21,7 +21,7 @@ public class EnemyManager : Singleton<EnemyManager>
     List<List<Dictionary<string, int>>> waveList;
     List<GameObject> nowWaveList;
     int nowWaveListCount => nowWaveList.Count;
-    int curWave = 10;
+    int curWave = 1;
     WaitUntil waitUntilWaveEnd;
     WaitForSeconds waitForShowUI;
     [SerializeField] int[] randomLevel1;
@@ -53,12 +53,12 @@ public class EnemyManager : Singleton<EnemyManager>
         while (true)
         {
             if (GameManager.IsGameOver) yield break;
-            if (curWave % 10 == 0)
+            if (curWave % 5 == 0)
             {
                 SetBossUI();
                 yield return waitForShowUI;
                 RemoveBossUI();
-                CreateOneBoss(curWave / 10);
+                CreateOneBoss(curWave / 5);
                 curWave++;
                 yield return waitUntilWaveEnd;
             }
@@ -141,6 +141,7 @@ public class EnemyManager : Singleton<EnemyManager>
             healthSystem.setDer(der);
             healthSystem.setMaxHealth(maxHealth);
             nowWaveList.Add(enemy);
+            enemy.SetActive(true);
         }
     }
 
@@ -253,14 +254,15 @@ public class EnemyManager : Singleton<EnemyManager>
     void CreateOneBoss(int id)
     {
         int level = (id + 1) / 2;
-        int index = (id + 1) % 2;
+        // int index = (id + 1) % 2;
         int maxHealth = Mathf.FloorToInt(bossAttr[0] + healthFactor * level * level);
         int der = Mathf.FloorToInt(maxHealth * bossFactor);
-        var boss = PoolManager.Release(bossList[index]);
+        var boss = PoolManager.Release(bossList[0]);
         var healthSystem = boss.GetComponent<HealthSystem>();
-        boss.GetComponent<BossController>().StartSkill();
         healthSystem.setDer(der);
         healthSystem.setMaxHealth(maxHealth);
         nowWaveList.Add(boss);
+        boss.SetActive(true);
+        boss.GetComponent<BossController>().StartSkill();
     }
 }

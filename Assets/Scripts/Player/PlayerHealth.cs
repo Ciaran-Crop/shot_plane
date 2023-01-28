@@ -82,6 +82,7 @@ public class PlayerHealth : HealthSystem
         {
             PlayerBulletTime.Instance.BulletTime(playerController.bulletTime, playerController.fadeOutTime);
         }
+        playerController.Invincible();
         return isDead;
     }
 

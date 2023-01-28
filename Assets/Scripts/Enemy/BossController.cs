@@ -10,18 +10,21 @@ public class BossController : MonoBehaviour
     {
         ScatterProjectile,
         AimProjectile,
+        RedAimProjectile,
         Laser,
         CombineProjectile,
     }
     int skillNum = 4;
     int highSkillNum = 2;
     int index = 0;
+    [SerializeField] AudioData laserLaunch;
+    [SerializeField] AudioData laserFire;
     [SerializeField] Transform muzzleUp;
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleBottom;
     [SerializeField] GameObject enemyProjectileNormal;
     [SerializeField] GameObject enemyProjectileAim;
-    [SerializeField] GameObject enemyProjectileLaser;
+    [SerializeField] GameObject enemyProjectileRedAim;
     [SerializeField] float moveSpeed = 15f;
     [SerializeField] float skillInterval = 2f;
     [SerializeField] float fireInterval = 0.5f;
@@ -30,21 +33,27 @@ public class BossController : MonoBehaviour
     [SerializeField] float collisionDamage = 1f;
     [SerializeField] bool hasCollisionDamage = false;
     [SerializeField] float enemyProjectileUpAngle = 2f;
+    [SerializeField] float laserColdTime = 15f;
     Quaternion enemyProjectileUpRotation;
+    WaitForSeconds waitForLaserCold;
+    bool laserReady;
     [SerializeField] float enemyProjectileBottomAngle = -2f;
     [SerializeField, Range(1, 30)] int scatterCount = 10;
     [SerializeField, Range(1, 30)] int aimCount = 10;
+    [SerializeField] Animator laserAnimator;
+    [SerializeField] ParticleSystem fireVFX;
+    int laserAnimationId = Animator.StringToHash("launchBeam");
     Quaternion enemyProjectileBottomRotation;
     HealthSystem healthSystem;
 
     EnemyMoveState moveState = EnemyMoveState.Random;
     List<SkillEnum> skillList;
     Vector3 moveTo;
-    Vector3 nowPosition;
     WaitForSeconds waitForSkillInterval;
     WaitForSeconds waitForFireInterval;
     Coroutine skillCoroutine;
     bool skillState;
+    bool laserState;
 
     public void ChangeMoveState(EnemyMoveState state) => moveState = state;
     public void ChangeSkillState(bool state) => skillState = state;
@@ -52,19 +61,20 @@ public class BossController : MonoBehaviour
     IEnumerator RandomMoveCoroutine()
     {
         transform.position = ViewPort.Instance.RandomEnemyCreatePosition(paddingX, paddingY);
-        nowPosition = transform.position;
-        moveTo = ViewPort.Instance.RandomEnemyMoveRightQuarterPosition(paddingX, paddingY);
-        while (gameObject.activeSelf)
+        moveTo = ViewPort.Instance.RandomEnemyMoveRightPosition(paddingX, paddingY);
+        while (gameObject.activeSelf && !GameManager.IsGameOver)
         {
+            if (moveState == EnemyMoveState.Y)
+            {
+                moveTo = ViewPort.Instance.RightPaddingPosition(EnemyManager.Instance.GetPlayer().transform.position.y);
+            }
             if (Vector3.Distance(transform.position, moveTo) >= Time.deltaTime * moveSpeed)
             {
-                nowPosition = Vector3.MoveTowards(transform.position, moveTo, Time.deltaTime * moveSpeed);
-                if (moveState == EnemyMoveState.Y) nowPosition.y = EnemyManager.Instance.GetPlayer().transform.position.y;
-                transform.position = nowPosition;
+                transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.deltaTime * moveSpeed);
             }
             else
             {
-                moveTo = ViewPort.Instance.RandomEnemyMoveRightQuarterPosition(paddingX, paddingY);
+                moveTo = ViewPort.Instance.RandomEnemyMoveRightPosition(paddingX, paddingY);
             }
             if (GameManager.IsGameOver) yield break;
 
@@ -74,25 +84,25 @@ public class BossController : MonoBehaviour
 
     IEnumerator RandomSkillCoroutine()
     {
-        while (true)
+        while (!GameManager.IsGameOver)
         {
             yield return waitForSkillInterval;
-            if (skillState) yield return null;
+            if (skillState || laserState) yield return null;
             SkillEnum skillEnum = RandomSkill();
             ChangeSkillState(true);
             switch (skillEnum)
             {
                 case SkillEnum.ScatterProjectile:
-                    yield return ScatterProjectile();
+                    yield return StartCoroutine(nameof(ScatterProjectile));
                     break;
                 case SkillEnum.AimProjectile:
-                    yield return AimProjectile();
+                    yield return StartCoroutine(nameof(AimProjectile));
                     break;
                 case SkillEnum.Laser:
-                    yield return Laser();
+                    if (laserReady) yield return StartCoroutine(nameof(Laser));
                     break;
                 case SkillEnum.CombineProjectile:
-                    yield return CombineProjectile();
+                    yield return StartCoroutine(nameof(CombineProjectile));
                     break;
                 default:
                     yield return null;
@@ -130,30 +140,62 @@ public class BossController : MonoBehaviour
 
     IEnumerator ScatterProjectile()
     {
+        fireVFX.Play();
         for (int i = 0; i < scatterCount; i++)
         {
             FireProjectileUp(enemyProjectileNormal);
             FireProjectileMiddle(enemyProjectileNormal);
             FireProjectileBottom(enemyProjectileNormal);
+            AudioManager.Instance.PlayRandomEnemyLaunch();
             yield return waitForFireInterval;
         }
+        fireVFX.Stop();
     }
 
     IEnumerator AimProjectile()
     {
+        fireVFX.Play();
         for (int i = 0; i < aimCount; i++)
         {
             FireProjectileMiddle(enemyProjectileAim);
+            AudioManager.Instance.PlayRandomEnemyLaunch();
             yield return waitForFireInterval;
         }
+        fireVFX.Stop();
     }
 
     IEnumerator Laser()
     {
         ChangeMoveState(EnemyMoveState.Y);
+        laserState = true;
+        laserReady = false;
+        AudioManager.Instance.PlayAudio(laserLaunch);
+        laserAnimator.SetTrigger(laserAnimationId);
         yield return null;
-        // TODO
+    }
+
+    public void CloseLaser()
+    {
+        laserState = false;
         ChangeMoveState(EnemyMoveState.Random);
+        StartCoroutine(nameof(LaserColdDownCoroutine));
+    }
+
+    public void LaserAudio()
+    {
+        AudioManager.Instance.PlayAudio(laserFire);
+    }
+
+    IEnumerator RedAimProjectile()
+    {
+        fireVFX.Play();
+        for (int i = 0; i < aimCount; i++)
+        {
+            FireProjectileMiddle(enemyProjectileRedAim);
+            AudioManager.Instance.PlayRandomEnemyLaunch();
+            yield return waitForFireInterval;
+        }
+        fireVFX.Stop();
     }
 
     IEnumerator CombineProjectile()
@@ -162,11 +204,18 @@ public class BossController : MonoBehaviour
         yield return ScatterProjectile();
     }
 
+    IEnumerator LaserColdDownCoroutine()
+    {
+        yield return waitForLaserCold;
+        laserReady = true;
+    }
+
 
     protected virtual void AddSkill()
     {
         skillList.Add(SkillEnum.ScatterProjectile);
         skillList.Add(SkillEnum.AimProjectile);
+        skillList.Add(SkillEnum.RedAimProjectile);
         skillList.Add(SkillEnum.Laser);
         skillList.Add(SkillEnum.CombineProjectile);
     }
@@ -184,17 +233,21 @@ public class BossController : MonoBehaviour
         paddingX = size.x;
         paddingY = size.y;
         skillState = false;
+        laserState = false;
+        laserReady = false;
+        waitForLaserCold = new WaitForSeconds(laserColdTime);
     }
 
     public void StartSkill()
     {
         StartCoroutine(nameof(RandomMoveCoroutine));
         StartCoroutine(nameof(RandomSkillCoroutine));
+        StartCoroutine(nameof(LaserColdDownCoroutine));
     }
 
     void OnEnable()
     {
-
+        fireVFX.Stop();
     }
 
     void OnDisable()

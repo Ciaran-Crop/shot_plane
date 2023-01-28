@@ -15,7 +15,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] bool showOnHeadStatBar = true;
     void Awake()
     {
-        
+        health = maxHealth;
     }
 
     public void ShowOnHeadStatBar()
@@ -75,7 +75,7 @@ public class HealthSystem : MonoBehaviour
         health = 0f;
         if (deathVFX)
         {
-            PoolManager.Release(deathVFX, transform.position);
+           PoolManager.Release(deathVFX, transform.position).SetActive(true);
         }
         gameObject.SetActive(false);
     }

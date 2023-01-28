@@ -92,6 +92,10 @@
      <Compile Include="Assets\Scripts\UI\Boss_Stat_HUD.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossController.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossHealth.cs" />
+     <Compile Include="Assets\Scripts\Projectile\LaserDamage.cs" />
+     <Compile Include="Assets\Scripts\Loot\LootController.cs" />
+     <Compile Include="Assets\Scripts\Loot\AutoRotation.cs" />
+     <Compile Include="Assets\Scripts\Loot\LootManager.cs" />
      <None Include="Assets\Shaders\Shader_UI_DefaultHDR.shader" />
      <None Include="Assets\Resources\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
      <None Include="Assets\Models\Muzzle Fire\WFX_S Particle Add A8.shader" />

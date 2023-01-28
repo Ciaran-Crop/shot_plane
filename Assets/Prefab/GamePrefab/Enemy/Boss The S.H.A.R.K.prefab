@@ -19424,6 +19424,7 @@ Transform:
   - {fileID: 6777184693411119015}
   - {fileID: 6777184693290456823}
   - {fileID: 5028924143485601157}
+  - {fileID: 4751158526024982065}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19496,12 +19497,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb766ba94aeeee6428162ba222ad1252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserLaunch: {fileID: 11400000, guid: 802c7d43e4453814a94717dbe18bb487, type: 2}
+  laserFire: {fileID: 11400000, guid: 6627b19155393214cbe3223ff366f1ab, type: 2}
   muzzleUp: {fileID: 320899558}
   muzzleMiddle: {fileID: 1692112245}
   muzzleBottom: {fileID: 87292600}
   enemyProjectileNormal: {fileID: 1838376022377245223, guid: 9299f91954c4c364eb4cf1566b8aa387, type: 3}
   enemyProjectileAim: {fileID: 1838376022377245223, guid: c18f9d9d6927ab743950ac1ff5c6dc67, type: 3}
-  enemyProjectileLaser: {fileID: 0}
+  enemyProjectileRedAim: {fileID: 2956574102853484863, guid: 57e720cfe384a824eba173727c955950, type: 3}
   moveSpeed: 2
   skillInterval: 3
   fireInterval: 0.1
@@ -19510,9 +19513,12 @@ MonoBehaviour:
   collisionDamage: 1
   hasCollisionDamage: 0
   enemyProjectileUpAngle: -20
+  laserColdTime: 15
   enemyProjectileBottomAngle: 20
   scatterCount: 10
   aimCount: 10
+  laserAnimator: {fileID: 5735159873588532444}
+  fireVFX: {fileID: 4751158526009777009}
 --- !u!114 &1735618442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34171,6 +34177,7 @@ GameObject:
   - component: {fileID: 6777184693504505543}
   - component: {fileID: 8965626045995070401}
   - component: {fileID: 6777184693504505536}
+  - component: {fileID: 1845742334}
   m_Layer: 9
   m_Name: Beam
   m_TagString: Enemy Beam
@@ -34240,6 +34247,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 20, y: 0.25}
   m_EdgeRadius: 0.1
+--- !u!114 &1845742334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6777184693504505542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0bede94e60f2f4daa76bd22772e22b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
+  hitSFX: {fileID: 11400000, guid: 1ec44d25a67d4664bb8b01c703dfa53b, type: 2}
 --- !u!1 &8136977872067818088
 GameObject:
   m_ObjectHideFlags: 0
@@ -34435,6 +34457,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5bd699f74ec5a74383b5ce8aec7739b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1618612500499598916
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5735159873588532430}
+    m_Modifications:
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312347931672775765, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+      propertyPath: m_Name
+      value: VFX_BossMuzzleFire
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+--- !u!198 &4751158526009777009 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6312347931691750709, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+  m_PrefabInstance: {fileID: 1618612500499598916}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4751158526024982065 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+  m_PrefabInstance: {fileID: 1618612500499598916}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2401603174913531125
 PrefabInstance:
   m_ObjectHideFlags: 0

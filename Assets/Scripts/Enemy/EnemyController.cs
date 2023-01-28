@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float enemyProjectileUpAngle = 2f;
     Quaternion enemyProjectileUpRotation;
     [SerializeField] float enemyProjectileBottomAngle = -2f;
+    [SerializeField] ParticleSystem fireVFX;
     Quaternion enemyProjectileBottomRotation;
     HealthSystem healthSystem;
 
@@ -67,6 +68,7 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(minFireInterval, maxFireInterval));
             if (GameManager.IsGameOver) yield break;
+            fireVFX.Play();
             switch (powerLevel)
             {
                 case 1:
@@ -96,6 +98,7 @@ public class EnemyController : MonoBehaviour
                 default:
                     break;
             }
+            fireVFX.Stop();
             AudioManager.Instance.PlayRandomEnemyLaunch();
         }
     }
@@ -115,6 +118,7 @@ public class EnemyController : MonoBehaviour
 
     void OnEnable()
     {
+        fireVFX.Stop();
         StartCoroutine(nameof(RandomMoveCoroutine));
         StartCoroutine(nameof(RandomFireCoroutine));
     }
