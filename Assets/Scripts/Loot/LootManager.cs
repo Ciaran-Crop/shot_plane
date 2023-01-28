@@ -2,22 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootManager : Singleton<LootManager>
+public class LootManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] loots;
+    [SerializeField] LootItem[] loots;
 
-    int len => loots.Length;
-
-    public void RandomOneLoot(Vector3 location)
+    public void RandomLoot()
     {
-        PoolManager.Release(loots[Random.Range(0, len)], location).SetActive(true);
-    }
-
-    public void RandomMoreLoot(Vector3 location, int count)
-    {
-        for(int i = 0;i < count; i++)
+        Vector2 newPosition2D = new Vector2(transform.position.x, transform.position.y);
+        for(int i = 0;i < loots.Length;i++)
         {
-            RandomOneLoot(location);
+            loots[i].Spawn(newPosition2D + Random.insideUnitCircle);
         }
     }
 }

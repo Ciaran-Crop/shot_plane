@@ -19400,6 +19400,7 @@ GameObject:
   - component: {fileID: 5735159873588532444}
   - component: {fileID: 1735618443}
   - component: {fileID: 1735618442}
+  - component: {fileID: 9203816218047759110}
   m_Layer: 7
   m_Name: Boss The S.H.A.R.K
   m_TagString: Untagged
@@ -19536,6 +19537,33 @@ MonoBehaviour:
   maxHealth: 1200
   onHeadStatBar: {fileID: 1213963932}
   showOnHeadStatBar: 1
+--- !u!114 &9203816218047759110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735159873588532432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd023b36b4095f149ab38dac00833926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loots:
+  - prefab: {fileID: 2019851316260838503, guid: 3281a09cc02e0e3478edeb13d697cd38, type: 3}
+    spawnProbability: 50
+  - prefab: {fileID: 7021913161279593451, guid: 58293df6629a1ca41945239608f9b6ba, type: 3}
+    spawnProbability: 20
+  - prefab: {fileID: 5921898909932458412, guid: 853e9cf2d19d10a44947898a95b33246, type: 3}
+    spawnProbability: 20
+  - prefab: {fileID: 1604554900472224324, guid: f85c5fe7e46557a44a51545100a28c3c, type: 3}
+    spawnProbability: 25
+  - prefab: {fileID: 7946695540464534128, guid: 286b3ebf9063d1b4fa7d2acb14489695, type: 3}
+    spawnProbability: 70
+  - prefab: {fileID: 2019851316260838503, guid: 652b6f2b6b236e44da76ff8c43307fd4, type: 3}
+    spawnProbability: 50
+  - prefab: {fileID: 7021913161279593451, guid: f24af46c963d4734b9fb87d09033e32c, type: 3}
+    spawnProbability: 25
 --- !u!1 &6777184692101022918
 GameObject:
   m_ObjectHideFlags: 0
@@ -34514,14 +34542,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
---- !u!198 &4751158526009777009 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6312347931691750709, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
-  m_PrefabInstance: {fileID: 1618612500499598916}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4751158526024982065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6312347931672350837, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
+  m_PrefabInstance: {fileID: 1618612500499598916}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4751158526009777009 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6312347931691750709, guid: 2d55ef798e986df4db1aa2d22a470be0, type: 3}
   m_PrefabInstance: {fileID: 1618612500499598916}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2401603174913531125

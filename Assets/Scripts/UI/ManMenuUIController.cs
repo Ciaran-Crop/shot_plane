@@ -87,7 +87,7 @@ public class ManMenuUIController : MonoBehaviour
         OnPressedBehaviour.UIActionDict.Add(exitButton.gameObject.name, OnExitButtonOn);
         OnPressedBehaviour.UIActionDict.Add(surviveGameButton.gameObject.name, OnSurviveGameButtonOn);
         OnPressedBehaviour.UIActionDict.Add(endlessGameButton.gameObject.name, OnEndlessGameButtonOn);
-        OnPressedBehaviour.UIActionDict.Add(rankListButton.gameObject.name, OnRankListButtonOn);
+        // OnPressedBehaviour.UIActionDict.Add(rankListButton.gameObject.name, OnRankListButtonOn);
         OnPressedBehaviour.UIActionDict.Add(BuffGameButton.gameObject.name, OnBuffGameButtonOn);
         OnPressedBehaviour.UIActionDict.Add(backMainButton.gameObject.name, OnBackMainButtonOn);
         OnPressedBehaviour.UIActionDict.Add(cancelRankListButton.gameObject.name, OnCancelRankListButtonOn);

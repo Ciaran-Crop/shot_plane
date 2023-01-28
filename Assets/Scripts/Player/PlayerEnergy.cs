@@ -14,6 +14,7 @@ public class PlayerEnergy : MonoBehaviour
     public const int PERCENT = 1;
     int energy;
     bool canObtain = true;
+    public bool IsFull => energy == MAX_ENERGY;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +41,7 @@ public class PlayerEnergy : MonoBehaviour
         if (!canObtain) return;
         energy = Mathf.Clamp(energy + value, 0, MAX_ENERGY);
         energyStatBar.UpdateStat(energy, MAX_ENERGY);
-        if (energy == MAX_ENERGY)
+        if (IsFull)
         {
             FullState();
         }

@@ -7,7 +7,8 @@ public class LaserDamage : MonoBehaviour
     [SerializeField] float damage;
     [SerializeField] GameObject hitVFX;
     [SerializeField] AudioData hitSFX;
-    void OnCollisionEnter2D(Collision2D collision)
+
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
         {

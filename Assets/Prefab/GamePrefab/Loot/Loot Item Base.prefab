@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 3557428357913326418}
   - component: {fileID: 3557428357913326416}
   - component: {fileID: 3207027584852431511}
-  - component: {fileID: 5179530962490973734}
   m_Layer: 10
   m_Name: Loot Item Base
   m_TagString: Untagged
@@ -267,21 +266,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &5179530962490973734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3557428357913326413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de6ee856b623eaa40bba09e68935e24f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  animator: {fileID: 3207027584852431511}
-  pickData: {fileID: 11400000, guid: c78843d7612245e438cda7cea3ff81ee, type: 2}
 --- !u!1 &5691329383125972806
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,6 @@ public class EnemyHealth : HealthSystem
         var enemyManager = EnemyManager.Instance;
         enemyManager.GetComponent<EnemyManager>().RemoveOneEnemy(gameObject);
         AudioManager.Instance.PlayRandomEnemyExplosion();
-        LootManager.Instance.RandomOneLoot(transform.position);
+        GetComponent<LootManager>().RandomLoot();
     }
 }

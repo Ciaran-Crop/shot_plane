@@ -355,7 +355,11 @@ public class PlayerController : MonoBehaviour
         fireInterval *= factor;
         fireWaitForSeconds = new WaitForSeconds(fireInterval);
     }
-    public void ChangeAddMissileCount(int value) => missileCount = Mathf.Clamp(missileCount + value, 0, 10);
+    public void ChangeAddMissileCount(int value)
+    {
+        missileCount = Mathf.Max(0, missileCount + value);
+        skillBarSystem.UpdateMissileText(missileCount);
+    }
     public void ChangeMissileColdDownTime(float factor) => missileColdDownTime *= factor;
     public void ChangeDodgeCost(int value) => dodgeCost = Mathf.Clamp(dodgeCost + value, 1, 100);
     public void ChangeWaitForStraightSub(float factor) => waitForStraight = new WaitForSeconds(Mathf.Max(waitForStraightTime * factor, minWaitForStraightTime));

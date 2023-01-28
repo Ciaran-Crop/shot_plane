@@ -25,17 +25,18 @@ public class RankListController : MonoBehaviour
     {
         // TODO: get rank list from web server
         // TEMP: gen rank list
-        for (int i = 1; i <= listCount; i++)
+        youInfo.Add("rank", 1.ToString());
+        youInfo.Add("name", "You");
+        youInfo.Add("score", GameManager.LastGameScore.ToString());
+        rankList.Add(youInfo);
+        for (int i = 2; i <= listCount; i++)
         {
             Dictionary<string, string> temp = new Dictionary<string, string>();
             temp.Add("rank", i.ToString());
-            temp.Add("name", "Ciaran");
-            temp.Add("score", (i * Random.Range(100, 200)).ToString());
+            temp.Add("name", "None");
+            temp.Add("score", "None");
             rankList.Add(temp);
         }
-        youInfo.Add("rank", 1.ToString());
-        youInfo.Add("name", "Ciaran");
-        youInfo.Add("score", (1 * Random.Range(100, 200)).ToString());
     }
 
     void PaddingRankList()

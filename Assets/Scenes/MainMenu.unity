@@ -272,33 +272,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\r\u641C\u7D22\u624B\u518C...\r\u624B\u518C\u811A\u672CAPI\runity3d.com\rVesion:
-    2021.3 \r\u8BED\u8A00:\u4E2D\u6587\r\u624B\u518C\rUnity UserManual 2021.3 (LTS)\rNew
-    in Unity 2021 LTS\r\nPackages and feature sets\r\n\u5728 Unity \u4E2D\u64CD\u4F5C\r\n\u8D44\u6E90\u5DE5\u4F5C\u6D41\u7A0B\r\n\u8F93\u5165\r\n2D\r\n\u56FE\u5F62\r\nWorld
-    building\r\n\u7269\u7406\u7CFB\u7EDF\r\n\u811A\u672C\r\n\u591A\u73A9\u5BB6\u548C\u8054\u7F51\r\n\u97F3\u9891\r\n\u89C6\u9891\u6982\u8FF0\r\n\u52A8\u753B\r\nCreate
-    user interfaces (UI)\r\nUnity \u4E2D UI \u7CFB\u7EDF\u7684\u5BF9\u6BD4\r\nUI
-    \u5DE5\u5177\u5305\r\nUnity UI\r\n\u753B\u5E03\r\nBasic Layout\r\n\u53EF\u89C6\u7EC4\u4EF6\r\n\u4EA4\u4E92\u7EC4\u4EF6\r\n\u52A8\u753B\u96C6\u6210\r\n\u81EA\u52A8\u5E03\u5C40\r\n\u5BCC\u6587\u672C\r\n\u4E8B\u4EF6\u7CFB\u7EDF\r\nUI
-    \u53C2\u8003\r\n\u77E9\u5F62\u53D8\u6362\r\n\u753B\u5E03\u7EC4\u4EF6\r\n\u53EF\u89C6\u7EC4\u4EF6\r\n\u6587\u672C
-    (Text)\r\n\u56FE\u50CF (Image)\r\n\u539F\u59CB\u56FE\u50CF (Raw Image)\r\n\u906E\u7F69
-    (Mask)\r\nRectMask2D\r\nUI \u6548\u679C\u7EC4\u4EF6\r\n\u4EA4\u4E92\u7EC4\u4EF6\r\n\u81EA\u52A8\u5E03\u5C40\r\n\u4E8B\u4EF6\u7CFB\u7EDF\u53C2\u8003\r\nFont
-    assets\r\nUI \u64CD\u4F5C\u65B9\u6CD5\r\n\u5373\u65F6\u6A21\u5F0F GUI (IMGUI)\r\n\u5BFC\u822A\u548C\u5BFB\u8DEF\r\nUnity
-    \u670D\u52A1\r\nXR\r\n\u5F00\u6E90\u4EE3\u7801\u4ED3\u5E93\r\nUnity Asset Store\r\n\u5E73\u53F0\u5F00\u53D1\r\nUnity
-    Search\r\n\u65E7\u7248\u4E3B\u9898\r\n\u672F\u8BED\u8868\r\nUnity User Manual
-    2021.3 (LTS)Create user interfaces (UI)Unity UIUI \u53C2\u8003\u53EF\u89C6\u7EC4\u4EF6\u6587\u672C
-    (Text)\r\n\u53EF\u89C6\u7EC4\u4EF6\r\n\u56FE\u50CF (Image)\r\n\u6587\u672C (Text)\r\n__\u6587\u672C__\u63A7\u4EF6\u5411\u7528\u6237\u663E\u793A\u975E\u4EA4\u4E92\u5F0F\u6587\u672C\u3002\u6B64\u63A7\u4EF6\u53EF\u7528\u4E8E\u4E3A\u5176\u4ED6
-    GUI \u63A7\u4EF6\u63D0\u4F9B\u6807\u9898\u6216\u6807\u7B7E\uFF0C\u6216\u663E\u793A\u8BF4\u660E\u6216\u5176\u4ED6\u6587\u672C\u3002\r\n\r\n\u5C5E\u6027\r\n\r\n\u5C5E\u6027\uFF1A\t\u529F\u80FD\uFF1A\r\nText\t\u63A7\u4EF6\u663E\u793A\u7684\u6587\u672C\u3002\r\nCharacter\r\nFont\t\u7528\u4E8E\u663E\u793A\u6587\u672C\u7684\u5B57\u4F53\u3002\r\nFont
-    Style\t\u5E94\u7528\u4E8E\u6587\u672C\u7684\u6837\u5F0F\u3002\u9009\u9879\u5305\u62EC
-    Normal\u3001Bold\u3001Italic \u548C Bold And Italic\u3002\r\nFont Size\t\u663E\u793A\u7684\u6587\u672C\u7684\u5927\u5C0F\u3002\r\nLine
-    Spacing\t\u6587\u672C\u884C\u4E4B\u95F4\u7684\u5782\u76F4\u95F4\u8DDD\u3002\r\nRich
-    Text\t\u6587\u672C\u4E2D\u7684\u6807\u8BB0\u5143\u7D20\u662F\u5426\u5E94\u89E3\u91CA\u4E3A\u5BCC\u6587\u672C\u6837\u5F0F\uFF1F\r\nParagraph\r\nAlignment\t\u6587\u672C\u7684\u6C34\u5E73\u548C\u5782\u76F4\u5BF9\u9F50\u65B9\u5F0F\u3002\r\nAlign
-    by Geometry\t\u4F7F\u7528\u5B57\u5F62\u51E0\u4F55\u5F62\u72B6\u7684\u8303\u56F4\uFF08\u800C\u4E0D\u662F\u5B57\u5F62\u6307\u6807\uFF09\u6267\u884C\u6C34\u5E73\u5BF9\u9F50\u3002\r\nHorizontal
-    Overflow\t\u7528\u4E8E\u5904\u7406\u6587\u672C\u592A\u5BBD\u800C\u65E0\u6CD5\u653E\u5165\u77E9\u5F62\u5185\u7684\u60C5\u51B5\u7684\u65B9\u6CD5\u3002\u63D0\u4F9B\u7684\u9009\u9879\u4E3A
-    Wrap \u548C Overflow\u3002\r\nVertical Overflow\t\u7528\u4E8E\u5904\u7406\u6362\u884C\u6587\u672C\u592A\u9AD8\u800C\u65E0\u6CD5\u653E\u5165\u77E9\u5F62\u5185\u7684\u60C5\u51B5\u7684\u65B9\u6CD5\u3002\u63D0\u4F9B\u7684\u9009\u9879\u4E3A
-    Truncate \u548C Overflow\u3002\r\nBest Fit\tUnity \u5E94\u8BE5\u5FFD\u7565\u5927\u5C0F\u5C5E\u6027\u5E76\u5C1D\u8BD5\u76F4\u63A5\u5C06\u6587\u672C\u653E\u5165\u63A7\u4EF6\u7684\u77E9\u5F62\uFF1F\r\nColor\t\u7528\u4E8E\u6E32\u67D3\u6587\u672C\u7684\u989C\u8272\u3002\r\nMaterial\t\u7528\u4E8E\u6E32\u67D3\u6587\u672C\u7684\u6750\u8D28\u3002\r\n\u9ED8\u8BA4\u6587\u672C\u5143\u7D20\u5982\u4E0B\u6240\u793A\uFF1A\r\n\r\n\u6587\u672C\u5143\u7D20\u3002\r\n\u6587\u672C\u5143\u7D20\u3002\r\n\u8BE6\u7EC6\u4FE1\u606F\r\n\u6709\u4E9B\u63A7\u4EF6\uFF08\u5982\u6309\u94AE\u548C\u5F00\u5173\uFF09\u5185\u7F6E\u4E86\u6587\u672C\u63CF\u8FF0\u3002\u5BF9\u4E8E\u6CA1\u6709\u9690\u5F0F\u6587\u672C\u7684\u63A7\u4EF6\uFF08\u5982\u6ED1\u52A8\u6761\uFF09\uFF0C\u53EF\u4F7F\u7528\u901A\u8FC7\u6587\u672C\u63A7\u4EF6\u521B\u5EFA\u7684\u6807\u7B7E\u6765\u6307\u793A\u7528\u9014\u3002\u6587\u672C\u5BF9\u4E8E\u5217\u51FA\u8BF4\u660E\u3001\u6545\u4E8B\u6587\u672C\u3001\u5BF9\u8BDD\u548C\u6CD5\u5F8B\u514D\u8D23\u58F0\u660E\u4E5F\u5F88\u6709\u7528\u3002\r\n\r\n\u6587\u672C\u63A7\u4EF6\u63D0\u4F9B\u5B57\u4F53\u5927\u5C0F\u3001\u6837\u5F0F\u4EE5\u53CA\u6587\u672C\u5BF9\u9F50\u65B9\u5F0F\u7B49\u5E38\u7528\u53C2\u6570\u3002\u542F\u7528
-    Rich Text \u9009\u9879\u540E\uFF0C\u6587\u672C\u4E2D\u7684\u6807\u8BB0\u5143\u7D20\u5C06\u89C6\u4E3A\u6837\u5F0F\u4FE1\u606F\uFF0C\u56E0\u6B64\u53EF\u4EC5\u8BA9\u5355\u4E2A\u5355\u8BCD\u6216\u77ED\u6BB5\u4F7F\u7528\u7C97\u4F53\u6216\u4E0D\u540C\u989C\u8272\uFF0C\u7B49\u7B49\uFF08\u8BF7\u53C2\u9605\u6709\u5173\u5BCC\u6587\u672C\u7684\u9875\u9762\u4EE5\u83B7\u53D6\u6709\u5173\u6807\u8BB0\u65B9\u6848\u7684\u8BE6\u7EC6\u4FE1\u606F\uFF09\u3002\r\n\r\n\u63D0\u793A\r\n\u8BF7\u53C2\u9605\u6548\u679C\u9875\u9762\u4EE5\u4E86\u89E3\u5982\u4F55\u5C06\u7B80\u5355\u9634\u5F71\u6216\u8F6E\u5ED3\u6548\u679C\u5E94\u7528\u4E8E\u6587\u672C\u3002\r\n\u53EF\u89C6\u7EC4\u4EF6\r\n\u56FE\u50CF
-    (Image)\r\nCopyright \xA9 2022 Unity Technologies. Publication 2021.3\u6559\u7A0B\u793E\u533A\u7B54\u6848\u77E5\u8BC6\u5E93\u8BBA\u575BAsset
-    Store\r\n\u6211\u4EEC\u4F7F\u7528 Cookie \u4EE5\u5141\u8BB8\u6211\u4EEC\u7F51\u7AD9\u7684\u6B63\u5E38\u5DE5\u4F5C\u3001\u4E2A\u6027\u5316\u8BBE\u8BA1\u5185\u5BB9\u548C\u5E7F\u544A\u3001\u63D0\u4F9B\u793E\u4EA4\u5A92\u4F53\u529F\u80FD\u5E76\u5206\u6790\u6D41\u91CF\u3002\u6211\u4EEC\u8FD8\u540C\u793E\u4EA4\u5A92\u4F53\u3001\u5E7F\u544A\u548C\u5206\u6790\u5408\u4F5C\u4F19\u4F34\u5206\u4EAB\u6709\u5173\u60A8\u4F7F\u7528\u6211\u4EEC\u7F51\u7AD9\u7684\u4FE1\u606F\u3002\r\nCookie
-    \u8BBE\u7F6E\r\n\u5168\u90E8\u62D2\u7EDD\r\n\u63A5\u53D7\u6240\u6709 Cookie\r\n"
+  m_Text: "\n\t\u57FA\u672C\u64CD\u4F5C\uFF1A                                        
+    \t\u6A21\u5F0F\uFF1A\n\n\t\t  W S A D : \u64CD\u63A7\u98DE\u673A\u79FB\u52A8             
+    \u751F\u5B58\u6A21\u5F0F\uFF1A \u654C\u4EBA\u4E00\u6CE2\u4E00\u6CE2\u6765\u88AD\n\t\t 
+    \n\t\t  J | \u9F20\u6807\u5DE6\u952E\uFF1A\u53D1\u5C04\u5B50\u5F39             
+    \u65E0\u5C3D\u6A21\u5F0F\uFF1A\u654C\u4EBA\u4E0D\u65AD\u6765\u88AD\n\t\t\n\t\t 
+    K :  \u7FFB\u6EDA                                                Buff\u6A21\u5F0F\uFF1A\u6BCF\u4E00\u6CE2\u540E\u83B7\u5F97\u968F\u673Abuff\n\t\t 
+    \n         I : \u53D1\u5C04\u5BFC\u5F39\n\n\t\t  Space : \u5F00\u542F\u8FC7\u8F7D\u6A21\u5F0F\n\t\t
+    \n\t\t\n"
 --- !u!222 &19526146
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -51457,6 +51438,158 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1418559199}
     m_Modifications:
+    - target: {fileID: 21047222, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 21047222, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 21047222, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 21047222, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 21047223, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21047223, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 98844600, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 98844600, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 98844600, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 98844600, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 147138198, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 147138198, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 147138198, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 147138198, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798607584, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798607584, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798607584, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798607584, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798607585, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 798607585, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 829962497, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829962497, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829962497, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1037920661, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1037920661, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1037920661, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1037920661, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1088910777, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1088910777, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125040025, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125040025, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1372756075, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1372756075, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1372756075, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1372756075, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548049349, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548049349, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548049349, guid: 340c45c0f8008084b952544c0908e273, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8036821575332430089, guid: 340c45c0f8008084b952544c0908e273, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -51544,10 +51677,6 @@ PrefabInstance:
     - target: {fileID: 8036821575332430102, guid: 340c45c0f8008084b952544c0908e273, type: 3}
       propertyPath: m_Name
       value: Setting
-      objectReference: {fileID: 0}
-    - target: {fileID: 8036821575977098023, guid: 340c45c0f8008084b952544c0908e273, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8036821576005441314, guid: 340c45c0f8008084b952544c0908e273, type: 3}
       propertyPath: m_AnchorMax.x

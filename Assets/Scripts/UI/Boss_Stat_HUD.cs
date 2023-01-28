@@ -6,6 +6,6 @@ public class Boss_Stat_HUD : StatSystem_HUD
 {
     public override void UpdateText(float targetFillAmount)
     {
-        textFillPercent.text = (targetFillAmount * 100f).ToString("F2") + "%";
+        textFillPercent.text = targetFillAmount.ToString("P2");
     }
 }

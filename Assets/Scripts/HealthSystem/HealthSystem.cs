@@ -10,6 +10,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] protected float maxHealth;
     protected float health;
     public bool LessHalfHealth => health < (maxHealth / 2);
+    public bool IsFullHealth => health == maxHealth;
 
     [SerializeField] StatSystem onHeadStatBar;
     [SerializeField] bool showOnHeadStatBar = true;

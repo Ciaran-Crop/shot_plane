@@ -23,6 +23,7 @@ public class EnemyManager : Singleton<EnemyManager>
     int nowWaveListCount => nowWaveList.Count;
     int curWave = 1;
     WaitUntil waitUntilWaveEnd;
+    WaitUntil waitUntilEnemyLastOne;
     WaitForSeconds waitForShowUI;
     [SerializeField] int[] randomLevel1;
     [SerializeField] int[] randomLevel2;
@@ -30,6 +31,7 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] WaveUIController waveUIController;
     [SerializeField] GameObject bossUI;
     public bool OnlyHasOneEnemy => nowWaveListCount == 0;
+    public bool isBoss = false;
 
     IEnumerator SelfWaveStartCoroutine()
     {
@@ -38,14 +40,54 @@ public class EnemyManager : Singleton<EnemyManager>
         else if (GameManager.GameMode == GameMode.Buff) yield return BuffMode();
     }
 
-    IEnumerable BuffMode()
+    IEnumerator BuffMode()
     {
-        yield return null;
+        while (true)
+        {
+            if (GameManager.IsGameOver) yield break;
+            if (curWave % 5 == 0)
+            {
+                isBoss = true;
+                SetBossUI();
+                yield return waitForShowUI;
+                RemoveBossUI();  
+                CreateOneBoss(curWave / 5);
+            }
+            else
+            {
+                isBoss = false;
+                SetWaveUI(curWave);
+                yield return waitForShowUI;
+                RemoveWaveUI();
+                createOneWaveFromSetting(getOneWave(curWave));
+            }
+            curWave++;
+            yield return StartCoroutine(BuffManager.Instance.RandomOneBuff());
+            yield return waitUntilWaveEnd;
+
+        }
     }
 
     IEnumerator EndlessMode()
     {
-        yield return null;
+        while (true)
+        {
+            if (GameManager.IsGameOver) yield break;
+            if (curWave % 5 == 0)
+            {
+                isBoss = true;
+                CreateOneBoss(curWave / 5);
+                curWave++;
+                yield return waitUntilEnemyLastOne;
+            }
+            else
+            {
+                isBoss = false;
+                createOneWaveFromSetting(getOneWave(curWave));
+                curWave++;
+                yield return waitUntilEnemyLastOne;
+            }
+        }
     }
 
     IEnumerator SurviveMode()
@@ -55,6 +97,7 @@ public class EnemyManager : Singleton<EnemyManager>
             if (GameManager.IsGameOver) yield break;
             if (curWave % 5 == 0)
             {
+                isBoss = true;
                 SetBossUI();
                 yield return waitForShowUI;
                 RemoveBossUI();
@@ -64,6 +107,7 @@ public class EnemyManager : Singleton<EnemyManager>
             }
             else
             {
+                isBoss = false;
                 SetWaveUI(curWave);
                 yield return waitForShowUI;
                 RemoveWaveUI();
@@ -86,6 +130,7 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
+
     void SetBossUI()
     {
         bossUI.SetActive(true);
@@ -106,6 +151,7 @@ public class EnemyManager : Singleton<EnemyManager>
         base.Awake();
         waveList = new List<List<Dictionary<string, int>>>();
         waitUntilWaveEnd = new WaitUntil(() => nowWaveListCount == 0);
+        waitUntilEnemyLastOne = new WaitUntil(() => (!isBoss && nowWaveListCount <= 1) || (isBoss && nowWaveListCount == 0));
         waitForShowUI = new WaitForSeconds(waitForShowUITime);
         nowWaveList = new List<GameObject>();
         CreateWaveSettings();

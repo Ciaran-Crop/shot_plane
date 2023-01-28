@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 1314979423199981967}
   - component: {fileID: 344315207440004911}
   - component: {fileID: 6530655484578388431}
+  - component: {fileID: -2822479049218608695}
   m_Layer: 7
   m_Name: Enemy03
   m_TagString: Enemy
@@ -213,6 +214,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &-2822479049218608695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4307445449615710544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd023b36b4095f149ab38dac00833926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loots:
+  - prefab: {fileID: 2019851316260838503, guid: 3281a09cc02e0e3478edeb13d697cd38, type: 3}
+    spawnProbability: 30
+  - prefab: {fileID: 7021913161279593451, guid: 58293df6629a1ca41945239608f9b6ba, type: 3}
+    spawnProbability: 5
+  - prefab: {fileID: 5921898909932458412, guid: 853e9cf2d19d10a44947898a95b33246, type: 3}
+    spawnProbability: 5
+  - prefab: {fileID: 1604554900472224324, guid: f85c5fe7e46557a44a51545100a28c3c, type: 3}
+    spawnProbability: 5
+  - prefab: {fileID: 7946695540464534128, guid: 286b3ebf9063d1b4fa7d2acb14489695, type: 3}
+    spawnProbability: 10
+  - prefab: {fileID: 2019851316260838503, guid: 652b6f2b6b236e44da76ff8c43307fd4, type: 3}
+    spawnProbability: 10
+  - prefab: {fileID: 7021913161279593451, guid: f24af46c963d4734b9fb87d09033e32c, type: 3}
+    spawnProbability: 10
 --- !u!1 &6727038990730595426
 GameObject:
   m_ObjectHideFlags: 0

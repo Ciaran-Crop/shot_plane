@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LootController : MonoBehaviour
 {
     [SerializeField] float speed;
     Animator animator;
-    [SerializeField] AudioData pickData;
+    [SerializeField] protected AudioData pickData;
+    [SerializeField] protected AudioData defaultData;
+    [SerializeField] protected Text lootMessage;
     
     GameObject player;
     Vector3 direction;
@@ -16,6 +19,7 @@ public class LootController : MonoBehaviour
     {
         player = EnemyManager.Instance.GetPlayer();
         animator = GetComponent<Animator>();
+        lootMessage = GetComponentInChildren<Text>(true);
         direction = Vector3.left;
     }
 

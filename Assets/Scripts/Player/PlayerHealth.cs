@@ -58,7 +58,7 @@ public class PlayerHealth : HealthSystem
     protected override void OnDisable()
     {
         base.OnDisable();
-        onHUDStatBar.UpdateStat(health, maxHealth);
+        if(onHUDStatBar.gameObject.activeSelf) onHUDStatBar.UpdateStat(health, maxHealth);
     }
 
     public override bool TakeDamage(float damage)
